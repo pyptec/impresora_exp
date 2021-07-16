@@ -5,7 +5,7 @@
 sbit sel_com = P0^7;				//Micro switch	
 /* varibles externas*/
 extern  unsigned char Tipo_Vehiculo;	
-
+extern unsigned char 	Raspberry;
 /*funciones externas*/
 extern char putchar (char c);
 extern void Block_read_Clock(unsigned char *datos_clock);
@@ -14,6 +14,8 @@ extern void Debug_Dividir_texto();
 extern void clean_tx();
 extern void serie_ascii_siceros_l(unsigned char *serie);
 extern void clear_buffer();
+extern void Debug_txt_Tibbo(unsigned char * str);
+extern void Debug_chr_Tibbo(unsigned char Dat);
 
 #define ERROR_LOOP							0XE0
 #define TARJETA_INVALIDA				0XE1
@@ -35,6 +37,24 @@ extern void clear_buffer();
 #define ENVIANDO_COD						'D'
 #define INFO1										'I'
 #define INFO2										'i'
+
+
+//#define GRACIAS									91		
+#define LECTURA_WIEGAND					92					//0xB0
+
+#define EXPIRO									94						//B4
+#define	EXCEDE_HORARIO					95
+#define MENSUAL_NO_PAGO					97
+
+#define TARJETA_VENCIDA					180
+#define MENSUAL_FUERA_HORARIO		181
+
+#define NO_MENSUAL_NI_PREPAGO		96
+#define	NO_IN_PARK							93						//B2
+#define IN_PARK									99
+#define EXPIRO									94		
+#define MENSUAL_FUERA_HORARIO		181
+#define BIENVENIDO_WIEGAN				0x9b
 
 
 #define NUL											0x00
@@ -109,6 +129,33 @@ void Reloj_Pantalla_Lcd()
 					REN = 1;																																				/*habilita recepcion de datos*/
 					sel_com=1;																																			/*switch pto serie a verificador o expedidor */
 }
+void Raspberry_data (unsigned char *msjpantalla)
+{
+	
+	unsigned char i;
+	unsigned char lenth_cadena;
+	unsigned char d;
+	
+	
+	lenth_cadena=strlen(msjpantalla);
+	
+	for (i=0; i < lenth_cadena ; i++)
+	{
+			
+		for (d=0; d<100; d++)
+   {
+	 }
+		d=putchar(*(msjpantalla + i));
+
+	}
+	
+		
+		for (d=0; d<100; d++)
+   {
+    /*** DO NOTHING ***/
+    }
+	
+}
 /*------------------------------------------------------------------------------
 Rutina de msj de pantalla
 0xaa,0x80,0x18 cmd de inicio lcd
@@ -129,8 +176,8 @@ unsigned char num_chr;
  	
 		sel_com=0;
 	
-		//if (Raspberry==0)
-		//{
+		if (Raspberry==0)
+		{
 			LCD_txt (Ini_LCD_Line_one,0);
 			
 			switch (cod_msg)
@@ -238,21 +285,60 @@ unsigned char num_chr;
 				  LCD_txt_num_char(datos,num_chr,1);
 				 								
 					break;
-	}
+		}
 				sel_com=1;	
+	}
+		else
+		{
+			sel_com=0;   
+         switch (cod_msg)
+         {
+					case BIENVENIDO:
+					//	strcpy(msjpantalla,"a;03;BIENVENIDO\n\0");
+					 Raspberry_data((unsigned char  *) "a;03;BIENVENIDO\n\r\0");
+							//Raspberry_data (msjpantalla);
+             
+							break;
+					case TARJETA_VENCIDA:
+						//strcpy(msjpantalla,"a;07;¡ MENSUALIDAD VENCIDA !\n\0");
+						//	 Raspberry_data (msjpantalla);
+						Raspberry_data((unsigned char  *)  "a;07;¡ MENSUALIDAD VENCIDA !\n\r\0");
+							 break;	
+					 case EXPIRO:
+						 //strcpy(msjpantalla,"a;94;MENSUALIDAD VENCIDA\n\0");
+								//	Raspberry_data(msjpantalla);
+						Raspberry_data((unsigned char  *) "a;94;MENSUALIDAD EXPIRO\n\r\0");
+                  break;
+					  case EXCEDE_HORARIO:
+						 //strcpy(msjpantalla,"a;95;MENSUALIDAD EXCEDE HORARIO ACERQUESE A CAJA\n\0");
+							//		Raspberry_data(msjpantalla);
+							Raspberry_data((unsigned char  *) "a;95;MENSUALIDAD EXCEDE HORARIO ACERQUESE A CAJA\n\r\0");
+                  break;
+						case MENSUAL_NO_PAGO:
+							//strcpy(msjpantalla,"a;97;MENSUAL NO PAGO LOCACION HOY\n\0");
+							//		Raspberry_data(msjpantalla);
+							Raspberry_data((unsigned char  *) "a;97;MENSUAL NO PAGO LOCACION HOY\n\r\0");
+                  break;
+						case IN_PARK:
+									//strcpy(msjpantalla,"a;93;MENSUAL ESTA EN PARQUEADERO\n\0");
+									//Raspberry_data (msjpantalla);
+									Raspberry_data((unsigned char  *) "a;93;MENSUAL YA ESTA EN PARQUEADERO\n\r\0");
+                  break;
+				}
+		}
 }
 void PantallaLCD_LINEA_2(unsigned char cod_msg, unsigned char *buffer)
 {
 	
 unsigned char Ini_LCD_Line_one   []={0xaa,0x80,0x18,0x01,0x02,0x00} ;
-
+unsigned char msjpantalla [40]= {0};
 
 unsigned char num_chr;
 	
 sel_com=0;
 	
-		//if (Raspberry==0)
-		//{
+		if (Raspberry==0)
+		{
 		
 			
 			switch (cod_msg)
@@ -273,6 +359,86 @@ sel_com=0;
 					break;
 				
 				
+			}
+				sel_com=1;
+		}
+		else
+		{
+			 sel_com=0;
+			// Debug_txt_Tibbo((unsigned char *) "DATO msj");			
+			// Debug_chr_Tibbo(cod_msg);
+			// Debug_txt_Tibbo((unsigned char *) "\r\n");
+       switch (cod_msg)
+			 {
+				 case	LECTURA_WIEGAND:
+						
+										 
+						strcpy(msjpantalla,"a;92;WIEGAND ");
+								 
+						strcat(msjpantalla,buffer);
+						
+						strcat(msjpantalla,"\n");
+						
+				 
+						Raspberry_data (msjpantalla);
+						Debug_txt_Tibbo((unsigned char *) "DATO WIEGAND");	
+						Debug_txt_Tibbo((unsigned char *) msjpantalla);	
+						Debug_txt_Tibbo((unsigned char *) "\r\n");	
+						break;
+				 
+				// 	case TARJETA_VENCIDA:
+				//		strcpy(msjpantalla,"a;07; ¡ MENSUALIDAD VENCIDA ! VENCIO 20");
+				//		num_chr=strlen(buffer);
+				//		*(buffer+(num_chr-1))=0;
+				//		strcat(msjpantalla,buffer);
+				//		strcat(msjpantalla,"\n\0");
+					//	Raspberry_data (msjpantalla);
+						
+         //   break;
+						 case GRACIAS:
+            strcpy(msjpantalla,"a;91;GRACIAS ");
+						num_chr=strlen(buffer);
+						*(buffer+(num_chr-1))=0;
+						strcat(msjpantalla,buffer);
+						strcat(msjpantalla,"\n\0");
+						Raspberry_data (msjpantalla);
+					
+            break;
+			//			 case BIENVENIDO:
+						 
+     //       strcpy(msjpantalla,"a;03;BIENVENIDO ");
+		//			 Raspberry_data (msjpantalla);
+			//			 if(MenSual !=  True)
+				//		{
+							/*tarjeta de rotacion*/
+			//			strcpy(msjpantalla, Lee_No_Ticket());
+						//strcat(msjpantalla,ticket);
+				//			 Raspberry_data (msjpantalla);
+					//	}
+					//	else
+					//	{
+							/*mensual nombre del mensual*/
+					//		strcpy(msjpantalla, buffer);
+						//strcat(msjpantalla,buffer);
+				//			 Raspberry_data (msjpantalla);
+							
+//}
+			//			if (placa_ready== True)
+				//			{
+				//			strcpy(msjpantalla, " PLACA");	
+				//			//strcat(msjpantalla," PLACA:");
+				//			strcat(msjpantalla,placa);	
+								
+				//				strcat(msjpantalla,"\n\0");
+				//			}
+				//			else
+				//			{
+				//				strcpy(msjpantalla, "\n");	
+								//strcat(msjpantalla,"\n\r\0");
+				//			}	
+				//			Raspberry_data (msjpantalla);
+						
+			 
+			}
 	}
-				sel_com=1;	
 }

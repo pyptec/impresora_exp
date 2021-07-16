@@ -89,6 +89,7 @@ definiciones de los estados del verificador o expedidor
  unsigned char  USE_LPR;
  unsigned char  COMPARACION_ACTIVA;
  unsigned char 	QR_BARRAS;
+ unsigned char 	Raspberry;																		/*variable que define los msj por lcd (0) o rasberry (1)*/
  unsigned char buffer_ready=0;
  unsigned char placa[]={0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0};
 
@@ -114,6 +115,7 @@ bit placa_ready=0;
 #define EE_USE_LPR						0x000A
 #define EE_CPRCN_ACTIVA				0x000C
 #define EE_QR_BARRAS					0x000E
+#define EE_TIPO_PANTALLA			0X000F
 
 /*librerias*/
 #include "uart.h"

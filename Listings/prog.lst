@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   PROG                                                              07/25/2020 19:44:20 PAGE 1   
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE PROG
@@ -40,812 +40,862 @@ line level    source
   30          #define EE_USE_LPR            0x000A
   31          #define EE_CPRCN_ACTIVA       0x000C
   32          #define EE_QR_BARRAS          0x000E
-  33          #define EE_CLIENTE            0X0010
-  34          #define EE_NIT                0x0040
-  35          #define EE_PARQUEADERO        0X0050
-  36          #define EE_ADDRES             0x0080
-  37          #define EE_MSJ1               0X00B0
-  38          #define EE_MSJ2               0X00f1
-  39          #define EE_MSJ3               0X0132
-  40          #define EE_MSJ4               0X0173
-  41          #define EE_MSJ5               0X01b4
-  42          #define EE_MSJ6               0X01f5
-  43          #define EE_MSJ7               0X0236
-  44          
-  45          /* Definicion del tamaño de comando y longitud de cmd*/
-  46          
-  47          #define   NUMCOMMAND 21
-  48          #define   LONGSIZE 3
-  49          
+  33          #define EE_TIPO_PANTALLA      0X000F
+  34          #define EE_CLIENTE            0X0010
+  35          #define EE_NIT                0x0040
+  36          #define EE_PARQUEADERO        0X0050
+  37          #define EE_ADDRES             0x0080
+  38          #define EE_MSJ1               0X00B0
+  39          #define EE_MSJ2               0X00f1
+  40          #define EE_MSJ3               0X0132
+  41          #define EE_MSJ4               0X0173
+  42          #define EE_MSJ5               0X01b4
+  43          #define EE_MSJ6               0X01f5
+  44          #define EE_MSJ7               0X0236
+  45          
+  46          /* Definicion del tamaño de comando y longitud de cmd*/
+  47          
+  48          #define   NUMCOMMAND 22
+  49          #define   LONGSIZE 3
   50          
   51          
-  52          char comandos[NUMCOMMAND][LONGSIZE]=
-  53          {
-  54            "0",          //ID_CLIENTEValor del punto cero.
-C51 COMPILER V9.59.0.0   PROG                                                              07/25/2020 19:44:20 PAGE 2   
+  52          
+  53          char comandos[NUMCOMMAND][LONGSIZE]=
+  54          {
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 2   
 
-  55            "1",       //COD_PARKTiempo de recolecion entre muestra
-  56            "2",    //T_GRACIA Informacion recolectada enviada al rs232
-  57            "3",    //SIN_COBRO"Ajuste del cero del sensor
-  58            "4",  // DEBUGCalibracion por la curva de la pendiente
-  59            "5",//USE_LPR
-  60            "6",  //COMPARACION_ACTIVA
-  61            "7",  //1=QR 0=codigo de barras
-  62            "8",    //CLIENTENombre del cliente
-  63            "9",        //NITnit
-  64            "10",   //NOM_PARQ Nombre de parqueadero
-  65            "11",   //direccion del establecimiento 
-  66            "12",   // mensajes
-  67            "13",
-  68            "14",
-  69            "15",
-  70            "16",
-  71            "17",
-  72            "18",
-  73            "19",     // Ayuda!muestra todos los comandos
-  74            "20"    //Salir de programacion
-  75          };
-  76          
-  77          /*------------------------------------------------------------------------------
-  78          Rutina de lista de comandos 
-  79          ------------------------------------------------------------------------------*/
-  80          
-  81          unsigned char ListaComandos(unsigned char *cmd)
-  82          {
-  83   1         unsigned char buf[LONGSIZE];
-  84   1         unsigned char i;
-  85   1         
-  86   1         for (i=0; i<NUMCOMMAND; i++)
-  87   1         {
-  88   2            strcpy(buf, &comandos[i][0]);
-  89   2            if (strcmp(buf, cmd)==0)
-  90   2               return(i);
-  91   2         }
-  92   1         
-  93   1         return(0xFF);
-  94   1      }
-  95          
-  96          
-  97          /*------------------------------------------------------------------------------
-  98          Rutina que valida la clave
-  99          ------------------------------------------------------------------------------*/
- 100          unsigned char  ValidarClave(unsigned char *buffer)
- 101          {
- 102   1      unsigned char buf [7];
- 103   1        
- 104   1            strcpy(buf, &validacion[0]);
- 105   1            if (strcmp(buf, buffer)==0)
- 106   1               return(0);
- 107   1       
- 108   1         
- 109   1         return(0xFF);
- 110   1      }
- 111          
- 112          
+  55            "0",          //ID_CLIENTEValor del punto cero.
+  56            "1",       //COD_PARKTiempo de recolecion entre muestra
+  57            "2",    //T_GRACIA Informacion recolectada enviada al rs232
+  58            "3",    //SIN_COBRO"Ajuste del cero del sensor
+  59            "4",  // DEBUGCalibracion por la curva de la pendiente
+  60            "5",//USE_LPR
+  61            "6",  //COMPARACION_ACTIVA
+  62            "7",  //1=QR 0=codigo de barras
+  63            "8",
+  64            "9",    //CLIENTENombre del cliente
+  65            "10",        //NITnit
+  66            "11",   //NOM_PARQ Nombre de parqueadero
+  67            "12",   //direccion del establecimiento 
+  68            "13",   // mensajes
+  69            "14",
+  70            "15",
+  71            "16",
+  72            "17",
+  73            "18",
+  74            "19",
+  75            "20",     // Ayuda!muestra todos los comandos
+  76            "21"    //Salir de programacion
+  77          };
+  78          
+  79          /*------------------------------------------------------------------------------
+  80          Rutina de lista de comandos 
+  81          ------------------------------------------------------------------------------*/
+  82          
+  83          unsigned char ListaComandos(unsigned char *cmd)
+  84          {
+  85   1         unsigned char buf[LONGSIZE];
+  86   1         unsigned char i;
+  87   1         
+  88   1         for (i=0; i<NUMCOMMAND; i++)
+  89   1         {
+  90   2            strcpy(buf, &comandos[i][0]);
+  91   2            if (strcmp(buf, cmd)==0)
+  92   2               return(i);
+  93   2         }
+  94   1         
+  95   1         return(0xFF);
+  96   1      }
+  97          
+  98          
+  99          /*------------------------------------------------------------------------------
+ 100          Rutina que valida la clave
+ 101          ------------------------------------------------------------------------------*/
+ 102          unsigned char  ValidarClave(unsigned char *buffer)
+ 103          {
+ 104   1      unsigned char buf [7];
+ 105   1        
+ 106   1            strcpy(buf, &validacion[0]);
+ 107   1            if (strcmp(buf, buffer)==0)
+ 108   1               return(0);
+ 109   1       
+ 110   1         
+ 111   1         return(0xFF);
+ 112   1      }
  113          
- 114          /*------------------------------------------------------------------------------
- 115          Rutina que busca el \
- 116          ------------------------------------------------------------------------------*/
-C51 COMPILER V9.59.0.0   PROG                                                              07/25/2020 19:44:20 PAGE 3   
+ 114          
+ 115          
+ 116          /*------------------------------------------------------------------------------
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 3   
 
- 117          unsigned char * GetCMD(unsigned char *in)
- 118          {
- 119   1         char tokens[]=" \r\n";
- 120   1         return(strtok(in,tokens));
- 121   1      }
- 122          
- 123          /*------------------------------------------------------------------------------
- 124          Rutina de 
- 125          ------------------------------------------------------------------------------*/
- 126          unsigned char * GetOption(unsigned char *in)
- 127          {
- 128   1         unsigned char tokensSpace[]=" \r\n";
- 129   1         unsigned char tokensQuote[]="\"\r\n";
- 130   1         
- 131   1         //trim leading spaces
- 132   1         while (*in==' ')
- 133   1            in++;
- 134   1         
- 135   1         //if first char is a quote, then end token on a quote.  ELSE end token on a space
- 136   1         if (*in == '\"')
- 137   1            return(strtok(in,tokensQuote));
- 138   1         else
- 139   1            return(strtok(in,tokensSpace));
- 140   1      } 
- 141          /*------------------------------------------------------------------------------
- 142          Rutina de muestra el cursor
- 143          ------------------------------------------------------------------------------*/
- 144          
- 145          void DisplayCursor(void)
- 146          {
- 147   1         printf("\r\n\n%s> ", cursor);
- 148   1      }
- 149          
- 150          /*------------------------------------------------------------------------------
- 151          Rutina que captura los datos pto serie y los muestra en el pto
- 152          modo=0 muestra el caracter
- 153          modo= 1 se colocan * para que no se vea el caracter digitado
- 154          ------------------------------------------------------------------------------*/
- 155          
- 156          void IngresaDato(unsigned char  *buffer, unsigned char modo)
- 157          {
- 158   1      
- 159   1       int i;
- 160   1       
- 161   1        do
- 162   1        { 
- 163   2          *buffer = _getkey();
- 164   2        if (modo == 0) 
- 165   2          {
- 166   3             printf("%c", *buffer);
- 167   3          }
- 168   2          else 
- 169   2          {
- 170   3            putchar('*');
- 171   3          }
- 172   2           i=*buffer; 
- 173   2           buffer++;
- 174   2          *buffer='\0'; 
- 175   2          
- 176   2        } while((i != '\r')&& (i != '\n'));
- 177   1          buffer--;
- 178   1         *buffer='\n';     
-C51 COMPILER V9.59.0.0   PROG                                                              07/25/2020 19:44:20 PAGE 4   
+ 117          Rutina que busca el \
+ 118          ------------------------------------------------------------------------------*/
+ 119          unsigned char * GetCMD(unsigned char *in)
+ 120          {
+ 121   1         char tokens[]=" \r\n";
+ 122   1         return(strtok(in,tokens));
+ 123   1      }
+ 124          
+ 125          /*------------------------------------------------------------------------------
+ 126          Rutina de 
+ 127          ------------------------------------------------------------------------------*/
+ 128          unsigned char * GetOption(unsigned char *in)
+ 129          {
+ 130   1         unsigned char tokensSpace[]=" \r\n";
+ 131   1         unsigned char tokensQuote[]="\"\r\n";
+ 132   1         
+ 133   1         //trim leading spaces
+ 134   1         while (*in==' ')
+ 135   1            in++;
+ 136   1         
+ 137   1         //if first char is a quote, then end token on a quote.  ELSE end token on a space
+ 138   1         if (*in == '\"')
+ 139   1            return(strtok(in,tokensQuote));
+ 140   1         else
+ 141   1            return(strtok(in,tokensSpace));
+ 142   1      } 
+ 143          /*------------------------------------------------------------------------------
+ 144          Rutina de muestra el cursor
+ 145          ------------------------------------------------------------------------------*/
+ 146          
+ 147          void DisplayCursor(void)
+ 148          {
+ 149   1         printf("\r\n\n%s> ", cursor);
+ 150   1      }
+ 151          
+ 152          /*------------------------------------------------------------------------------
+ 153          Rutina que captura los datos pto serie y los muestra en el pto
+ 154          modo=0 muestra el caracter
+ 155          modo= 1 se colocan * para que no se vea el caracter digitado
+ 156          ------------------------------------------------------------------------------*/
+ 157          
+ 158          void IngresaDato(unsigned char  *buffer, unsigned char modo)
+ 159          {
+ 160   1      
+ 161   1       int i;
+ 162   1       
+ 163   1        do
+ 164   1        { 
+ 165   2          *buffer = _getkey();
+ 166   2        if (modo == 0) 
+ 167   2          {
+ 168   3             printf("%c", *buffer);
+ 169   3          }
+ 170   2          else 
+ 171   2          {
+ 172   3            putchar('*');
+ 173   3          }
+ 174   2           i=*buffer; 
+ 175   2           buffer++;
+ 176   2          *buffer='\0'; 
+ 177   2          
+ 178   2        } while((i != '\r')&& (i != '\n'));
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 4   
 
- 179   1               
- 180   1      } 
- 181          
- 182          /*------------------------------------------------------------------------------
- 183          Rutina que programa el id_cliente en eeprom
- 184          ------------------------------------------------------------------------------*/
- 185          void prog_id_cliente()
- 186          {
- 187   1        unsigned char buffer[10];
- 188   1        unsigned int dataee;
- 189   1        
- 190   1        dataee=rd_eeprom(0xa8,EE_ID_CLIENTE);                                         /*se lee el id_cliente actual */
- 191   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
- 192   1        
- 193   1        printf("\r\n\n ACTUAL ID_CLIENTE=%s\r\n\n",buffer);                           /*se muestra el id_cliente actual en pan
-             -talla*/
+ 179   1          buffer--;
+ 180   1         *buffer='\n';     
+ 181   1               
+ 182   1      } 
+ 183          
+ 184          /*------------------------------------------------------------------------------
+ 185          Rutina que programa el id_cliente en eeprom
+ 186          ------------------------------------------------------------------------------*/
+ 187          void prog_id_cliente()
+ 188          {
+ 189   1        unsigned char buffer[10];
+ 190   1        unsigned int dataee;
+ 191   1        
+ 192   1        dataee=rd_eeprom(0xa8,EE_ID_CLIENTE);                                         /*se lee el id_cliente actual */
+ 193   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
  194   1        
- 195   1        printf("\r\n\n DIGITE SU NUEVO ID_CLIENTE=");                                 /*digite el nuevo id_cliente*/
- 196   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 197   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
- 198   1        wr_eeprom(0xa8,EE_ID_CLIENTE,dataee);                                         /*grabo el dato en la eeprom*/
- 199   1        
- 200   1        dataee=rd_eeprom(0xa8,EE_ID_CLIENTE);                                         /*leo el dato grabado*/
- 201   1        sprintf(buffer,"%d",dataee);                                                  /*lo convierto a un string*/
- 202   1        printf("\r\n\n DATO MODIFICADO ID_CLIENTE=%s\r\n\n",buffer);                  /*lo muetro por la pantalla el dato 
+ 195   1        printf("\r\n\n ACTUAL ID_CLIENTE=%s\r\n\n",buffer);                           /*se muestra el id_cliente actual en pan
+             -talla*/
+ 196   1        
+ 197   1        printf("\r\n\n DIGITE SU NUEVO ID_CLIENTE=");                                 /*digite el nuevo id_cliente*/
+ 198   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 199   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
+ 200   1        wr_eeprom(0xa8,EE_ID_CLIENTE,dataee);                                         /*grabo el dato en la eeprom*/
+ 201   1        
+ 202   1        dataee=rd_eeprom(0xa8,EE_ID_CLIENTE);                                         /*leo el dato grabado*/
+ 203   1        sprintf(buffer,"%d",dataee);                                                  /*lo convierto a un string*/
+ 204   1        printf("\r\n\n DATO MODIFICADO ID_CLIENTE=%s\r\n\n",buffer);                  /*lo muetro por la pantalla el dato 
              -grabado*/
- 203   1      }
- 204          /*------------------------------------------------------------------------------
- 205          Rutina que programa el cod_park
- 206          ------------------------------------------------------------------------------*/
- 207          void prog_cod_park()
- 208          {
- 209   1        unsigned char buffer[10];
- 210   1        unsigned int dataee;
- 211   1        
- 212   1        dataee=rd_eeprom(0xa8,EE_ID_PARK);                                          /*se lee el id_cliente actual */
- 213   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
- 214   1        
- 215   1        printf("\r\n\n ACTUAL COD_PARK=%s\r\n\n",buffer);                           /*se muestra el id_cliente actual en panta
-             -lla*/
+ 205   1      }
+ 206          /*------------------------------------------------------------------------------
+ 207          Rutina que programa el cod_park
+ 208          ------------------------------------------------------------------------------*/
+ 209          void prog_cod_park()
+ 210          {
+ 211   1        unsigned char buffer[10];
+ 212   1        unsigned int dataee;
+ 213   1        
+ 214   1        dataee=rd_eeprom(0xa8,EE_ID_PARK);                                          /*se lee el id_cliente actual */
+ 215   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
  216   1        
- 217   1        printf("\r\n\n DIGITE SU NUEVO COD_PARK=");                                 /*digite el nuevo id_cliente*/
- 218   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 219   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
- 220   1        wr_eeprom(0xa8,EE_ID_PARK,dataee);                                          /*grabo el dato en la eeprom*/
- 221   1        
- 222   1        dataee=rd_eeprom(0xa8,EE_ID_PARK);                                          /*leo el dato grabado*/
- 223   1        sprintf(buffer,"%d",dataee);                                                  /*lo convierto a un string*/
- 224   1        printf("\r\n\n DATO MODIFICADO COD_PARK=%s\r\n\n",buffer);                  /*lo muetro por la pantalla el dato gr
+ 217   1        printf("\r\n\n ACTUAL COD_PARK=%s\r\n\n",buffer);                           /*se muestra el id_cliente actual en panta
+             -lla*/
+ 218   1        
+ 219   1        printf("\r\n\n DIGITE SU NUEVO COD_PARK=");                                 /*digite el nuevo id_cliente*/
+ 220   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 221   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
+ 222   1        wr_eeprom(0xa8,EE_ID_PARK,dataee);                                          /*grabo el dato en la eeprom*/
+ 223   1        
+ 224   1        dataee=rd_eeprom(0xa8,EE_ID_PARK);                                          /*leo el dato grabado*/
+ 225   1        sprintf(buffer,"%d",dataee);                                                  /*lo convierto a un string*/
+ 226   1        printf("\r\n\n DATO MODIFICADO COD_PARK=%s\r\n\n",buffer);                  /*lo muetro por la pantalla el dato gr
              -abado*/
- 225   1      }
- 226          /*------------------------------------------------------------------------------
- 227          Rutina que programa el tiempo de gracia de cobro (00) no tiene tiempo de gracia
- 228          ------------------------------------------------------------------------------*/
- 229          void Prog_tiempo_gracia()
- 230          {
- 231   1        unsigned char buffer[10];
- 232   1        unsigned int dataee;
- 233   1        
- 234   1        dataee=rd_eeprom(0xa8,EE_TIEMPO_GRACIA);                                          /*se lee el id_cliente actual */
- 235   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
- 236   1        
-C51 COMPILER V9.59.0.0   PROG                                                              07/25/2020 19:44:20 PAGE 5   
+ 227   1      }
+ 228          /*------------------------------------------------------------------------------
+ 229          Rutina que programa el tiempo de gracia de cobro (00) no tiene tiempo de gracia
+ 230          ------------------------------------------------------------------------------*/
+ 231          void Prog_tiempo_gracia()
+ 232          {
+ 233   1        unsigned char buffer[10];
+ 234   1        unsigned int dataee;
+ 235   1        
+ 236   1        dataee=rd_eeprom(0xa8,EE_TIEMPO_GRACIA);                                          /*se lee el id_cliente actual */
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 5   
 
- 237   1        printf("\r\n\n ACTUAL TIEMPO_GRACIA=%s\r\n\n",buffer);                            /*se muestra el id_cliente actual en 
-             -pantalla*/
+ 237   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
  238   1        
- 239   1        printf("\r\n\n DIGITE SU NUEVO TIEMPO_GRACIA=");                                  /*digite el nuevo id_cliente*/
- 240   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 241   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
- 242   1        wr_eeprom(0xa8,EE_TIEMPO_GRACIA,dataee);                                          /*grabo el dato en la eeprom*/
- 243   1        
- 244   1        dataee=rd_eeprom(0xa8,EE_TIEMPO_GRACIA);                                        /*leo el dato grabado*/
- 245   1        sprintf(buffer,"%d",dataee);                                                  /*lo convierto a un string*/
- 246   1        printf("\r\n\n DATO MODIFICADO TIEMPO_GRACIA=%s\r\n\n",buffer);               /*lo muetro por la pantalla el dat
+ 239   1        printf("\r\n\n ACTUAL TIEMPO_GRACIA=%s\r\n\n",buffer);                            /*se muestra el id_cliente actual en 
+             -pantalla*/
+ 240   1        
+ 241   1        printf("\r\n\n DIGITE SU NUEVO TIEMPO_GRACIA=");                                  /*digite el nuevo id_cliente*/
+ 242   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 243   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
+ 244   1        wr_eeprom(0xa8,EE_TIEMPO_GRACIA,dataee);                                          /*grabo el dato en la eeprom*/
+ 245   1        
+ 246   1        dataee=rd_eeprom(0xa8,EE_TIEMPO_GRACIA);                                        /*leo el dato grabado*/
+ 247   1        sprintf(buffer,"%d",dataee);                                                  /*lo convierto a un string*/
+ 248   1        printf("\r\n\n DATO MODIFICADO TIEMPO_GRACIA=%s\r\n\n",buffer);               /*lo muetro por la pantalla el dat
              -o grabado*/
- 247   1      }
- 248          /*------------------------------------------------------------------------------
- 249          Rutina que programa SIN COBRO
- 250          SIN_COBRO=0 inhabilitado, SIN_COBRO=1 sin cobro, SIN_COBRO=2 sin cobro y salida el mismo dia");
- 251          ------------------------------------------------------------------------------*/
- 252          void Prog_Sin_Cobro()
- 253          {
- 254   1        
- 255   1      
- 256   1        unsigned char buffer[10];
- 257   1        unsigned int dataee;
- 258   1      
- 259   1        dataee=rd_eeprom(0xa8,EE_SIN_COBRO);                                          /*se lee el id_cliente actual */
- 260   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
- 261   1        if(dataee==0)
- 262   1        {
- 263   2          printf("\r\n\n ACTUAL SIN_COBRO INHABILITADO=%s\r\n\n",buffer);                           /*se muestra el id_cliente 
+ 249   1      }
+ 250          /*------------------------------------------------------------------------------
+ 251          Rutina que programa SIN COBRO
+ 252          SIN_COBRO=0 inhabilitado, SIN_COBRO=1 sin cobro, SIN_COBRO=2 sin cobro y salida el mismo dia");
+ 253          ------------------------------------------------------------------------------*/
+ 254          void Prog_Sin_Cobro()
+ 255          {
+ 256   1        
+ 257   1      
+ 258   1        unsigned char buffer[10];
+ 259   1        unsigned int dataee;
+ 260   1      
+ 261   1        dataee=rd_eeprom(0xa8,EE_SIN_COBRO);                                          /*se lee el id_cliente actual */
+ 262   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
+ 263   1        if(dataee==0)
+ 264   1        {
+ 265   2          printf("\r\n\n ACTUAL SIN_COBRO INHABILITADO=%s\r\n\n",buffer);                           /*se muestra el id_cliente 
              -actual en pantalla*/
- 264   2        }
- 265   1        else if (dataee==1)
- 266   1        {
- 267   2          printf("\r\n\n ACTUAL SIN_COBRO GRATIS=%s\r\n\n",buffer);   
- 268   2        }
- 269   1        else 
- 270   1        {
- 271   2            printf("\r\n\n ACTUAL SIN_COBRO GRATIS Y SALIDA EL MISMO DIA=%s\r\n\n",buffer);   
- 272   2        }
- 273   1        
- 274   1        printf("\r\n\n DIGITE SU NUEVO SIN_COBRO=");                                  /*digite el nuevo id_cliente*/
- 275   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 276   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
- 277   1        wr_eeprom(0xa8,EE_SIN_COBRO,dataee);                                          /*grabo el dato en la eeprom*/
- 278   1        
- 279   1        dataee=rd_eeprom(0xa8,EE_SIN_COBRO);                                        /*leo el dato grabado*/
- 280   1        sprintf(buffer,"%d",dataee);                                                  /*lo convierto a un string*/
- 281   1        if(dataee==0)
- 282   1        {
- 283   2          printf("\r\n\n ACTUAL SIN_COBRO INHABILITADO=%s\r\n\n",buffer);                           /*se muestra el id_cliente 
+ 266   2        }
+ 267   1        else if (dataee==1)
+ 268   1        {
+ 269   2          printf("\r\n\n ACTUAL SIN_COBRO GRATIS=%s\r\n\n",buffer);   
+ 270   2        }
+ 271   1        else 
+ 272   1        {
+ 273   2            printf("\r\n\n ACTUAL SIN_COBRO GRATIS Y SALIDA EL MISMO DIA=%s\r\n\n",buffer);   
+ 274   2        }
+ 275   1        
+ 276   1        printf("\r\n\n DIGITE SU NUEVO SIN_COBRO=");                                  /*digite el nuevo id_cliente*/
+ 277   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 278   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
+ 279   1        wr_eeprom(0xa8,EE_SIN_COBRO,dataee);                                          /*grabo el dato en la eeprom*/
+ 280   1        
+ 281   1        dataee=rd_eeprom(0xa8,EE_SIN_COBRO);                                        /*leo el dato grabado*/
+ 282   1        sprintf(buffer,"%d",dataee);                                                  /*lo convierto a un string*/
+ 283   1        if(dataee==0)
+ 284   1        {
+ 285   2          printf("\r\n\n ACTUAL SIN_COBRO INHABILITADO=%s\r\n\n",buffer);                           /*se muestra el id_cliente 
              -actual en pantalla*/
- 284   2        }
- 285   1        else if (dataee==1)
- 286   1        {
- 287   2          printf("\r\n\n ACTUAL SIN_COBRO GRATIS=%s\r\n\n",buffer);   
- 288   2        }
- 289   1        else 
- 290   1        {
- 291   2            printf("\r\n\n ACTUAL SIN_COBRO GRATIS Y SALIDA EL MISMO DIA=%s\r\n\n",buffer);   
- 292   2        }
- 293   1        
- 294   1      }
-C51 COMPILER V9.59.0.0   PROG                                                              07/25/2020 19:44:20 PAGE 6   
+ 286   2        }
+ 287   1        else if (dataee==1)
+ 288   1        {
+ 289   2          printf("\r\n\n ACTUAL SIN_COBRO GRATIS=%s\r\n\n",buffer);   
+ 290   2        }
+ 291   1        else 
+ 292   1        {
+ 293   2            printf("\r\n\n ACTUAL SIN_COBRO GRATIS Y SALIDA EL MISMO DIA=%s\r\n\n",buffer);   
+ 294   2        }
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 6   
 
- 295          /*------------------------------------------------------------------------------
- 296          
- 297          ------------------------------------------------------------------------------*/
- 298          void Prog_debug()
- 299          {
- 300   1        unsigned char buffer[10];
- 301   1        unsigned int dataee;
- 302   1      
- 303   1        
- 304   1        dataee=rd_eeprom(0xa8,EE_DEBUG);                                          /*se lee el id_cliente actual */
- 305   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
- 306   1        if(dataee==0)
- 307   1        {
- 308   2          printf("\r\n\n ACTUAL DEBUG INHABILITADO=%s\r\n\n",buffer);                           /*se muestra el id_cliente actu
+ 295   1        
+ 296   1      }
+ 297          /*------------------------------------------------------------------------------
+ 298          
+ 299          ------------------------------------------------------------------------------*/
+ 300          void Prog_debug()
+ 301          {
+ 302   1        unsigned char buffer[10];
+ 303   1        unsigned int dataee;
+ 304   1      
+ 305   1        
+ 306   1        dataee=rd_eeprom(0xa8,EE_DEBUG);                                          /*se lee el id_cliente actual */
+ 307   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
+ 308   1        if(dataee==0)
+ 309   1        {
+ 310   2          printf("\r\n\n ACTUAL DEBUG INHABILITADO=%s\r\n\n",buffer);                           /*se muestra el id_cliente actu
              -al en pantalla*/
- 309   2        }
- 310   1        else
- 311   1        {
- 312   2          printf("\r\n\n ACTUAL DEBUG HABILITADO=%s\r\n\n",buffer);     
- 313   2        }
- 314   1        
- 315   1        printf("\r\n\n DIGITE EL NUEVO ESTADO DE DEBUG=");                                  /*digite el nuevo id_cliente*/
- 316   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 317   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
- 318   1        wr_eeprom(0xa8,EE_DEBUG,dataee);                                          /*grabo el dato en la eeprom*/
- 319   1        
- 320   1        dataee=rd_eeprom(0xa8,EE_DEBUG);                                        /*leo el dato grabado*/
- 321   1        sprintf(buffer,"%d",dataee);  
- 322   1        if(dataee==0)
- 323   1        {
- 324   2          printf("\r\n\n ACTUAL DEBUG INHABILITADO=%s\r\n\n",buffer);                           /*se muestra el id_cliente actu
+ 311   2        }
+ 312   1        else
+ 313   1        {
+ 314   2          printf("\r\n\n ACTUAL DEBUG HABILITADO=%s\r\n\n",buffer);     
+ 315   2        }
+ 316   1        
+ 317   1        printf("\r\n\n DIGITE EL NUEVO ESTADO DE DEBUG=");                                  /*digite el nuevo id_cliente*/
+ 318   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 319   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
+ 320   1        wr_eeprom(0xa8,EE_DEBUG,dataee);                                          /*grabo el dato en la eeprom*/
+ 321   1        
+ 322   1        dataee=rd_eeprom(0xa8,EE_DEBUG);                                        /*leo el dato grabado*/
+ 323   1        sprintf(buffer,"%d",dataee);  
+ 324   1        if(dataee==0)
+ 325   1        {
+ 326   2          printf("\r\n\n ACTUAL DEBUG INHABILITADO=%s\r\n\n",buffer);                           /*se muestra el id_cliente actu
              -al en pantalla*/
- 325   2        }
- 326   1        else
- 327   1        {
- 328   2          printf("\r\n\n ACTUAL DEBUG HABILITADO=%s\r\n\n",buffer);     
- 329   2        }
- 330   1      }
- 331          /*------------------------------------------------------------------------------
- 332          
- 333          ------------------------------------------------------------------------------*/
- 334          void Prog_Use_Lpr()
- 335          {
- 336   1          unsigned char buffer[10];
- 337   1        unsigned int dataee;
- 338   1      
- 339   1        
- 340   1        dataee=rd_eeprom(0xa8,EE_USE_LPR);                                          /*se lee el id_cliente actual */
- 341   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
- 342   1        if(dataee==0)
- 343   1        {
- 344   2          printf("\r\n\n ACTUAL USE_LPR INHABILITADO=%s\r\n\n",buffer);                           /*se muestra el id_cliente ac
+ 327   2        }
+ 328   1        else
+ 329   1        {
+ 330   2          printf("\r\n\n ACTUAL DEBUG HABILITADO=%s\r\n\n",buffer);     
+ 331   2        }
+ 332   1      }
+ 333          /*------------------------------------------------------------------------------
+ 334          
+ 335          ------------------------------------------------------------------------------*/
+ 336          void Prog_Use_Lpr()
+ 337          {
+ 338   1          unsigned char buffer[10];
+ 339   1        unsigned int dataee;
+ 340   1      
+ 341   1        
+ 342   1        dataee=rd_eeprom(0xa8,EE_USE_LPR);                                          /*se lee el id_cliente actual */
+ 343   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
+ 344   1        if(dataee==0)
+ 345   1        {
+ 346   2          printf("\r\n\n ACTUAL USE_LPR INHABILITADO=%s\r\n\n",buffer);                           /*se muestra el id_cliente ac
              -tual en pantalla*/
- 345   2        }
- 346   1        else
- 347   1        {
- 348   2          printf("\r\n\n ACTUAL USE_LPR HABILITADO=%s\r\n\n",buffer);     
- 349   2        }
- 350   1        
- 351   1        printf("\r\n\n DIGITE EL NUEVO ESTADO DE USE_LPR=");                                  /*digite el nuevo id_cliente*/
- 352   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 353   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
-C51 COMPILER V9.59.0.0   PROG                                                              07/25/2020 19:44:20 PAGE 7   
+ 347   2        }
+ 348   1        else
+ 349   1        {
+ 350   2          printf("\r\n\n ACTUAL USE_LPR HABILITADO=%s\r\n\n",buffer);     
+ 351   2        }
+ 352   1        
+ 353   1        printf("\r\n\n DIGITE EL NUEVO ESTADO DE USE_LPR=");                                  /*digite el nuevo id_cliente*/
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 7   
 
- 354   1        wr_eeprom(0xa8,EE_USE_LPR,dataee);                                          /*grabo el dato en la eeprom*/
- 355   1        
- 356   1        dataee=rd_eeprom(0xa8,EE_USE_LPR);                                        /*leo el dato grabado*/
- 357   1        sprintf(buffer,"%d",dataee);  
- 358   1        if(dataee==0)
- 359   1        {
- 360   2          printf("\r\n\n ACTUAL USE_LPR INHABILITADO=%s\r\n\n",buffer);                           /*se muestra el id_cliente ac
+ 354   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 355   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
+ 356   1        wr_eeprom(0xa8,EE_USE_LPR,dataee);                                          /*grabo el dato en la eeprom*/
+ 357   1        
+ 358   1        dataee=rd_eeprom(0xa8,EE_USE_LPR);                                        /*leo el dato grabado*/
+ 359   1        sprintf(buffer,"%d",dataee);  
+ 360   1        if(dataee==0)
+ 361   1        {
+ 362   2          printf("\r\n\n ACTUAL USE_LPR INHABILITADO=%s\r\n\n",buffer);                           /*se muestra el id_cliente ac
              -tual en pantalla*/
- 361   2        }
- 362   1        else
- 363   1        {
- 364   2          printf("\r\n\n ACTUAL USE_LPR HABILITADO=%s\r\n\n",buffer);     
- 365   2        }
- 366   1      }
- 367          /*------------------------------------------------------------------------------  
- 368          
- 369          ------------------------------------------------------------------------------*/
- 370          void Prog_Comparacion_Activa()
- 371          {
- 372   1        unsigned char buffer[10];
- 373   1        unsigned int dataee;
- 374   1      
- 375   1        
- 376   1        dataee=rd_eeprom(0xa8,EE_CPRCN_ACTIVA);                                         /*se lee el id_cliente actual */
- 377   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
- 378   1        if(dataee==0)
- 379   1        {
- 380   2          printf("\r\n\n ACTUAL COMPARACION ACTIVA INHABILITADO=%s\r\n\n",buffer);                            /*se muestra el id
+ 363   2        }
+ 364   1        else
+ 365   1        {
+ 366   2          printf("\r\n\n ACTUAL USE_LPR HABILITADO=%s\r\n\n",buffer);     
+ 367   2        }
+ 368   1      }
+ 369          /*------------------------------------------------------------------------------  
+ 370          
+ 371          ------------------------------------------------------------------------------*/
+ 372          void Prog_Comparacion_Activa()
+ 373          {
+ 374   1        unsigned char buffer[10];
+ 375   1        unsigned int dataee;
+ 376   1      
+ 377   1        
+ 378   1        dataee=rd_eeprom(0xa8,EE_CPRCN_ACTIVA);                                         /*se lee el id_cliente actual */
+ 379   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
+ 380   1        if(dataee==0)
+ 381   1        {
+ 382   2          printf("\r\n\n ACTUAL COMPARACION ACTIVA INHABILITADO=%s\r\n\n",buffer);                            /*se muestra el id
              -_cliente actual en pantalla*/
- 381   2        }
- 382   1        else
- 383   1        {
- 384   2          printf("\r\n\n ACTUAL COMPARACION ACTIVA  HABILITADO=%s\r\n\n",buffer);     
- 385   2        }
- 386   1        
- 387   1        printf("\r\n\n DIGITE EL NUEVO ESTADO DE COMPARACION ACTIVA =");                                  /*digite el nuevo id_cli
+ 383   2        }
+ 384   1        else
+ 385   1        {
+ 386   2          printf("\r\n\n ACTUAL COMPARACION ACTIVA  HABILITADO=%s\r\n\n",buffer);     
+ 387   2        }
+ 388   1        
+ 389   1        printf("\r\n\n DIGITE EL NUEVO ESTADO DE COMPARACION ACTIVA =");                                  /*digite el nuevo id_cli
              -ente*/
- 388   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 389   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
- 390   1        wr_eeprom(0xa8,EE_CPRCN_ACTIVA,dataee);                                         /*grabo el dato en la eeprom*/
- 391   1        
- 392   1        dataee=rd_eeprom(0xa8,EE_CPRCN_ACTIVA);                                       /*leo el dato grabado*/
- 393   1        sprintf(buffer,"%d",dataee);  
- 394   1        if(dataee==0)
- 395   1        {
- 396   2          printf("\r\n\n ACTUAL COMPARACION ACTIVA  INHABILITADO=%s\r\n\n",buffer);                           /*se muestra el i
+ 390   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 391   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
+ 392   1        wr_eeprom(0xa8,EE_CPRCN_ACTIVA,dataee);                                         /*grabo el dato en la eeprom*/
+ 393   1        
+ 394   1        dataee=rd_eeprom(0xa8,EE_CPRCN_ACTIVA);                                       /*leo el dato grabado*/
+ 395   1        sprintf(buffer,"%d",dataee);  
+ 396   1        if(dataee==0)
+ 397   1        {
+ 398   2          printf("\r\n\n ACTUAL COMPARACION ACTIVA  INHABILITADO=%s\r\n\n",buffer);                           /*se muestra el i
              -d_cliente actual en pantalla*/
- 397   2        }
- 398   1        else
- 399   1        {
- 400   2          printf("\r\n\n ACTUAL COMPARACION ACTIVA  HABILITADO=%s\r\n\n",buffer);     
- 401   2        }
- 402   1      }
- 403          /*------------------------------------------------------------------------------
- 404          
- 405          ------------------------------------------------------------------------------*/
- 406          void Prog_QR_barras()
- 407          {
- 408   1        unsigned char buffer[10];
- 409   1        unsigned int dataee;
- 410   1      
- 411   1        
-C51 COMPILER V9.59.0.0   PROG                                                              07/25/2020 19:44:20 PAGE 8   
+ 399   2        }
+ 400   1        else
+ 401   1        {
+ 402   2          printf("\r\n\n ACTUAL COMPARACION ACTIVA  HABILITADO=%s\r\n\n",buffer);     
+ 403   2        }
+ 404   1      }
+ 405          /*------------------------------------------------------------------------------
+ 406          
+ 407          ------------------------------------------------------------------------------*/
+ 408          void Prog_QR_barras()
+ 409          {
+ 410   1        unsigned char buffer[10];
+ 411   1        unsigned int dataee;
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 8   
 
- 412   1        dataee=rd_eeprom(0xa8,EE_QR_BARRAS);                                          /*se lee el id_cliente actual */
- 413   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
- 414   1        if(dataee==0)
- 415   1        {
- 416   2          printf("\r\n\n ACTUAL CODIGO DE BARRAS ACTIV0=%s\r\n\n",buffer);                            /*se muestra el id_cliente
+ 412   1      
+ 413   1        
+ 414   1        dataee=rd_eeprom(0xa8,EE_QR_BARRAS);                                          /*se lee el id_cliente actual */
+ 415   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
+ 416   1        if(dataee==0)
+ 417   1        {
+ 418   2          printf("\r\n\n ACTUAL CODIGO DE BARRAS ACTIV0=%s\r\n\n",buffer);                            /*se muestra el id_cliente
              - actual en pantalla*/
- 417   2        }
- 418   1        else
- 419   1        {
- 420   2          printf("\r\n\n ACTUAL CODIGO QR ACTIVO=%s\r\n\n",buffer);     
- 421   2        }
- 422   1        
- 423   1        printf("\r\n\n DIGITE EL NUEVO ESTADO DE CODIGO QR O CODIGO DE BARRAS=");                                 /*digite el nue
+ 419   2        }
+ 420   1        else
+ 421   1        {
+ 422   2          printf("\r\n\n ACTUAL CODIGO QR ACTIVO=%s\r\n\n",buffer);     
+ 423   2        }
+ 424   1        
+ 425   1        printf("\r\n\n DIGITE EL NUEVO ESTADO DE CODIGO QR O CODIGO DE BARRAS=");                                 /*digite el nue
              -vo id_cliente*/
- 424   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 425   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
- 426   1        wr_eeprom(0xa8,EE_QR_BARRAS,dataee);                                          /*grabo el dato en la eeprom*/
- 427   1        
- 428   1        dataee=rd_eeprom(0xa8,EE_QR_BARRAS);                                        /*leo el dato grabado*/
- 429   1        sprintf(buffer,"%d",dataee);  
- 430   1        if(dataee==0)
- 431   1        {
- 432   2          printf("\r\n\n ACTUAL CODIGO DE BARRAS ACTIV0=%s\r\n\n",buffer);                            /*se muestra el id_cliente
+ 426   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 427   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
+ 428   1        wr_eeprom(0xa8,EE_QR_BARRAS,dataee);                                          /*grabo el dato en la eeprom*/
+ 429   1        
+ 430   1        dataee=rd_eeprom(0xa8,EE_QR_BARRAS);                                        /*leo el dato grabado*/
+ 431   1        sprintf(buffer,"%d",dataee);  
+ 432   1        if(dataee==0)
+ 433   1        {
+ 434   2          printf("\r\n\n ACTUAL CODIGO DE BARRAS ACTIV0=%s\r\n\n",buffer);                            /*se muestra el id_cliente
              - actual en pantalla*/
- 433   2        }
- 434   1        else
- 435   1        {
- 436   2          printf("\r\n\n ACTUAL CODIGO QR ACTIVO=%s\r\n\n",buffer);     
- 437   2        }
- 438   1      }
- 439          /*------------------------------------------------------------------------------
- 440          
- 441          ------------------------------------------------------------------------------*/
- 442          void Prog_Cliente(void)
- 443          {
- 444   1        unsigned char buffer[48];
- 445   1        
- 446   1        printf("\r\n\n Digite el nombre del cliente ");                                 /*digite el nuevo id_cliente*/
- 447   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 448   1        
- 449   1        EscribirMemoria(0xa8,EE_CLIENTE,buffer);                                          /*grabo el dato en la eeprom*/
- 450   1        LeerMemoria(EE_CLIENTE,buffer); 
- 451   1        printf("\r\n\n texto grabado=%s\r\n\n",buffer);   
- 452   1      }
- 453          void Prog_Nit(void)
- 454          {
- 455   1        unsigned char buffer[16];
- 456   1        
- 457   1        printf("\r\n\n Digite el numero de Nit ");                                  /*digite el nuevo id_cliente*/
- 458   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 459   1        
- 460   1        EscribirMemoria(0xa8,EE_NIT,buffer);                                          /*grabo el dato en la eeprom*/
- 461   1        LeerMemoria(EE_NIT,buffer); 
- 462   1        printf("\r\n\n NIT: %s\r\n\n",buffer);    
- 463   1      }
- 464          /*------------------------------------------------------------------------------
- 465          Rutina que captura el nombre del parqueadero y lo almacena en eeeprom
- 466          ------------------------------------------------------------------------------*/
- 467          void Prog_Nom_Parq()
- 468          {
- 469   1        unsigned char buffer[48];
- 470   1        
-C51 COMPILER V9.59.0.0   PROG                                                              07/25/2020 19:44:20 PAGE 9   
+ 435   2        }
+ 436   1        else
+ 437   1        {
+ 438   2          printf("\r\n\n ACTUAL CODIGO QR ACTIVO=%s\r\n\n",buffer);     
+ 439   2        }
+ 440   1      }
+ 441          /*------------------------------------------------------------------------------------
+ 442          cmd del tipo de pantalla a usar
+ 443          Rasberry = 1
+ 444          lcd = 0
+ 445          --------------------------------------------------------------------------------------*/
+ 446          void tipo_pantalla()
+ 447          {
+ 448   1        unsigned char buffer[10];
+ 449   1        unsigned int dataee;
+ 450   1      
+ 451   1        
+ 452   1        dataee=rd_eeprom(0xa8,EE_TIPO_PANTALLA);                                          /*se lee el id_cliente actual */
+ 453   1        sprintf(buffer,"%d",dataee);                                                  /*se convierte  un entero a un string*/
+ 454   1        if(dataee==0)
+ 455   1        {
+ 456   2          printf("\r\n\n PANTALLA LCD HABILITADA=%s\r\n\n",buffer);                           /*se muestra el id_cliente actual
+             - en pantalla*/
+ 457   2        }
+ 458   1        else
+ 459   1        {
+ 460   2          printf("\r\n\n PANTALLA RASPBERRY  HABILITADA=%s\r\n\n",buffer);      
+ 461   2        }
+ 462   1        
+ 463   1        printf("\r\n\n DIGITE EL NUEVO ESTADO DE LA PANTALLA =");                                 /*digite el nuevo id_cliente*/
+ 464   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 465   1        dataee=atoi(buffer);                                                          /*lo convierto a un dato hex*/
+ 466   1        wr_eeprom(0xa8,EE_TIPO_PANTALLA,dataee);                                          /*grabo el dato en la eeprom*/
+ 467   1        
+ 468   1        dataee=rd_eeprom(0xa8,EE_TIPO_PANTALLA);                                        /*leo el dato grabado*/
+ 469   1        sprintf(buffer,"%d",dataee);  
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 9   
 
- 471   1        printf("\r\n\n Digite el Nombre del Parqueadero ");                                 /*digite el nuevo id_cliente*/
- 472   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 473   1        
- 474   1        EscribirMemoria(0xa8,EE_PARQUEADERO,buffer);                                          /*grabo el dato en la eeprom*/
- 475   1        LeerMemoria(EE_PARQUEADERO,buffer); 
- 476   1        printf("\r\n\n Nombre: %s\r\n\n",buffer);   
- 477   1      }
- 478          void Prog_Direccion()
- 479          {
- 480   1        unsigned char buffer[48];
- 481   1        
- 482   1        printf("\r\n\n Digite la direccion del establecimiento ");                                  /*digite el nuevo id_cliente*/
- 483   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 484   1        
- 485   1        EscribirMemoria(0xa8,EE_ADDRES,buffer);                                         /*grabo el dato en la eeprom*/
- 486   1        LeerMemoria(EE_ADDRES,buffer);  
- 487   1        printf("\r\n\n Direccion: %s\r\n\n",buffer);    
- 488   1      } 
- 489          void Prog_Msj1()
- 490          {
- 491   1        unsigned char buffer[62];
- 492   1        
- 493   1        printf("\r\n\n Digite el msj1 del establecimiento ");                                 /*digite el nuevo id_cliente*/
- 494   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 495   1        
- 496   1        EscribirMemoria(0xa8,EE_MSJ1,buffer);                                         /*grabo el dato en la eeprom*/
- 497   1        LeerMemoria(EE_MSJ1,buffer);  
- 498   1        printf("\r\n\n msj1: %s\r\n\n",buffer);   
- 499   1      }
- 500          //EE_MSJ1
- 501            void Prog_Msj2()
- 502          {
- 503   1      unsigned char buffer[62];
- 504   1        
- 505   1        printf("\r\n\n Digite el msj2 del establecimiento ");                                 /*digite el nuevo id_cliente*/
- 506   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 507   1        
- 508   1        EscribirMemoria(0xa8,EE_MSJ2,buffer);                                         /*grabo el dato en la eeprom*/
- 509   1        LeerMemoria(EE_MSJ2,buffer);  
- 510   1        printf("\r\n\n msj1: %s\r\n\n",buffer); 
- 511   1      }
- 512            void Prog_Msj3()
- 513          {
- 514   1        unsigned char buffer[62];
- 515   1        
- 516   1        printf("\r\n\n Digite el msj3 del establecimiento ");                                 /*digite el nuevo id_cliente*/
- 517   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 518   1        
- 519   1        EscribirMemoria(0xa8,EE_MSJ3,buffer);                                         /*grabo el dato en la eeprom*/
- 520   1        LeerMemoria(EE_MSJ3,buffer);  
- 521   1        printf("\r\n\n msj3: %s\r\n\n",buffer); 
- 522   1      }
- 523            void Prog_Msj4()
- 524          {
- 525   1        unsigned char buffer[62];
- 526   1        
- 527   1        printf("\r\n\n Digite el msj4 del establecimiento ");                                 /*digite el nuevo id_cliente*/
- 528   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 529   1        
- 530   1        EscribirMemoria(0xa8,EE_MSJ4,buffer);                                         /*grabo el dato en la eeprom*/
- 531   1        LeerMemoria(EE_MSJ4,buffer);  
- 532   1        printf("\r\n\n msj4: %s\r\n\n",buffer); 
-C51 COMPILER V9.59.0.0   PROG                                                              07/25/2020 19:44:20 PAGE 10  
+ 470   1        if(dataee==0)
+ 471   1        {
+ 472   2          printf("\r\n\n PANTALLA LCD ACTIVA=%s\r\n\n",buffer);                           /*se muestra el id_cliente actual en 
+             -pantalla*/
+ 473   2        }
+ 474   1        else
+ 475   1        {
+ 476   2          printf("\r\n\n PANTALLA RASPBERRY ACTIVA =%s\r\n\n",buffer);      
+ 477   2        }
+ 478   1        
+ 479   1      }
+ 480          /*------------------------------------------------------------------------------
+ 481          
+ 482          ------------------------------------------------------------------------------*/
+ 483          void Prog_Cliente(void)
+ 484          {
+ 485   1        unsigned char buffer[48];
+ 486   1        
+ 487   1        printf("\r\n\n Digite el nombre del cliente ");                                 /*digite el nuevo id_cliente*/
+ 488   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 489   1        
+ 490   1        EscribirMemoria(0xa8,EE_CLIENTE,buffer);                                          /*grabo el dato en la eeprom*/
+ 491   1        LeerMemoria(EE_CLIENTE,buffer); 
+ 492   1        printf("\r\n\n texto grabado=%s\r\n\n",buffer);   
+ 493   1      }
+ 494          void Prog_Nit(void)
+ 495          {
+ 496   1        unsigned char buffer[16];
+ 497   1        
+ 498   1        printf("\r\n\n Digite el numero de Nit ");                                  /*digite el nuevo id_cliente*/
+ 499   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 500   1        
+ 501   1        EscribirMemoria(0xa8,EE_NIT,buffer);                                          /*grabo el dato en la eeprom*/
+ 502   1        LeerMemoria(EE_NIT,buffer); 
+ 503   1        printf("\r\n\n NIT: %s\r\n\n",buffer);    
+ 504   1      }
+ 505          /*------------------------------------------------------------------------------
+ 506          Rutina que captura el nombre del parqueadero y lo almacena en eeeprom
+ 507          ------------------------------------------------------------------------------*/
+ 508          void Prog_Nom_Parq()
+ 509          {
+ 510   1        unsigned char buffer[48];
+ 511   1        
+ 512   1        printf("\r\n\n Digite el Nombre del Parqueadero ");                                 /*digite el nuevo id_cliente*/
+ 513   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 514   1        
+ 515   1        EscribirMemoria(0xa8,EE_PARQUEADERO,buffer);                                          /*grabo el dato en la eeprom*/
+ 516   1        LeerMemoria(EE_PARQUEADERO,buffer); 
+ 517   1        printf("\r\n\n Nombre: %s\r\n\n",buffer);   
+ 518   1      }
+ 519          void Prog_Direccion()
+ 520          {
+ 521   1        unsigned char buffer[48];
+ 522   1        
+ 523   1        printf("\r\n\n Digite la direccion del establecimiento ");                                  /*digite el nuevo id_cliente*/
+ 524   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 525   1        
+ 526   1        EscribirMemoria(0xa8,EE_ADDRES,buffer);                                         /*grabo el dato en la eeprom*/
+ 527   1        LeerMemoria(EE_ADDRES,buffer);  
+ 528   1        printf("\r\n\n Direccion: %s\r\n\n",buffer);    
+ 529   1      } 
+ 530          void Prog_Msj1()
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 10  
 
- 533   1      }
- 534            void Prog_Msj5()
- 535          {
- 536   1        unsigned char buffer[62];
- 537   1        
- 538   1        printf("\r\n\n Digite el msj5 del establecimiento ");                                 /*digite el nuevo id_cliente*/
- 539   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 540   1        
- 541   1        EscribirMemoria(0xa8,EE_MSJ5,buffer);                                         /*grabo el dato en la eeprom*/
- 542   1        LeerMemoria(EE_MSJ5,buffer);  
- 543   1        printf("\r\n\n msj5: %s\r\n\n",buffer); 
- 544   1      }
- 545          
- 546            void Prog_Msj6()
- 547          {
- 548   1        unsigned char buffer[62];
- 549   1        
- 550   1        printf("\r\n\n Digite el msj6 del establecimiento ");                                 /*digite el nuevo id_cliente*/
- 551   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 552   1        
- 553   1        EscribirMemoria(0xa8,EE_MSJ6,buffer);                                         /*grabo el dato en la eeprom*/
- 554   1        LeerMemoria(EE_MSJ6,buffer);  
- 555   1        printf("\r\n\n msj6: %s\r\n\n",buffer); 
- 556   1      }
- 557          
- 558          
- 559            void Prog_Msj7()
- 560          {
- 561   1        unsigned char buffer[62];
- 562   1        
- 563   1        printf("\r\n\n Digite el msj7 del establecimiento ");                                 /*digite el nuevo id_cliente*/
- 564   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
- 565   1        
- 566   1        EscribirMemoria(0xa8,EE_MSJ7,buffer);                                         /*grabo el dato en la eeprom*/
- 567   1        LeerMemoria(EE_MSJ7,buffer);  
- 568   1        printf("\r\n\n msj7: %s\r\n\n",buffer); 
- 569   1      }
- 570          /*------------------------------------------------------------------------------
- 571          Rutina que muestra la lista de comandos
- 572          ------------------------------------------------------------------------------*/
- 573          void Show()
- 574          {
- 575   1         printf("\r\n ID_CLIENTE    --- cmd 0 Identificador del cliente maximo 255");
- 576   1         printf("\r\n COD_PARK      --- cmd 1 El numero del parqueadero maximo 255");
- 577   1         printf("\r\n T_GRACIA      --- cmd 2 Tiempo sin cobro 00,  maximo 255");
- 578   1         printf("\r\n SIN_COBRO     --- cmd 3 Inhabilitado= 0, Gratis= 1 , Gratis y salida el mismo dia= 2");
- 579   1         printf("\r\n DEBUG         --- cmd 4 Habilitar = 1, Inhabilitar = 0");
- 580   1         printf("\r\n USE_LPR       --- cmd 5Habilitar = 1, Inhabilitar = 0");
- 581   1         printf("\r\n COMPARACION_ACTIVA ---cmd 6 Habilitar = 1, Inhabilitar = 0");
- 582   1         printf("\r\n QR_COD_BARRAS ---cmd 7 Habilitar QR = 1, Habilitar COD_BARRAS = 0"); 
- 583   1         printf("\r\n CLIENTE       ---cmd 8 Nombre del cliente");
- 584   1         printf("\r\n NIT           --- cmd 9 Numero del nit");
- 585   1         printf("\r\n NOM_PARQ      --- cmd 10 Nombre del parqueadero");
- 586   1         printf("\r\n DIRECCION     --- cmd 11 Nombre del parqueadero");
- 587   1         printf("\r\n MSJ_1         --- cmd 12 msj de informacion del parqueadero");
- 588   1         printf("\r\n MSJ_2         --- cmd 13 msj de informacion del parqueadero");
- 589   1         printf("\r\n MSJ_3         --- cmd 14 msj de informacion del parqueadero");
- 590   1         printf("\r\n MSJ_4         --- cmd 15 msj de informacion del parqueadero");
- 591   1         printf("\r\n MSJ_5         --- cmd 16 msj de informacion del parqueadero");
- 592   1         printf("\r\n MSJ_6         --- cmd 17 msj de informacion del parqueadero");
- 593   1         printf("\r\n MSJ_7         --- cmd 18 msj de informacion del parqueadero");
- 594   1         printf("\r\n AYUDA         --- cmd 19 Muestra los comandos");
-C51 COMPILER V9.59.0.0   PROG                                                              07/25/2020 19:44:20 PAGE 11  
+ 531          {
+ 532   1        unsigned char buffer[62];
+ 533   1        
+ 534   1        printf("\r\n\n Digite el msj1 del establecimiento ");                                 /*digite el nuevo id_cliente*/
+ 535   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 536   1        
+ 537   1        EscribirMemoria(0xa8,EE_MSJ1,buffer);                                         /*grabo el dato en la eeprom*/
+ 538   1        LeerMemoria(EE_MSJ1,buffer);  
+ 539   1        printf("\r\n\n msj1: %s\r\n\n",buffer);   
+ 540   1      }
+ 541          //EE_MSJ1
+ 542            void Prog_Msj2()
+ 543          {
+ 544   1      unsigned char buffer[62];
+ 545   1        
+ 546   1        printf("\r\n\n Digite el msj2 del establecimiento ");                                 /*digite el nuevo id_cliente*/
+ 547   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 548   1        
+ 549   1        EscribirMemoria(0xa8,EE_MSJ2,buffer);                                         /*grabo el dato en la eeprom*/
+ 550   1        LeerMemoria(EE_MSJ2,buffer);  
+ 551   1        printf("\r\n\n msj1: %s\r\n\n",buffer); 
+ 552   1      }
+ 553            void Prog_Msj3()
+ 554          {
+ 555   1        unsigned char buffer[62];
+ 556   1        
+ 557   1        printf("\r\n\n Digite el msj3 del establecimiento ");                                 /*digite el nuevo id_cliente*/
+ 558   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 559   1        
+ 560   1        EscribirMemoria(0xa8,EE_MSJ3,buffer);                                         /*grabo el dato en la eeprom*/
+ 561   1        LeerMemoria(EE_MSJ3,buffer);  
+ 562   1        printf("\r\n\n msj3: %s\r\n\n",buffer); 
+ 563   1      }
+ 564            void Prog_Msj4()
+ 565          {
+ 566   1        unsigned char buffer[62];
+ 567   1        
+ 568   1        printf("\r\n\n Digite el msj4 del establecimiento ");                                 /*digite el nuevo id_cliente*/
+ 569   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 570   1        
+ 571   1        EscribirMemoria(0xa8,EE_MSJ4,buffer);                                         /*grabo el dato en la eeprom*/
+ 572   1        LeerMemoria(EE_MSJ4,buffer);  
+ 573   1        printf("\r\n\n msj4: %s\r\n\n",buffer); 
+ 574   1      }
+ 575            void Prog_Msj5()
+ 576          {
+ 577   1        unsigned char buffer[62];
+ 578   1        
+ 579   1        printf("\r\n\n Digite el msj5 del establecimiento ");                                 /*digite el nuevo id_cliente*/
+ 580   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 581   1        
+ 582   1        EscribirMemoria(0xa8,EE_MSJ5,buffer);                                         /*grabo el dato en la eeprom*/
+ 583   1        LeerMemoria(EE_MSJ5,buffer);  
+ 584   1        printf("\r\n\n msj5: %s\r\n\n",buffer); 
+ 585   1      }
+ 586          
+ 587            void Prog_Msj6()
+ 588          {
+ 589   1        unsigned char buffer[62];
+ 590   1        
+ 591   1        printf("\r\n\n Digite el msj6 del establecimiento ");                                 /*digite el nuevo id_cliente*/
+ 592   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 11  
 
- 595   1         printf("\r\n SALIR         --- cmd 20 Salir de programacion");
- 596   1      
+ 593   1        
+ 594   1        EscribirMemoria(0xa8,EE_MSJ6,buffer);                                         /*grabo el dato en la eeprom*/
+ 595   1        LeerMemoria(EE_MSJ6,buffer);  
+ 596   1        printf("\r\n\n msj6: %s\r\n\n",buffer); 
  597   1      }
  598          
- 599          /*------------------------------------------------------------------------------
- 600          Rutina de principal de programacion
- 601          ------------------------------------------------------------------------------*/
- 602          
- 603          void menu(void)
- 604          {
- 605   1      
- 606   1      unsigned char *cmd,*option1,*option2;
- 607   1      unsigned char opt_buffer[20];
- 608   1      unsigned char buffer[20];
- 609   1      
- 610   1      
- 611   1      
- 612   1        
- 613   1        printf("\r\n\nSistema de Programacion Verificador\r\n\r\n");
- 614   1      
- 615   1       
- 616   1        
- 617   1        
- 618   1        do{
- 619   2        printf("\r\n\n/>Usuario:");
- 620   2        clear_buffer();
- 621   2        // main loop
- 622   2        IngresaDato(buffer,0);          //ingreso el usuario por teclado 
- 623   2        cmd = GetCMD(buffer);         //quita el carri return 
- 624   2        printf("\r\n\n datos del buffer rx %s\r\n\n",rbuf); 
- 625   2        printf("\r\n\n datos del buffer tx %s\r\n\n",tbuf);   
- 626   2      }while(ValidarClave(cmd)!=0);       //validamos el usuario
- 627   1      
- 628   1      
- 629   1        do{
- 630   2      printf("\r\n\n/>Password:");
- 631   2      
- 632   2        IngresaDato(buffer,1);          //ingreso el password por teclado 
- 633   2        cmd = GetCMD(buffer);         //quita el carri return 
- 634   2        strcpy (validacion,"123456");
- 635   2        
- 636   2      
- 637   2        }while(ValidarClave(cmd)!=0);       //
+ 599          
+ 600            void Prog_Msj7()
+ 601          {
+ 602   1        unsigned char buffer[62];
+ 603   1        
+ 604   1        printf("\r\n\n Digite el msj7 del establecimiento ");                                 /*digite el nuevo id_cliente*/
+ 605   1        IngresaDato(buffer,0);                                                        /*trae el dato digitado*/
+ 606   1        
+ 607   1        EscribirMemoria(0xa8,EE_MSJ7,buffer);                                         /*grabo el dato en la eeprom*/
+ 608   1        LeerMemoria(EE_MSJ7,buffer);  
+ 609   1        printf("\r\n\n msj7: %s\r\n\n",buffer); 
+ 610   1      }
+ 611          /*------------------------------------------------------------------------------
+ 612          Rutina que muestra la lista de comandos
+ 613          ------------------------------------------------------------------------------*/
+ 614          void Show()
+ 615          {
+ 616   1         printf("\r\n ID_CLIENTE    --- cmd 0 Identificador del cliente maximo 255");
+ 617   1         printf("\r\n COD_PARK      --- cmd 1 El numero del parqueadero maximo 255");
+ 618   1         printf("\r\n T_GRACIA      --- cmd 2 Tiempo sin cobro 00,  maximo 255");
+ 619   1         printf("\r\n SIN_COBRO     --- cmd 3 Inhabilitado= 0, Gratis= 1 , Gratis y salida el mismo dia= 2");
+ 620   1         printf("\r\n DEBUG         --- cmd 4 Habilitar = 1, Inhabilitar = 0");
+ 621   1         printf("\r\n USE_LPR       --- cmd 5Habilitar = 1, Inhabilitar = 0");
+ 622   1         printf("\r\n COMPARACION_ACTIVA ---cmd 6 Habilitar = 1, Inhabilitar = 0");
+ 623   1         printf("\r\n QR_COD_BARRAS ---cmd 7 Habilitar QR = 1, Habilitar COD_BARRAS = 0"); 
+ 624   1         printf("\r\n TIPO_PANTALLA --- CMD 8 PANTALLA LCD =0 PANTALLA RASPBERRI=1");
+ 625   1         printf("\r\n CLIENTE       ---cmd 9 Nombre del cliente");
+ 626   1         printf("\r\n NIT           --- cmd 10 Numero del nit");
+ 627   1         printf("\r\n NOM_PARQ      --- cmd 11 Nombre del parqueadero");
+ 628   1         printf("\r\n DIRECCION     --- cmd 12 Nombre del parqueadero");
+ 629   1         printf("\r\n MSJ_1         --- cmd 13 msj de informacion del parqueadero");
+ 630   1         printf("\r\n MSJ_2         --- cmd 14 msj de informacion del parqueadero");
+ 631   1         printf("\r\n MSJ_3         --- cmd 15 msj de informacion del parqueadero");
+ 632   1         printf("\r\n MSJ_4         --- cmd 16 msj de informacion del parqueadero");
+ 633   1         printf("\r\n MSJ_5         --- cmd 17 msj de informacion del parqueadero");
+ 634   1         printf("\r\n MSJ_6         --- cmd 18 msj de informacion del parqueadero");
+ 635   1         printf("\r\n MSJ_7         --- cmd 19 msj de informacion del parqueadero");
+ 636   1         printf("\r\n AYUDA         --- cmd 20 Muestra los comandos");
+ 637   1         printf("\r\n SALIR         --- cmd 21 Salir de programacion");
  638   1      
- 639   1        
- 640   1        Show();
- 641   1        while(1)
- 642   1        {
- 643   2        DisplayCursor();
- 644   2      
- 645   2      
- 646   2          IngresaDato(buffer,0);  
- 647   2          cmd = GetCMD(buffer); 
- 648   2          option1 = GetOption(cmd + strlen(cmd) + 1);
- 649   2          option2 = GetOption(option1 + strlen(option1) + 1);  
- 650   2      
- 651   2         //si empieza con un '/', eso significa que incluye el caminoa
- 652   2            //al archivo.  si el archivo no empieza con un '/', debe agregarce 
- 653   2            //la ruta del archivo.
- 654   2            if (option1 && (option1[0]=='/'))
- 655   2            {
- 656   3               //option1 is a full path
-C51 COMPILER V9.59.0.0   PROG                                                              07/25/2020 19:44:20 PAGE 12  
+ 639   1      }
+ 640          
+ 641          /*------------------------------------------------------------------------------
+ 642          Rutina de principal de programacion
+ 643          ------------------------------------------------------------------------------*/
+ 644          
+ 645          void menu(void)
+ 646          {
+ 647   1      
+ 648   1      unsigned char *cmd,*option1,*option2;
+ 649   1      unsigned char opt_buffer[20];
+ 650   1      unsigned char buffer[20];
+ 651   1      
+ 652   1      
+ 653   1      
+ 654   1        
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 12  
 
- 657   3               strcpy(opt_buffer, option1);
- 658   3            }
- 659   2            else if (option1)
- 660   2            {
- 661   3               // tack on the current working directory to option1
- 662   3               strcpy(opt_buffer, cursor);
- 663   3               strcat(opt_buffer, option1);
- 664   3            }         
- 665   2      
- 666   2      
- 667   2      
- 668   2      
- 669   2      
- 670   2          if (cmd)
- 671   2            {
- 672   3               switch(ListaComandos(cmd))
- 673   3               {
- 674   4                  case 0:                     /*Se programa la identificacion del cliente*/
- 675   4                    prog_id_cliente();
- 676   4                  
- 677   4                   break;
- 678   4                  
- 679   4                  case 1:                    /*Codigo de parqueadero*/
- 680   4                  prog_cod_park();
- 681   4                     break;
- 682   4                  
- 683   4                  case 2:  //Informacion recolectada enviada al rs232
- 684   4          
- 685   4                  Prog_tiempo_gracia();
- 686   4                
- 687   4                     break;
- 688   4                  
- 689   4                  case 3:  //Ajuste del cero del sensor
- 690   4                  Prog_Sin_Cobro();
- 691   4      
- 692   4                     break;
- 693   4                  
- 694   4                  case 4:  //Ajuste de calibracion por medio de la pendiente
- 695   4                    Prog_debug();
- 696   4                     break;
- 697   4                  case 5:  //help me
- 698   4                    Prog_Use_Lpr();
- 699   4                     break;
- 700   4                  case 6:  //help me
- 701   4                 Prog_Comparacion_Activa();
- 702   4      
- 703   4                     break;
- 704   4                    case 7:                   /*Nombre del cliente*/
- 705   4                    Prog_QR_barras();
- 706   4                    
- 707   4                     break;
- 708   4                  case 8:                   /*Nombre del cliente*/
- 709   4                    Prog_Cliente();
- 710   4                    
- 711   4                     break;
- 712   4                  case 9:                   /*Numero del Nit*/
- 713   4                    
- 714   4                  Prog_Nit();
- 715   4                    
- 716   4                     break;
- 717   4                    case 10:                    /*Numero del Nit*/
- 718   4                    
-C51 COMPILER V9.59.0.0   PROG                                                              07/25/2020 19:44:20 PAGE 13  
+ 655   1        printf("\r\n\nSistema de Programacion Verificador\r\n\r\n");
+ 656   1      
+ 657   1       
+ 658   1        
+ 659   1        
+ 660   1        do{
+ 661   2        printf("\r\n\n/>Usuario:");
+ 662   2        clear_buffer();
+ 663   2        // main loop
+ 664   2        IngresaDato(buffer,0);          //ingreso el usuario por teclado 
+ 665   2        cmd = GetCMD(buffer);         //quita el carri return 
+ 666   2        printf("\r\n\n datos del buffer rx %s\r\n\n",rbuf); 
+ 667   2        printf("\r\n\n datos del buffer tx %s\r\n\n",tbuf);   
+ 668   2      }while(ValidarClave(cmd)!=0);       //validamos el usuario
+ 669   1      
+ 670   1      
+ 671   1        do{
+ 672   2      printf("\r\n\n/>Password:");
+ 673   2      
+ 674   2        IngresaDato(buffer,1);          //ingreso el password por teclado 
+ 675   2        cmd = GetCMD(buffer);         //quita el carri return 
+ 676   2        strcpy (validacion,"123456");
+ 677   2        
+ 678   2      
+ 679   2        }while(ValidarClave(cmd)!=0);       //
+ 680   1      
+ 681   1        
+ 682   1        Show();
+ 683   1        while(1)
+ 684   1        {
+ 685   2        DisplayCursor();
+ 686   2      
+ 687   2      
+ 688   2          IngresaDato(buffer,0);  
+ 689   2          cmd = GetCMD(buffer); 
+ 690   2          option1 = GetOption(cmd + strlen(cmd) + 1);
+ 691   2          option2 = GetOption(option1 + strlen(option1) + 1);  
+ 692   2      
+ 693   2         //si empieza con un '/', eso significa que incluye el caminoa
+ 694   2            //al archivo.  si el archivo no empieza con un '/', debe agregarce 
+ 695   2            //la ruta del archivo.
+ 696   2            if (option1 && (option1[0]=='/'))
+ 697   2            {
+ 698   3               //option1 is a full path
+ 699   3               strcpy(opt_buffer, option1);
+ 700   3            }
+ 701   2            else if (option1)
+ 702   2            {
+ 703   3               // tack on the current working directory to option1
+ 704   3               strcpy(opt_buffer, cursor);
+ 705   3               strcat(opt_buffer, option1);
+ 706   3            }         
+ 707   2      
+ 708   2      
+ 709   2      
+ 710   2      
+ 711   2      
+ 712   2          if (cmd)
+ 713   2            {
+ 714   3               switch(ListaComandos(cmd))
+ 715   3               {
+ 716   4                  case 0:                     /*Se programa la identificacion del cliente*/
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 13  
 
- 719   4                  Prog_Nom_Parq();
- 720   4                    
- 721   4                     break;
- 722   4                      case 11:                    /*Numero del Nit*/
- 723   4                    
- 724   4                  Prog_Direccion();
- 725   4                    
- 726   4                     break;
- 727   4                  
- 728   4                  case 12:                    /*Numero del Nit*/
- 729   4                    
- 730   4                  Prog_Msj1();
- 731   4                    
- 732   4                     break;
- 733   4                  case 13:                    /*Numero del Nit*/
- 734   4                    
- 735   4                  Prog_Msj2();
- 736   4                    
- 737   4                     break;
- 738   4                  
- 739   4                  case 14:                    /*Numero del Nit*/
- 740   4                    
- 741   4                  Prog_Msj3();
- 742   4                    
- 743   4                     break;
- 744   4                  case 15:                    /*Numero del Nit*/
- 745   4                    
- 746   4                  Prog_Msj4();
- 747   4                    
- 748   4                     break;   
- 749   4                  case 16:                    /*Numero del Nit*/
- 750   4                    
- 751   4                  Prog_Msj5();
+ 717   4                    prog_id_cliente();
+ 718   4                  
+ 719   4                   break;
+ 720   4                  
+ 721   4                  case 1:                    /*Codigo de parqueadero*/
+ 722   4                  prog_cod_park();
+ 723   4                     break;
+ 724   4                  
+ 725   4                  case 2:  //Informacion recolectada enviada al rs232
+ 726   4          
+ 727   4                  Prog_tiempo_gracia();
+ 728   4                
+ 729   4                     break;
+ 730   4                  
+ 731   4                  case 3:  //Ajuste del cero del sensor
+ 732   4                  Prog_Sin_Cobro();
+ 733   4      
+ 734   4                     break;
+ 735   4                  
+ 736   4                  case 4:  //Ajuste de calibracion por medio de la pendiente
+ 737   4                    Prog_debug();
+ 738   4                     break;
+ 739   4                  case 5:  //help me
+ 740   4                    Prog_Use_Lpr();
+ 741   4                     break;
+ 742   4                  case 6:  //help me
+ 743   4                 Prog_Comparacion_Activa();
+ 744   4      
+ 745   4                     break;
+ 746   4                    case 7:                   /*Nombre del cliente*/
+ 747   4                    Prog_QR_barras();
+ 748   4                    
+ 749   4                     break;
+ 750   4                    case 8:                   /*Nombre del cliente*/
+ 751   4                    tipo_pantalla();
  752   4                    
  753   4                     break;
- 754   4      
- 755   4                  case 17:                    /*Numero del Nit*/
+ 754   4                  case 9:                   /*Nombre del cliente*/
+ 755   4                    Prog_Cliente();
  756   4                    
- 757   4                  Prog_Msj6();
- 758   4                    
- 759   4                     break;   
- 760   4                  case 18:                    /*Numero del Nit*/
+ 757   4                     break;
+ 758   4                  case 10:                    /*Numero del Nit*/
+ 759   4                    
+ 760   4                  Prog_Nit();
  761   4                    
- 762   4                  Prog_Msj7();
- 763   4                    
- 764   4                     break;   
- 765   4      
- 766   4                  
- 767   4                  case 19:  //help me
- 768   4                    
- 769   4                    Show();
- 770   4                     break;
- 771   4                  case 20:  //salir
- 772   4                  return;
- 773   4      
- 774   4                     break;
- 775   4                 
- 776   4          
- 777   4                
- 778   4                  default:
- 779   4                     printf("\r\nComando no existe '%s'", cmd);
- 780   4                     break;
-C51 COMPILER V9.59.0.0   PROG                                                              07/25/2020 19:44:20 PAGE 14  
+ 762   4                     break;
+ 763   4                    case 11:                    /*Numero del Nit*/
+ 764   4                    
+ 765   4                  Prog_Nom_Parq();
+ 766   4                    
+ 767   4                     break;
+ 768   4                      case 12:                    /*Numero del Nit*/
+ 769   4                    
+ 770   4                  Prog_Direccion();
+ 771   4                    
+ 772   4                     break;
+ 773   4                  
+ 774   4                  case 13:                    /*Numero del Nit*/
+ 775   4                    
+ 776   4                  Prog_Msj1();
+ 777   4                    
+ 778   4                     break;
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 14  
 
- 781   4              }
- 782   3            }
- 783   2        }
- 784   1      }
- 785          
- 786            
- 787          
+ 779   4                  case 14:                    /*Numero del Nit*/
+ 780   4                    
+ 781   4                  Prog_Msj2();
+ 782   4                    
+ 783   4                     break;
+ 784   4                  
+ 785   4                  case 15:                    /*Numero del Nit*/
+ 786   4                    
+ 787   4                  Prog_Msj3();
+ 788   4                    
+ 789   4                     break;
+ 790   4                  case 16:                    /*Numero del Nit*/
+ 791   4                    
+ 792   4                  Prog_Msj4();
+ 793   4                    
+ 794   4                     break;   
+ 795   4                  case 17:                    /*Numero del Nit*/
+ 796   4                    
+ 797   4                  Prog_Msj5();
+ 798   4                    
+ 799   4                     break;
+ 800   4      
+ 801   4                  case 18:                    /*Numero del Nit*/
+ 802   4                    
+ 803   4                  Prog_Msj6();
+ 804   4                    
+ 805   4                     break;   
+ 806   4                  case 19:                    /*Numero del Nit*/
+ 807   4                    
+ 808   4                  Prog_Msj7();
+ 809   4                    
+ 810   4                     break;   
+ 811   4      
+ 812   4                  
+ 813   4                  case 20:  //help me
+ 814   4                    
+ 815   4                    Show();
+ 816   4                     break;
+ 817   4                  case 21:  //salir
+ 818   4                  return;
+ 819   4      
+ 820   4                     break;
+ 821   4                 
+ 822   4          
+ 823   4                
+ 824   4                  default:
+ 825   4                     printf("\r\nComando no existe '%s'", cmd);
+ 826   4                     break;
+ 827   4              }
+ 828   3            }
+ 829   2        }
+ 830   1      }
+ 831          
+ 832            
+ 833          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   3988    ----
-   CONSTANT SIZE    =   3049    ----
-   XDATA SIZE       =     92     780
+   CODE SIZE        =   4258    ----
+   CONSTANT SIZE    =   3300    ----
+   XDATA SIZE       =     95     792
    PDATA SIZE       =   ----    ----
+C51 COMPILER V9.59.0.0   PROG                                                              07/16/2021 16:28:18 PAGE 15  
+
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----

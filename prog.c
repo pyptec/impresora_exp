@@ -30,6 +30,7 @@ extern idata unsigned char rbuf [];
 #define EE_USE_LPR						0x000A
 #define EE_CPRCN_ACTIVA				0x000C
 #define EE_QR_BARRAS					0x000E
+#define EE_TIPO_PANTALLA			0X000F
 #define	EE_CLIENTE						0X0010
 #define EE_NIT								0x0040
 #define EE_PARQUEADERO				0X0050
@@ -44,7 +45,7 @@ extern idata unsigned char rbuf [];
 
 /* Definicion del tamaño de comando y longitud de cmd*/
 
-#define 	NUMCOMMAND 21
+#define 	NUMCOMMAND 22
 #define 	LONGSIZE 3
 
 
@@ -59,19 +60,20 @@ char comandos[NUMCOMMAND][LONGSIZE]=
 	"5",//USE_LPR
 	"6",	//COMPARACION_ACTIVA
 	"7",	//1=QR 0=codigo de barras
-	"8",  	//CLIENTENombre del cliente
-	"9",        //NITnit
-	"10",		//NOM_PARQ Nombre de parqueadero
-	"11",		//direccion del establecimiento 
-	"12",		// mensajes
-	"13",
+	"8",
+	"9",  	//CLIENTENombre del cliente
+	"10",        //NITnit
+	"11",		//NOM_PARQ Nombre de parqueadero
+	"12",		//direccion del establecimiento 
+	"13",		// mensajes
 	"14",
 	"15",
 	"16",
 	"17",
 	"18",
-	"19",     // Ayuda!muestra todos los comandos
-	"20"		//Salir de programacion
+	"19",
+	"20",     // Ayuda!muestra todos los comandos
+	"21"		//Salir de programacion
 };
 
 /*------------------------------------------------------------------------------
@@ -436,6 +438,45 @@ void Prog_QR_barras()
 		printf("\r\n\n ACTUAL CODIGO QR ACTIVO=%s\r\n\n",buffer);			
 	}
 }
+/*------------------------------------------------------------------------------------
+cmd del tipo de pantalla a usar
+Rasberry = 1
+lcd = 0
+--------------------------------------------------------------------------------------*/
+void tipo_pantalla()
+{
+	unsigned char buffer[10];
+	unsigned int dataee;
+
+	
+	dataee=rd_eeprom(0xa8,EE_TIPO_PANTALLA);																					/*se lee el id_cliente actual */
+	sprintf(buffer,"%d",dataee);																									/*se convierte  un entero a un string*/
+	if(dataee==0)
+	{
+		printf("\r\n\n PANTALLA LCD HABILITADA=%s\r\n\n",buffer);														/*se muestra el id_cliente actual en pantalla*/
+	}
+	else
+	{
+		printf("\r\n\n PANTALLA RASPBERRY  HABILITADA=%s\r\n\n",buffer);			
+	}
+	
+	printf("\r\n\n DIGITE EL NUEVO ESTADO DE LA PANTALLA =");																	/*digite el nuevo id_cliente*/
+	IngresaDato(buffer,0);																												/*trae el dato digitado*/
+	dataee=atoi(buffer);																													/*lo convierto a un dato hex*/
+	wr_eeprom(0xa8,EE_TIPO_PANTALLA,dataee);																					/*grabo el dato en la eeprom*/
+	
+	dataee=rd_eeprom(0xa8,EE_TIPO_PANTALLA);																				/*leo el dato grabado*/
+	sprintf(buffer,"%d",dataee);	
+	if(dataee==0)
+	{
+		printf("\r\n\n PANTALLA LCD ACTIVA=%s\r\n\n",buffer);														/*se muestra el id_cliente actual en pantalla*/
+	}
+	else
+	{
+		printf("\r\n\n PANTALLA RASPBERRY ACTIVA =%s\r\n\n",buffer);			
+	}
+	
+}
 /*------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------*/
@@ -580,19 +621,20 @@ void Show()
 	 printf("\r\n USE_LPR       --- cmd 5Habilitar = 1, Inhabilitar = 0");
    printf("\r\n COMPARACION_ACTIVA ---cmd 6 Habilitar = 1, Inhabilitar = 0");
 	 printf("\r\n QR_COD_BARRAS ---cmd 7 Habilitar QR = 1, Habilitar COD_BARRAS = 0"); 
-	 printf("\r\n CLIENTE       ---cmd 8 Nombre del cliente");
-	 printf("\r\n NIT           --- cmd 9 Numero del nit");
-	 printf("\r\n NOM_PARQ      --- cmd 10 Nombre del parqueadero");
-	 printf("\r\n DIRECCION     --- cmd 11 Nombre del parqueadero");
-	 printf("\r\n MSJ_1         --- cmd 12 msj de informacion del parqueadero");
-	 printf("\r\n MSJ_2         --- cmd 13 msj de informacion del parqueadero");
-	 printf("\r\n MSJ_3         --- cmd 14 msj de informacion del parqueadero");
-	 printf("\r\n MSJ_4         --- cmd 15 msj de informacion del parqueadero");
-	 printf("\r\n MSJ_5         --- cmd 16 msj de informacion del parqueadero");
-	 printf("\r\n MSJ_6         --- cmd 17 msj de informacion del parqueadero");
-	 printf("\r\n MSJ_7         --- cmd 18 msj de informacion del parqueadero");
-	 printf("\r\n AYUDA         --- cmd 19 Muestra los comandos");
-   printf("\r\n SALIR         --- cmd 20 Salir de programacion");
+	 printf("\r\n TIPO_PANTALLA --- CMD 8 PANTALLA LCD =0 PANTALLA RASPBERRI=1");
+	 printf("\r\n CLIENTE       ---cmd 9 Nombre del cliente");
+	 printf("\r\n NIT           --- cmd 10 Numero del nit");
+	 printf("\r\n NOM_PARQ      --- cmd 11 Nombre del parqueadero");
+	 printf("\r\n DIRECCION     --- cmd 12 Nombre del parqueadero");
+	 printf("\r\n MSJ_1         --- cmd 13 msj de informacion del parqueadero");
+	 printf("\r\n MSJ_2         --- cmd 14 msj de informacion del parqueadero");
+	 printf("\r\n MSJ_3         --- cmd 15 msj de informacion del parqueadero");
+	 printf("\r\n MSJ_4         --- cmd 16 msj de informacion del parqueadero");
+	 printf("\r\n MSJ_5         --- cmd 17 msj de informacion del parqueadero");
+	 printf("\r\n MSJ_6         --- cmd 18 msj de informacion del parqueadero");
+	 printf("\r\n MSJ_7         --- cmd 19 msj de informacion del parqueadero");
+	 printf("\r\n AYUDA         --- cmd 20 Muestra los comandos");
+   printf("\r\n SALIR         --- cmd 21 Salir de programacion");
 
 }
 
@@ -705,70 +747,74 @@ printf("\r\n\n/>Password:");
 							Prog_QR_barras();
 							
                break;
-						case 8:  									/*Nombre del cliente*/
+							case 8:  									/*Nombre del cliente*/
+							tipo_pantalla();
+							
+               break;
+						case 9:  									/*Nombre del cliente*/
 							Prog_Cliente();
 							
                break;
-						case 9:  									/*Numero del Nit*/
+						case 10:  									/*Numero del Nit*/
 							
 						Prog_Nit();
 							
                break;
-							case 10:  									/*Numero del Nit*/
+							case 11:  									/*Numero del Nit*/
 							
 						Prog_Nom_Parq();
 							
                break;
-								case 11:  									/*Numero del Nit*/
+								case 12:  									/*Numero del Nit*/
 							
 						Prog_Direccion();
 							
                break;
 						
-						case 12:  									/*Numero del Nit*/
+						case 13:  									/*Numero del Nit*/
 							
 						Prog_Msj1();
 							
                break;
-						case 13:  									/*Numero del Nit*/
+						case 14:  									/*Numero del Nit*/
 							
 						Prog_Msj2();
 							
                break;
 						
-						case 14:  									/*Numero del Nit*/
+						case 15:  									/*Numero del Nit*/
 							
 						Prog_Msj3();
 							
                break;
-						case 15:  									/*Numero del Nit*/
+						case 16:  									/*Numero del Nit*/
 							
 						Prog_Msj4();
 							
                break;		
-						case 16:  									/*Numero del Nit*/
+						case 17:  									/*Numero del Nit*/
 							
 						Prog_Msj5();
 							
                break;
 
-						case 17:  									/*Numero del Nit*/
+						case 18:  									/*Numero del Nit*/
 							
 						Prog_Msj6();
 							
                break;		
-						case 18:  									/*Numero del Nit*/
+						case 19:  									/*Numero del Nit*/
 							
 						Prog_Msj7();
 							
                break;		
 
 						
-						case 19:  //help me
+						case 20:  //help me
 							
 							Show();
                break;
-						case 20:  //salir
+						case 21:  //salir
 						return;
 
                break;

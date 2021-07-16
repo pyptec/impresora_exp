@@ -702,10 +702,10 @@ void Genera_ticket(void)
 			if (ValidaSensoresPaso()!=0)																												/*pregunto q alla presencia vehicular*/
 			{
 				Debug_txt_Tibbo((unsigned char *) "Vehiculo en el loop\r\n\r\n");									/* se encuentra un sensor activo*/
-				PantallaLCD(BIENVENIDO);
+				
 				if(paso_una_vez==0)
 				{
-				
+				PantallaLCD(BIENVENIDO);
 				send_portERR(AUDIO_IN);																														/*habilito el audio de entrada*/
 				paso_una_vez=1;
 				}														

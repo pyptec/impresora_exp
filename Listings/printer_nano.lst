@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 1   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE PRINTER_NANO
@@ -62,7 +62,7 @@ line level    source
   52          tiempo de delay entre funciones
   53          ------------------------------------------------------------------------------*/
   54          
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 2   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 2   
 
   55          #define   TIME_CARD         20    //50
   56          #define   TIME_RX           70    //
@@ -126,7 +126,7 @@ line level    source
  114          /*------------------------------------------------
  115          Cmd de inicio de impresora
  116          ------------------------------------------------*/
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 3   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 3   
 
  117          void Inicializa_Print(void)
  118          {
@@ -190,7 +190,7 @@ line level    source
  176          {
  177   1        putchar(ESC);
  178   1        putchar('a'); 
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 4   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 4   
 
  179   1        putchar('0');
  180   1      }
@@ -254,7 +254,7 @@ line level    source
  238          
  239          como se debe aramr el cmd 00 normal, 11 boble de ancho y altura
  240          ------------------------------------------------*/
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 5   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 5   
 
  241          
  242          void Tama_letra(unsigned char tama)
@@ -318,7 +318,7 @@ line level    source
  300   1        putchar(GS);
  301   1        putchar('H');
  302   1        putchar(position);
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 6   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 6   
 
  303   1      }
  304          /*------------------------------------------------
@@ -382,7 +382,7 @@ line level    source
  362          
  363          void Funcion_167()
  364          {
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 7   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 7   
 
  365   1        /*se establece el tamaño del codigo QR*/
  366   1        putchar(GS);
@@ -446,7 +446,7 @@ line level    source
  424   1        putchar(DLE);             /*16 decimal*/
  425   1        putchar(EOT);             /*04 decimal*/
  426   1        putchar(StatusConsulta);  /*04 la consulta */
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 8   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 8   
 
  427   1      }
  428          /*--------------------------------------------------------------------------------------------------------
@@ -510,7 +510,7 @@ line level    source
              ------*/
  480          void Print_datos_cliente_QR()
  481          {
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 9   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 9   
 
  482   1        unsigned char buffer[50];
  483   1        /*------------------------------------------------imprime el nombre del parqueadero*/ 
@@ -574,7 +574,7 @@ line level    source
  541   1      /*------------------------------------------------*/  
  542   1          LeerMemoria(EE_NIT,buffer); 
  543   1          Bold(00);                                   /*pone el texto sin negrilla*/
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 10  
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 10  
 
  544   1          Tama_letra(0x00);                           /*tamaño del caracter*/
  545   1          Espcs_ent_chr(0);                           /*espacio entre caracteres*/
@@ -638,7 +638,7 @@ line level    source
  603   1        
  604   1        LeerMemoria(EE_MSJ5,msj_print);
  605   1        printf(" %s",msj_print);  
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 11  
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 11  
 
  606   1        
  607   1        LeerMemoria(EE_MSJ6,msj_print);
@@ -702,7 +702,7 @@ line level    source
  662   2          
  663   2        }
  664   1        else
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 12  
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 12  
 
  665   1        {
  666   2          printf("   Vehiculo:   Moto\n");
@@ -748,10 +748,10 @@ line level    source
  703   3            {
  704   4              Debug_txt_Tibbo((unsigned char *) "Vehiculo en el loop\r\n\r\n");                 /* se encuentra un sensor ac
              -tivo*/
- 705   4              PantallaLCD(BIENVENIDO);
+ 705   4              
  706   4              if(paso_una_vez==0)
  707   4              {
- 708   5              
+ 708   5              PantallaLCD(BIENVENIDO);
  709   5              send_portERR(AUDIO_IN);                                                           /*habilito el audio de entrada*/
  710   5              paso_una_vez=1;
  711   5              }                           
@@ -766,7 +766,7 @@ line level    source
              -cmd*/    
  720   5              }
  721   4              else
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 13  
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 13  
 
  722   4              {
  723   5                Debug_txt_Tibbo((unsigned char *) "Pulsador No Activo\r\n");
@@ -830,7 +830,7 @@ line level    source
  774   3              
  775   3              if (buffer_ready==1)
  776   3              {
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 14  
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 14  
 
  777   4                buffer_ready=0;
  778   4                Debug_txt_Tibbo((unsigned char *) "Impresora con papel \r\n");              /*la respuesta es desconocida*/
@@ -894,7 +894,7 @@ line level    source
  828   3              if(QR_BARRAS!=0)                                                                  /* se pregunta si imprime codigo de barras o Qr*/
  829   3              {
  830   4              Print_datos_cliente_QR();                                                         /*imprime codigo QR*/ 
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 15  
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 15  
 
  831   4              }
  832   3              else
@@ -958,7 +958,7 @@ line level    source
  885   5                ValTimeOutCom=TIME_PULSADOR;
  886   5                buffer_ready=0;                                                                   /* buffer del pto serie (0) inicia a esperar la tram
              -a*/
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/25/2020 19:44:21 PAGE 16  
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      07/16/2021 16:28:19 PAGE 16  
 
  887   5                g_cEstadoComSoft=ESPERA_RX;
  888   5                g_cEstadoImpresion=SEQ_RELEASE;
