@@ -1,0 +1,933 @@
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE CLOCK
+OBJECT MODULE PLACED IN .\Objects\Clock.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Clock.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
+                    -gs\Clock.lst) TABS(2) OBJECT(.\Objects\Clock.obj)
+
+line level    source
+
+   1          
+   2          #include <Clock.h>
+   3          #include <reg51.h>
+   4          
+   5          /*funcion prototipo*/
+   6          extern void Delay (void);
+   7          extern void Delay_20us(unsigned int cnt);
+   8          extern void Debug_Fecha_actual(unsigned char *buffer);
+   9          extern float pow   (float x, float y);
+  10          /*variables externas */
+  11          extern unsigned char  Debug_Tibbo;
+  12          
+  13          sbit sck = P1^4 ;                 /* define I/O functions     */
+  14          sbit io  = P1^5 ;
+  15          sbit rst = P1^6 ;
+  16          /*CMD DE ESCRITURA RELOJ*/
+  17          #define WDIA            0x86
+  18          #define WMES            0x88
+  19          #define WANO            0x8C
+  20          #define WHORA           0x84
+  21          #define WMIN            0x82
+  22          #define WSEG            0x80
+  23          #define WDIA_SEMANA     0x8A
+  24          /*CMD DE LECTURA DEL RELOJ*/
+  25          #define RDIA            0x87
+  26          #define RMES            0x89
+  27          #define RANO            0x8D
+  28          #define RHORA           0x85
+  29          #define RMIN            0x83
+  30          #define RSEG            0x81
+  31          #define RDIA_SEMANA     0x8B
+  32          
+  33          unsigned char data_clk;
+  34          //*********************************************************************************
+  35          
+  36          //*********************************************************************************
+  37          void p_ck (void)
+  38          {
+  39   1          sck=1;
+  40   1          Delay();
+  41   1          sck=0;
+  42   1      }
+  43          //*********************************************************************************
+  44          void eb_clk(char dir_clk) {
+  45   1        int nbits;
+  46   1        for (nbits=0; nbits<8; nbits++)
+  47   1        {
+  48   2          dir_clk >>=1;
+  49   2          if (CY==1)
+  50   2          { 
+  51   3            io=1;
+  52   3          }
+  53   2          else
+  54   2          {
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 2   
+
+  55   3            io=0;
+  56   3          }
+  57   2          p_ck();
+  58   2        }
+  59   1      }
+  60          //*********************************************************************************
+  61          char lee_clk (unsigned char dir_clk) {            
+  62   1      int nbits;
+  63   1        rst=1;
+  64   1        Delay_20us(3);
+  65   1        eb_clk(dir_clk);
+  66   1        for (nbits=0; nbits<8; nbits++)
+  67   1        {
+  68   2          if (io==1) 
+  69   2          {
+  70   3          data_clk = data_clk | 0x80;
+  71   3          if (nbits<=6) {
+  72   4           data_clk >>=1;
+  73   4           }
+  74   3          }
+  75   2          if (io==0)
+  76   2          {
+  77   3            data_clk = data_clk & 0x7F;
+  78   3          if (nbits<=6) 
+  79   3           {
+  80   4            data_clk >>=1;
+  81   4           }
+  82   3          }
+  83   2          p_ck();
+  84   2          } 
+  85   1        rst=0;
+  86   1        return data_clk;
+  87   1      }
+  88          //*********************************************************************************
+  89          void wr_clk (unsigned char dir_clk, unsigned char byte) {            
+  90   1        rst=1;
+  91   1        Delay_20us(3);
+  92   1        eb_clk(dir_clk);
+  93   1        dir_clk=byte;
+  94   1        eb_clk(dir_clk);
+  95   1        rst=0;
+  96   1        
+  97   1       }
+  98          //****************************************************************************
+  99           unsigned char two_one (unsigned char byte_h,unsigned char byte_l)
+ 100          {
+ 101   1        unsigned char byte_out;
+ 102   1        byte_h=byte_h&0x0f;
+ 103   1        byte_h<<=4;
+ 104   1        byte_l=byte_l&0x0f;
+ 105   1        byte_out=byte_h|byte_l;
+ 106   1        return byte_out;
+ 107   1      }
+ 108          /*------------------------------------------------------------------------------
+ 109          Escribo el reloj en ascii en bloque 
+ 110          ------------------------------------------------------------------------------*/
+ 111          
+ 112          void Block_write_clock_ascii(unsigned char *datos_clock)  
+ 113          
+ 114          {     
+ 115   1      //dia,mes,año,hora,minutos,segundos,Dia de la semana 
+ 116   1          
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 3   
+
+ 117   1            /*dia*/
+ 118   1            wr_clk(WDIA,two_one(*datos_clock,*(datos_clock+1)));                    //dia
+ 119   1            datos_clock++;
+ 120   1            datos_clock++;
+ 121   1            datos_clock++;
+ 122   1            /*mes*/
+ 123   1            wr_clk(WMES,two_one(*datos_clock,*(datos_clock+1)));                    //mes
+ 124   1            datos_clock++;
+ 125   1            datos_clock++;
+ 126   1            datos_clock++;
+ 127   1            datos_clock++;
+ 128   1            datos_clock++;
+ 129   1            /*año*/
+ 130   1            wr_clk(WANO,two_one(*datos_clock,*(datos_clock+1)));                    //año
+ 131   1            datos_clock++;
+ 132   1            datos_clock++;
+ 133   1            datos_clock++;
+ 134   1            /*hora*/
+ 135   1            wr_clk(WHORA,two_one(*datos_clock,*(datos_clock+1)));                   //hora
+ 136   1            datos_clock++;
+ 137   1            datos_clock++;
+ 138   1            datos_clock++;
+ 139   1            /*minutos*/
+ 140   1            wr_clk(WMIN,two_one(*datos_clock,*(datos_clock+1)));                    //minutos
+ 141   1            datos_clock++;
+ 142   1            datos_clock++;
+ 143   1            datos_clock++;
+ 144   1            /*segundos*/
+ 145   1            wr_clk(WSEG,two_one(*datos_clock,*(datos_clock+1)));                    //segundos
+ 146   1            datos_clock++;
+ 147   1            datos_clock++;
+ 148   1            datos_clock++;
+ 149   1            /*dia de la semana*/
+ 150   1            wr_clk(WDIA_SEMANA,(*datos_clock&0x0f));                                //dia de la semana
+ 151   1        
+ 152   1      }
+ 153          /*------------------------------------------------------------------------------
+ 154          rutinas de conversiones  de bcd a hex
+ 155          ------------------------------------------------------------------------------*/
+ 156          unsigned char bcd_hex (unsigned char l_data)
+ 157           {
+ 158   1        unsigned char temp,j;
+ 159   1        temp=l_data;
+ 160   1        temp>>=4;
+ 161   1        temp=temp & 0x0f;
+ 162   1        if (temp!=0x00)
+ 163   1        {
+ 164   2          l_data=l_data & 0x0f;
+ 165   2          for (j=0;j<temp;j++)
+ 166   2          {
+ 167   3              l_data=l_data+0x0a;
+ 168   3          } 
+ 169   2        }
+ 170   1        return l_data;
+ 171   1       }
+ 172           /*------------------------------------------------------------------------------
+ 173           Rutina que convierte de Hex a bcd 
+ 174          ------------------------------------------------------------------------------*/
+ 175          /*TEMPORALMENTE FUERA DE SERVICIO
+ 176           unsigned char hex_bcd (unsigned char byte)
+ 177          {
+ 178            unsigned char nibble_h; 
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 4   
+
+ 179            unsigned char nibble_l;
+ 180            unsigned char k,byte_out;
+ 181          
+ 182            nibble_h=0x00;
+ 183            nibble_l=0x00;
+ 184          
+ 185            for (k=0;k<byte;k++)
+ 186            {
+ 187              nibble_l=nibble_l+0x01;
+ 188              if (nibble_l==0x0a)
+ 189              {
+ 190                nibble_l=0x00;
+ 191                nibble_h=nibble_h+0x01;
+ 192              }
+ 193             }
+ 194             nibble_h<<=4;
+ 195             nibble_h=nibble_h & 0xf0;
+ 196             nibble_l=nibble_l & 0x0f;
+ 197             byte_out=(nibble_h | nibble_l);
+ 198             return byte_out;
+ 199            
+ 200          }
+ 201          */
+ 202          /*------------------------------------------------------------------------------
+ 203            CONVIERTE DE 1BYTE HEXADECIMAL A DECIMAL                      
+ 204          valorhex= pasa el byte en Hex y lo convierte en decimal
+ 205          buffer=   se debuelve la conversion en un arreglo en ascii
+ 206          ------------------------------------------------------------------------------*/
+ 207          void ByteHex_Decimal(unsigned char *buffer,unsigned char valorhex)
+ 208          {
+ 209   1        unsigned char numero, centena, decena;
+ 210   1      
+ 211   1        centena=0;
+ 212   1        decena=0;
+ 213   1        numero=valorhex;
+ 214   1      
+ 215   1        while (numero>=0x064)                           /* resto centena en ascii100*/
+ 216   1        {
+ 217   2          numero=numero-0x64;
+ 218   2          centena=centena+1;
+ 219   2        }
+ 220   1          *buffer=centena|0x30;
+ 221   1          buffer++;
+ 222   1        while (numero>=0x0a)                            /* resto 10 decena en ascii*/
+ 223   1        {
+ 224   2          numero=numero-0x0a;
+ 225   2          decena=decena+1;
+ 226   2        }
+ 227   1        *buffer=decena|0x30;
+ 228   1        buffer++;
+ 229   1        *buffer=numero|0x30;                            /*unidad en ascii */
+ 230   1        
+ 231   1      
+ 232   1      }
+ 233          /*------------------------------------------------------------------------------
+ 234            CONVIERTE DE 2BYTE HEXADECIMAL A DECIMAL                      
+ 235          
+ 236          ------------------------------------------------------------------------------*/
+ 237          void Two_ByteHex_Decimal(unsigned char *buffer,unsigned char id_h,unsigned char id_l)
+ 238          {
+ 239   1        unsigned int valor,numero;
+ 240   1        unsigned char temp,dmil, mil, centena, decena;
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 5   
+
+ 241   1      
+ 242   1        valor=0;
+ 243   1        dmil=0;
+ 244   1        mil=0;
+ 245   1        centena=0;
+ 246   1        decena=0;
+ 247   1        
+ 248   1         
+ 249   1        temp=id_h;
+ 250   1        temp=temp&0xf0;
+ 251   1        temp>>=4;
+ 252   1      
+ 253   1        valor=valor+(pow(16,3))*temp;
+ 254   1        temp=id_h;
+ 255   1        temp=temp&0x0f;
+ 256   1        valor=valor+(pow(16,2))*temp;
+ 257   1      
+ 258   1        temp=id_l;
+ 259   1        temp=temp&0xf0;
+ 260   1        temp>>=4;
+ 261   1        valor=valor+(pow(16,1))*temp;
+ 262   1        temp=id_l;
+ 263   1        temp=temp&0x0f;
+ 264   1        valor=valor+(pow(16,0))*temp;
+ 265   1        numero=valor;
+ 266   1      
+ 267   1        while (numero>=0x2710)        // resto 10.000 
+ 268   1        {
+ 269   2          numero=numero-0x2710;
+ 270   2          dmil=dmil+1;
+ 271   2        }
+ 272   1        *buffer=dmil|0x30;
+ 273   1          buffer++;
+ 274   1        while (numero>=0x03e8)        // resto 1.000
+ 275   1        {
+ 276   2          numero=numero-0x03e8;
+ 277   2          mil=mil+1;
+ 278   2        }
+ 279   1        *buffer=mil|0x30;
+ 280   1          buffer++;
+ 281   1        while (numero>=0x064)         // resto 100
+ 282   1        {
+ 283   2          numero=numero-0x64;
+ 284   2          centena=centena+1;
+ 285   2        }
+ 286   1        *buffer=centena|0x30;
+ 287   1          buffer++;
+ 288   1        while (numero>=0x0a)        // resto 10
+ 289   1        {
+ 290   2          numero=numero-0x0a;
+ 291   2          decena=decena+1;
+ 292   2        }
+ 293   1        *buffer=decena|0x30;
+ 294   1        buffer++;
+ 295   1        *buffer=numero|0x30;
+ 296   1        buffer++;
+ 297   1        *buffer=00;
+ 298   1        
+ 299   1      }
+ 300          /*------------------------------------------------------------------------------
+ 301           Lee el dato del reloj en bloque 
+ 302          ------------------------------------------------------------------------------*/
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 6   
+
+ 303          void Block_read_clock_ascii(unsigned char *datos_clock)
+ 304          {
+ 305   1        unsigned char dato;
+ 306   1      
+ 307   1        //dia,mes,año,hora,minutos,segundos,Dia de la semana
+ 308   1          
+ 309   1          /*año*/
+ 310   1          dato=lee_clk(RANO);
+ 311   1          *datos_clock=((dato&0xf0)>>4)| 0x30;      /*dato parte alta*/
+ 312   1          datos_clock++;
+ 313   1          *datos_clock=(dato&0x0f)| 0x30;           /*dato parte bajo*/
+ 314   1          datos_clock++;
+ 315   1        
+ 316   1        /*mes*/
+ 317   1          dato=lee_clk(RMES);
+ 318   1          *datos_clock=((dato&0xf0)>>4)| 0x30;      /*dato parte alta*/
+ 319   1          datos_clock++;
+ 320   1          *datos_clock=(dato&0x0f)| 0x30;           /*dato parte bajo*/
+ 321   1          datos_clock++;    
+ 322   1      
+ 323   1          /*dia*/
+ 324   1          dato=lee_clk(RDIA);                       //;bcd_hex(lee_clk(DIA));
+ 325   1          *datos_clock=((dato&0xf0)>>4)| 0x30;      /*dato parte alta*/
+ 326   1          datos_clock++;
+ 327   1          *datos_clock=(dato&0x0f)| 0x30;           /*dato parte bajo*/
+ 328   1          datos_clock++;
+ 329   1          
+ 330   1          
+ 331   1          /*hora*/            
+ 332   1          dato=lee_clk(RHORA);
+ 333   1          *datos_clock=((dato&0xf0)>>4)| 0x30;      /*dato parte alta*/
+ 334   1          datos_clock++;
+ 335   1          *datos_clock=(dato&0x0f)| 0x30;           /*dato parte bajo*/
+ 336   1          datos_clock++;        
+ 337   1          
+ 338   1          /*minutos*/         
+ 339   1          dato=lee_clk(RMIN);
+ 340   1          *datos_clock=((dato&0xf0)>>4)| 0x30;      /*dato parte alta*/
+ 341   1          datos_clock++;
+ 342   1          *datos_clock=(dato&0x0f)| 0x30;           /*dato parte bajo*/
+ 343   1          datos_clock++;  
+ 344   1        
+ 345   1          /*segundos*/    
+ 346   1          dato=lee_clk(RSEG);
+ 347   1          *datos_clock=((dato&0xf0)>>4)| 0x30;      /*dato parte alta*/
+ 348   1          datos_clock++;
+ 349   1          *datos_clock=(dato&0x0f)| 0x30;           /*dato parte bajo*/
+ 350   1          datos_clock++;
+ 351   1        
+ 352   1          /*dia de la semana*/
+ 353   1          dato=lee_clk(RDIA_SEMANA);
+ 354   1          *datos_clock=(dato&0x0f)| 0x30;           /*dato parte bajo*/
+ 355   1          datos_clock++;
+ 356   1          *datos_clock=0;
+ 357   1                      
+ 358   1      } 
+ 359          void Block_read_Clock_Hex(unsigned char *datos_clock)
+ 360          {
+ 361   1        
+ 362   1        /*año*/
+ 363   1        *datos_clock=bcd_hex(lee_clk(RANO));      
+ 364   1         datos_clock++;
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 7   
+
+ 365   1        /*mes*/
+ 366   1        *datos_clock=bcd_hex(lee_clk(RMES));      
+ 367   1         datos_clock++;
+ 368   1        /*Dia*/
+ 369   1        *datos_clock=bcd_hex(lee_clk(RDIA));      
+ 370   1         datos_clock++;
+ 371   1        /*hora*/  
+ 372   1        *datos_clock=bcd_hex(lee_clk(RHORA));     
+ 373   1         datos_clock++;
+ 374   1        /*minutos*/ 
+ 375   1        *datos_clock=bcd_hex(lee_clk(RMIN));      
+ 376   1         datos_clock++;
+ 377   1      
+ 378   1      }
+ 379          /*
+ 380          void Block_read_Clock_Hex_bcd(unsigned char *datos_clock)
+ 381          {
+ 382              
+ 383            /*año*/
+ 384            /**datos_clock=hex_bcd(lee_clk(RANO));      
+ 385             datos_clock++;
+ 386            /*mes*/
+ 387          /*  *datos_clock=hex_bcd(lee_clk(RMES));      
+ 388             datos_clock++;
+ 389            /*Dia*/
+ 390            /**datos_clock=hex_bcd(lee_clk(RDIA));      
+ 391             datos_clock++;
+ 392            /*hora*/  
+ 393            /**datos_clock=hex_bcd(lee_clk(RHORA));     
+ 394             datos_clock++;
+ 395            /*minutos*/ 
+ 396          /*  *datos_clock=hex_bcd(lee_clk(RMIN));      
+ 397             datos_clock++;
+ 398          }
+ 399          */
+ 400          /*------------------------------------------------------------------------------
+ 401           Lee el dato del reloj en bloque 
+ 402          ------------------------------------------------------------------------------*/
+ 403          void Block_read_Clock(unsigned char *datos_clock)
+ 404          {
+ 405   1        /*año*/ 
+ 406   1        *datos_clock=lee_clk(RANO);     
+ 407   1         datos_clock++;
+ 408   1        /*mes*/
+ 409   1        *datos_clock=lee_clk(RMES);     
+ 410   1         datos_clock++;
+ 411   1        /*Dia*/
+ 412   1        *datos_clock=lee_clk(RDIA);     
+ 413   1         datos_clock++;
+ 414   1        /*hora*/  
+ 415   1        *datos_clock=lee_clk(RHORA);      
+ 416   1         datos_clock++;
+ 417   1        /*minutos*/ 
+ 418   1        *datos_clock=lee_clk(RMIN);     
+ 419   1         datos_clock++;
+ 420   1        /*segundos*/  
+ 421   1        *datos_clock=lee_clk(RSEG);
+ 422   1        datos_clock++;
+ 423   1        *datos_clock=00;
+ 424   1          
+ 425   1      }
+ 426          void cond_ini_clock()
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 8   
+
+ 427          {
+ 428   1        sck=0;          //Reloj
+ 429   1        rst=0;
+ 430   1        io=1;
+ 431   1      }
+ 432          
+ 433          /*------------------------------------------------------------------------------
+ 434          funcion q verifica la fecha maxima de salida 
+ 435          VERIFICA PAGO (sin_pago)....                                      
+ 436          SI PAGO, VERIFICA QUE LA FECHA MAX DE SALIDA NO EXCEDE A LA ACTUAL (acceso_ok)              
+ 437          (0) pago parqueadero y esta entre el tiempo permitido
+ 438          (1) no hay pago
+ 439          (2) excede tiempo de gracia
+ 440          ------------------------------------------------------------------------------*/
+ 441          /*TEMPORARLMENTE FUERA DE SERVICIO POR SER EXPEDIDOR*/
+ 442          //char check_fechaOut(char *buffer)
+ 443          //{
+ 444          //  char temp=1;
+ 445          //  unsigned char datos_clk[6];
+ 446            
+ 447          
+ 448            /*se valida la fecha de salida si es cero no ha pagado*/
+ 449          
+ 450          //  if ((*buffer==0x00)&&(*(buffer+1)==0x00)&&(*(buffer+2)==0x00)&&(*(buffer+3)==0x00)&&(*(buffer+4)==0x00)
+             -)
+ 451          //    {
+ 452              
+ 453          //    temp=1;                                                         /*no hay pago*/
+ 454                
+ 455          //    }
+ 456          //  else
+ 457          //  {
+ 458                
+ 459          //      Block_read_Clock_Hex(datos_clk);                              /*leo el clock actual*/
+ 460            
+ 461          //    if (Debug_Tibbo==1)
+ 462          //    {
+ 463          //       Debug_Fecha_actual(datos_clk);                               /*muestro la fecha y hora actual*/
+ 464                
+ 465          //    } 
+ 466                
+ 467              
+ 468          //    if (datos_clk[0]<*buffer)                                       /*comparo el año leido de board_pcb con el dato de salid
+             -a leido en  la MF */
+ 469          //    {
+ 470          //      temp=0;                                                       /*el tiempo esta entre el tiempo de gracia y activa la salida*/
+ 471          //    }
+ 472          //    else if (datos_clk[0]==*buffer)                                 /*el año es igual*/
+ 473          //    {
+ 474          //      if (datos_clk[1]<*(buffer+1))                                 /*comparo el mes*/
+ 475          //      {
+ 476          //        temp=0;                                                     /*el tiempo esta entre el tiempo de gracia y activa la salida*/
+ 477          //      }
+ 478          //      else if (datos_clk[1]==*(buffer+1))                           /*el mes es igual*/
+ 479          //      {
+ 480          //        if (datos_clk[2]<*(buffer+2))                               /*se compara el dia*/
+ 481          //        {
+ 482          //            temp=0;                                                 /*el tiempo esta entre el tiempo de gracia y activa la salida*/
+ 483          //        }
+ 484          //        else if(datos_clk[2]==*(buffer+2))                          /*el dia es igual*/
+ 485          //        {
+ 486          //          if (datos_clk[3]<*(buffer+3))                             /*comparo la hora del board_pcb con el dato de salida d
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 9   
+
+             -e la MF*/
+ 487          //          {
+ 488          //                temp=0;                                             /*el tiempo esta entre el tiempo de gracia y activa la salida*/
+ 489          //          }
+ 490          //          else if (datos_clk[3]==*(buffer+3))                       /*es igual la hora*/
+ 491          //          {
+ 492          //            if (datos_clk[4]<*(buffer+4))   //(minut<=minutOut)
+ 493          //            {
+ 494          //              temp=0;                                               /*el tiempo esta entre el tiempo de gracia y activa la salida*/
+ 495          //            }
+ 496          //            else 
+ 497          //            {
+ 498          //              temp=2;                                               /*Excede T.GRACIA*/
+ 499          //            }
+ 500          
+ 501          //          }
+ 502          //          else
+ 503          //          {
+ 504          //            temp=2;                                                 /*Excede T.GRACIA*/
+ 505          //          }
+ 506          //        }
+ 507          //        else
+ 508          //        {
+ 509          //          temp=2;                                                   /*Excede T.GRACIA*/
+ 510          //        } 
+ 511          //      }
+ 512          //      else
+ 513          //      {
+ 514          //        temp=2;                                                     /*Excede T.GRACIA*/
+ 515          //      }
+ 516          //    }
+ 517          //    else
+ 518          //    {
+ 519          //      temp=2;                                                       /*Excede T.GRACIA*/
+ 520          // 
+ 521          //    }
+ 522              
+ 523          //  }
+ 524          //  return temp;
+ 525          //}
+ 526          
+ 527          //*******************************************************************************************
+ 528          /*TEMPORALMENTE FUERA DE SERVICIO POR EXPEDIDOR PRINTER*/
+ 529          /*
+ 530          void analiza_tiempo(char *buffer,unsigned int Val_DctoMinutos)
+ 531          {
+ 532          
+ 533          
+ 534            int ano_inT;
+ 535            bit bisiesto=0;
+ 536          
+ 537            unsigned char ano_out, mes_out, dia_out, hora_out, min_out;
+ 538            unsigned char Horas_Dcto, Minutos_Dcto, Xtemp; 
+ 539          
+ 540            bit Tiempo_Dcto=0;
+ 541          
+ 542          if ((*(buffer+0x0b)==0x00)&&(*(buffer+0x0c)==0x00)&&(*(buffer+0x0d)==0x00)&&(*(buffer+0x0e)==0x00)&&(*(buf
+             -fer+0x0f)==0x00))
+ 543          {
+ 544          */
+ 545          //--------------------------------------------------------------------------------------------------------
+             -------------------------------------
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 10  
+
+ 546          //  Descuento Maximo 999 minutos  = 16 Horas  39 Minutos
+ 547          //--------------------------------------------------------------------------------------------------------
+             -------------------------------------
+ 548          /*
+ 549          if (Val_DctoMinutos >= 60 )
+ 550            {
+ 551              Horas_Dcto=Val_DctoMinutos/60;
+ 552              Minutos_Dcto=Val_DctoMinutos-(Horas_Dcto*60);
+ 553          
+ 554            }
+ 555            else
+ 556            {
+ 557              Minutos_Dcto=Val_DctoMinutos;
+ 558              Horas_Dcto=0;
+ 559            }
+ 560            */
+ 561          //********************************************************************************************************
+             -*************************************
+ 562          //  Aumenta Primero Minutos
+ 563          //--------------------------------------------------------------------------------------------------------
+             --------------------------------------
+ 564          /* 
+ 565           if (Minutos_Dcto!=0)
+ 566            {
+ 567              min_out=*(buffer+4)+Minutos_Dcto;         
+ 568              if (min_out>59)                   // Si los minutos no sube de 60 no hay que aumentar nada
+ 569              {
+ 570          //----------------------------------------------------
+ 571                Xtemp=(int)(min_out/60);          // Numero de Horas a aumentar
+ 572                min_out=min_out-(Xtemp*60);         // Total de minutos
+ 573          //----------------------------------------------------
+ 574                hora_out=*(buffer+3)+Xtemp;         /*horas*/
+ 575          /*      if (hora_out>23)
+ 576                {
+ 577                  Xtemp= hora_out/24;             // Numero Dias a aumentar
+ 578                  hora_out=hora_out-(Xtemp*24);       // Total de Horas
+ 579          //--------------------------------------------------------------------------------------------------------
+             ---------------------------------------
+ 580                  dia_out=*(buffer+2)+Xtemp;
+ 581                  if ((*(buffer+1)==1)||(*(buffer+1)==3)||(*(buffer+1)==5)||(*(buffer+1)==7)||(*(buffer+1)==8)||(*(buffe
+             -r+1)==10)||(*(buffer+1)==12))   // Meses de 31 dias
+ 582                  {
+ 583                    if (dia_out>31)
+ 584                    {
+ 585                      dia_out=dia_out-31;
+ 586                      mes_out=*(buffer+1)+1;
+ 587                      if (mes_out>12)
+ 588                      {
+ 589                        ano_out=*(buffer+0)+1;
+ 590                        mes_out=1;
+ 591                      }
+ 592                      else
+ 593                      {
+ 594                        ano_out=*(buffer+0);
+ 595                      }
+ 596                    }
+ 597                    else
+ 598                    {
+ 599                      mes_out=*(buffer+1);                        /*mes*/
+ 600          //            ano_out=*(buffer+0);                        /*año*/
+ 601          /*          } 
+ 602                  }
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 11  
+
+ 603                  else if ((*(buffer+1)==4)||(*(buffer+1)==6)||(*(buffer+1)==9)||(*(buffer+1)==11))                   // Meses de
+             - 30 dias
+ 604                  {
+ 605                    if (dia_out>30)
+ 606                    {
+ 607                      dia_out=dia_out-30;
+ 608                      mes_out=*(buffer+1)+1;
+ 609                      ano_out=*(buffer+0);          
+ 610                    }
+ 611                    else
+ 612                    {
+ 613                      mes_out=*(buffer+1);
+ 614                      ano_out=*(buffer+0);  
+ 615                    }
+ 616          
+ 617                  }
+ 618                  else if (*(buffer+1)==2)                                        // Febtrero Es biciesto?
+ 619                  {
+ 620          //--------------------------------------------------------------------------------------------------------
+             ---------------------------------------
+ 621                    ano_inT=*(buffer+0)+2000;
+ 622                    bisiesto=0;
+ 623          
+ 624          /*
+ 625                    float flotante=12.345;
+ 626                    int entero;
+ 627          
+ 628                    entero=(int)flotante;
+ 629          */
+ 630            
+ 631          /*          division=(ano_inT/4);
+ 632                    intpart=division;
+ 633                    decpart= ano_inT - (intpart*4);
+ 634                    if (decpart==0)
+ 635                    {
+ 636                      division=(ano_inT/10);
+ 637                        intpart = division;
+ 638                        decpart = ano_inT - (intpart*10);
+ 639                      if (decpart==0)
+ 640                      {
+ 641                        division=(ano_inT/40);
+ 642                          intpart = division;
+ 643                          decpart = ano_inT - (intpart*40);
+ 644          
+ 645          
+ 646                        if (decpart==0)
+ 647                        {
+ 648                          bisiesto=1;
+ 649                        }
+ 650                        else
+ 651                        {
+ 652                          bisiesto=0;
+ 653                        }
+ 654                      }
+ 655                      else
+ 656                      {
+ 657                        bisiesto=1;
+ 658                      }
+ 659                    }
+ 660          */
+ 661          
+ 662            /*        if ((*(buffer+0)==16)||(*(buffer+0)==20)||(*(buffer+0)==24)||(*(buffer+0)==28)||(*(buffer+0)==32)||
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 12  
+
+             -(*(buffer+0)==36))
+ 663                    {
+ 664                      bisiesto=1;
+ 665                    }   
+ 666          //--------------------------------------------------------------------------------------------------------
+             ---------------------------------------          
+ 667                    if (bisiesto==1)
+ 668                    {
+ 669                      if (dia_out>29)
+ 670                      {
+ 671                        ano_out=*(buffer+0);
+ 672                        dia_out=dia_out-29;
+ 673                        mes_out=*(buffer+1)+1;
+ 674                    
+ 675                      }
+ 676                      else
+ 677                      {
+ 678                        ano_out=*(buffer+0);  
+ 679                        dia_out=dia_out;
+ 680                        mes_out=*(buffer+1);
+ 681                      }
+ 682                    }
+ 683                    else
+ 684                    {
+ 685                      if (dia_out>28)
+ 686                      {
+ 687                        dia_out=dia_out-28;
+ 688                        mes_out=*(buffer+1)+1;
+ 689                        ano_out=*(buffer+0);
+ 690                      }
+ 691                      else
+ 692                      {
+ 693                        dia_out=dia_out;
+ 694                        mes_out=*(buffer+1);
+ 695                        ano_out=*(buffer+0);  
+ 696                      }
+ 697                    }
+ 698          //--------------------------------------------------------------------------------------------------------
+             --------------------------------------
+ 699                  }
+ 700                  else                                                // Error fecha
+ 701                  {
+ 702                    dia_out=dia_out;
+ 703                    mes_out=*(buffer+1);
+ 704                    ano_out=*(buffer+0);  
+ 705                  }
+ 706                }
+ 707                else
+ 708                {
+ 709                  dia_out=*(buffer+2);
+ 710                  mes_out=*(buffer+1);
+ 711                  ano_out=*(buffer+0);
+ 712                }
+ 713              }
+ 714              else
+ 715              {
+ 716                hora_out=*(buffer+3);
+ 717                dia_out=*(buffer+2);
+ 718                mes_out=*(buffer+1);
+ 719                ano_out=*(buffer+0);
+ 720              }
+ 721            }
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 13  
+
+ 722            else
+ 723            {
+ 724              min_out=*(buffer+4);
+ 725              hora_out=*(buffer+3);
+ 726              dia_out=*(buffer+2);
+ 727              mes_out=*(buffer+1);
+ 728              ano_out=*(buffer+0);
+ 729            }
+ 730          //********************************************************************************************************
+             -*************************************
+ 731          //  AUMENTA HORAS
+ 732          //--------------------------------------------------------------------------------------------------------
+             --------------------------------------
+ 733              if (Horas_Dcto!=0)
+ 734              {
+ 735                  hora_out=hora_out+Horas_Dcto;
+ 736                  if (hora_out>23)
+ 737                  {
+ 738                    Xtemp= hora_out/24;             // Numero Dias a aumentar
+ 739                    hora_out=hora_out-(Xtemp*24);       // Total de Horas
+ 740            //-------------------------------------------------------------------------------------------------------
+             ----------------------------------------
+ 741                    dia_out=dia_out+Xtemp;
+ 742                    if ((mes_out==1)||(mes_out==3)||(mes_out==5)||(mes_out==7)||(mes_out==8)||(mes_out==10)||(mes_out==12
+             -))    // Meses de 31 dias
+ 743                    {
+ 744                      if (dia_out>31)
+ 745                      {
+ 746                        dia_out=dia_out-31;
+ 747                        mes_out=mes_out+1;
+ 748                        if (mes_out>12)
+ 749                        {
+ 750                          ano_out=ano_out+1;
+ 751                          mes_out=1;
+ 752                        }
+ 753                        else
+ 754                        {
+ 755                          ano_out=ano_out;
+ 756                        }
+ 757                      }
+ 758                    }
+ 759                    else if ((mes_out==4)||(mes_out==6)||(mes_out==9)||(mes_out==11))                   // Meses de 30 dias
+ 760                    {
+ 761                      if (dia_out>30)
+ 762                      {
+ 763                        dia_out=dia_out-30;
+ 764                        mes_out=mes_out+1;
+ 765                        ano_out=ano_out;          
+ 766                      }
+ 767                      else
+ 768                      {
+ 769                        mes_out=mes_out;
+ 770                        ano_out=ano_out;  
+ 771                      }
+ 772                    }
+ 773                    else if (mes_out==2)                                        // Febtrero Es biciesto?
+ 774                    {
+ 775          //--------------------------------------------------------------------------------------------------------
+             ---------------------------------------
+ 776                      ano_inT=ano_out+2000;
+ 777                      bisiesto=0;
+ 778          
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 14  
+
+ 779          
+ 780          /*            division=(ano_inT/4);
+ 781                      intpart = division;
+ 782                      decpart= ano_inT - (intpart*4);
+ 783            
+ 784            
+ 785                      if (decpart==0)
+ 786                      {
+ 787                        division=(ano_inT/10);
+ 788                          intpart = division;
+ 789                          decpart = ano_inT - (intpart*10);
+ 790                        if (decpart==0)
+ 791                        {
+ 792                          division=(ano_inT/40);
+ 793                            intpart = division;
+ 794                            decpart = ano_inT - (intpart*40);
+ 795                          if (decpart==0)
+ 796                          {
+ 797                            bisiesto=1;
+ 798                          }
+ 799                          else
+ 800                          {
+ 801                            bisiesto=0;
+ 802                          }
+ 803                        }
+ 804                        else
+ 805                        {
+ 806                          bisiesto=1;
+ 807                        }
+ 808                      }
+ 809          */
+ 810            /*          if ((ano_out==16)||(ano_out==20)||(ano_out==24)||(ano_out==28)||(ano_out==32)||(ano_out==36))
+ 811                      {
+ 812                        bisiesto=1;
+ 813                      }   
+ 814          
+ 815          //--------------------------------------------------------------------------------------------------------
+             ---------------------------------------          
+ 816                      if (bisiesto==1)
+ 817                      {
+ 818                        if (dia_out>29)
+ 819                        {
+ 820                          dia_out=dia_out-29;
+ 821                          mes_out=mes_out+1;
+ 822                          ano_out=ano_out;            
+ 823                        }
+ 824                        else
+ 825                        {
+ 826                          dia_out=dia_out;
+ 827                          mes_out=mes_out;
+ 828                          ano_out=ano_out;
+ 829                        }
+ 830                      }
+ 831                      else
+ 832                      {
+ 833                        if (dia_out>28)
+ 834                        {
+ 835                          dia_out=dia_out-28;
+ 836                          mes_out=mes_out+1;
+ 837                          ano_out=ano_out;                          
+ 838                        }
+ 839                      }
+C51 COMPILER V9.59.0.0   CLOCK                                                             07/25/2020 19:44:20 PAGE 15  
+
+ 840            //-------------------------------------------------------------------------------------------------------
+             ----------------------------------------
+ 841                    }
+ 842            
+ 843                  }
+ 844              }
+ 845          
+ 846          //--------------------------------------------------------------------------------------------------------
+             ---------------------------------------
+ 847            *(buffer+0x0b)=ano_out;
+ 848            *(buffer+0x0c)=mes_out;
+ 849            *(buffer+0x0d)=dia_out;
+ 850            *(buffer+0x0e)=hora_out;
+ 851            *(buffer+0x0f)=min_out;   
+ 852          //--------------------------------------------------------------------------------------------------------
+             ---------------------------------------
+ 853            }
+ 854            
+ 855          
+ 856          }
+ 857          */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   2137    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      1      33
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

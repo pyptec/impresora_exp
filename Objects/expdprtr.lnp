@@ -1,0 +1,16 @@
+".\Objects\main.obj",
+".\Objects\Accescan.obj",
+".\Objects\Clock.obj",
+".\Objects\delay.obj",
+".\Objects\eeprom.obj",
+".\Objects\io_sensores.obj",
+".\Objects\pantallas.obj",
+".\Objects\prog.obj",
+".\Objects\pto_paralelo.obj",
+".\Objects\tibbo.obj",
+".\Objects\uart.obj",
+".\Objects\printer_nano.obj",
+".\Objects\num_serie.obj",
+".\Objects\monitor.obj" 
+TO ".\Objects\expdprtr" 
+PRINT(".\Listings\expdprtr.m51") RAMSIZE(256) 

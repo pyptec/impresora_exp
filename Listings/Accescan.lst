@@ -1,0 +1,222 @@
+C51 COMPILER V9.59.0.0   ACCESCAN                                                          07/25/2020 19:44:20 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE ACCESCAN
+OBJECT MODULE PLACED IN .\Objects\Accescan.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Accescan.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\Accescan.lst) TABS(2) OBJECT(.\Objects\Accescan.obj)
+
+line level    source
+
+   1          #include <Accescan.h>
+   2          #include <reg51.h>
+   3          #include <string.h>
+   4          extern void Block_write_clock_ascii(unsigned char *datos_clock);
+   5          extern void PantallaLCD(unsigned char cod_msg);
+   6          extern void Reloj_Pantalla_Lcd();
+   7          extern unsigned char rx_Data(void);
+   8          extern void Debug_txt_Tibbo(unsigned char * str);
+   9          extern void DebugBufferMF(unsigned char *str,unsigned char num_char,char io);
+  10          extern void Debug_Dividir_texto();
+  11          extern void tx_aux(unsigned char caracter);
+  12          extern unsigned char Dir_board();
+  13          extern void Block_read_clock_ascii(unsigned char *datos_clock);
+  14          extern void Two_ByteHex_Decimal(unsigned char *buffer,unsigned char id_h,unsigned char id_l);
+  15          extern void ByteHex_Decimal(unsigned char *buffer,unsigned char valorhex);
+  16          extern void PantallaLCD(unsigned char cod_msg);
+  17          extern void LCD_txt (unsigned char * msg,char enable_char_add );
+  18          extern unsigned char  ValidaSensoresPaso(void);
+  19          extern void tx_aux(unsigned char caracter);
+  20          extern void PantallaLCD_LINEA_2(unsigned char cod_msg, unsigned char *buffer);
+  21          extern unsigned char hex_bcd (unsigned char byte);
+  22          extern void Trama_pto_Paralelo_P(unsigned char *buffer_S1_B0,unsigned char *buffer_S1_B2,unsigned char cmd
+             -);
+  23          extern void  send_port(unsigned char *buffer_port, unsigned char length_char);
+  24          extern void graba_serie(unsigned char *buffer);
+  25          extern void graba_serie_ascii_hex(unsigned char *buffer);
+  26          unsigned char rd_eeprom (unsigned char control,unsigned int Dir); 
+  27          extern unsigned long int  Leer_serie ();
+  28          extern void serie_ascii_siceros_l(unsigned char *serie);
+  29          extern void Cmd_LPR_Salida_wiegand(unsigned char *buffer);
+  30          
+  31          extern unsigned char Timer_wait;
+  32          extern unsigned char Tipo_Vehiculo;
+  33          extern unsigned char USE_LPR;
+  34          extern unsigned char  Debug_Tibbo;
+  35          extern unsigned char xdata Buffer_Tibbo_rx[];
+  36          extern unsigned char ValTimeOutCom;   
+  37          
+  38          sbit rx_ip = P0^0;        
+  39          sbit lock = P1^7;           //Relevo 
+  40          sbit Atascado = P0^3;       //Rele de on/off del verificador o transporte
+  41          sbit led_err_imp = P0^2;      //Error   
+  42          
+  43          
+  44          #define STX                     02 
+  45          #define ETX                     03 
+  46          #define FUERA_DE_LINEA          0xb6
+  47          #define ON_LINE                 0xAA
+  48          
+  49          /*mensajes de pantalla*/
+  50          #define BIENVENIDO              0XFE
+  51          #define SIN_PAGO                0XE7
+  52          #define LECTURA_DE_TARJETAS     0xB0
+  53          
+C51 COMPILER V9.59.0.0   ACCESCAN                                                          07/25/2020 19:44:20 PAGE 2   
+
+  54          
+  55          
+  56          
+  57          //unsigned char S1_B2[]={0x13, 0x03, 0x1D, 0x0B, 0x0E, 00, 00, 00, 00, 00, 0x01, 0x13, 0x03, 0x1D, 0x0E, 0
+             -x1D};
+  58          //unsigned char S1_B0[]={0x32, 0x31, 0x30, 0x37, 0x31, 0x35, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01};
+  59          //unsigned char S_B[]={0xE7, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01};
+  60          /*------------------------------------------------------------------------------
+  61          Rutina q valida los cmd del pto paralelo
+  62          ------------------------------------------------------------------------------*/
+  63          void Valida_Trama_Pto(unsigned char *buffer, unsigned char length_trama)
+  64          {
+  65   1         unsigned char buff[11];
+  66   1        /*-------------------------------CMD H reloj para el board y la pantalla lcd-----------------------------
+             --------------*/
+  67   1          if((length_trama==25)&&(*buffer==STX)&&(*(buffer+2)=='H')&&*(buffer+(length_trama-1))==ETX)                         
+             -/*cmd de Accescan que me envia el reloj actualizado*/
+  68   1          { 
+  69   2            
+  70   2            Block_write_clock_ascii(buffer+3);                                                                                /* se escribe el reloj de har
+             -dware*/
+  71   2          
+  72   2            Reloj_Pantalla_Lcd();                                                                                             /* Escribo el reloj en la pantalla 
+             -lcd*/
+  73   2          
+  74   2          }
+  75   1          /*-------------------------------CMD B6 fuera de linea -------------------------------------------------
+             -------------*/
+  76   1          else if(*buffer==FUERA_DE_LINEA)                                                                                    /*cmd de Accescan que dice q e
+             -sta fuera de linea*/
+  77   1          {
+  78   2            if (Timer_wait>=20)                                                                                               /* se envia el msj fuera de linea*/
+  79   2            {                                                                                                                 /* con un tiempo de retardo =((1/(22118400/12
+             -)*65535)*30)*/
+  80   3              PantallaLCD(FUERA_DE_LINEA);
+  81   3              led_err_imp=0;                                                                                                  /*error led on*/
+  82   3              Timer_wait=0;
+  83   3              lock=0;                                                                                                         /*relevo off despues de 1 minuto*/
+  84   3              Atascado=0;
+  85   3              ValTimeOutCom=10;       
+  86   3            }
+  87   2            if ((Debug_Tibbo==0)&&(USE_LPR==1))
+  88   2              {
+  89   3              Debug_Tibbo=1;
+  90   3              Debug_txt_Tibbo((unsigned char *) "LIVE\n");
+  91   3            
+  92   3              Debug_Tibbo=0;
+  93   3              }
+  94   2          }
+  95   1          /*-------------------------------CMD AA en linea -------------------------------------------------------
+             ------------*/
+  96   1          else if (*buffer==ON_LINE)                                                                                          /*en linea*/
+  97   1          {
+  98   2            
+  99   2            if (Timer_wait>=20)                                                                                               /* se envia el msj fuera de linea*/
+ 100   2            { 
+ 101   3              Timer_wait=0;                                                                                                   /*se inicia el timer*/
+ 102   3              lock=0;
+ 103   3              led_err_imp=1;                                                                                                  /*relevo off despues de 1 minuto*/
+ 104   3              Atascado=0; 
+ 105   3              ValTimeOutCom=10;
+ 106   3              if ((Debug_Tibbo==0)&&(USE_LPR==1))
+C51 COMPILER V9.59.0.0   ACCESCAN                                                          07/25/2020 19:44:20 PAGE 3   
+
+ 107   3              {
+ 108   4              Debug_Tibbo=1;
+ 109   4              Debug_txt_Tibbo((unsigned char *) "LIVE\n");
+ 110   4              
+ 111   4              Debug_Tibbo=0;
+ 112   4              }
+ 113   3            }
+ 114   2            
+ 115   2          } 
+ 116   1          else if ((length_trama==19)&&(*buffer==STX)&&(*(buffer+1)=='O')&&*(buffer+(length_trama-1))==ETX)             
+             -      /*mensaje de bienvenidos*/
+ 117   1          {
+ 118   2            PantallaLCD(BIENVENIDO);
+ 119   2          }
+ 120   1          else if ((length_trama==1)&&(*buffer==0xA1))                                                                        /*cmd 0xA1 audio caja qu
+             -e es igual a no registra pago */
+ 121   1          {
+ 122   2               PantallaLCD(SIN_PAGO);
+ 123   2          }
+ 124   1                    /*-------------------------------CMD de wiegand---------------------------------------------------*
+             -/
+ 125   1          else if ((length_trama==6)&&(*buffer==STX)&&(*(buffer+1)=='W')&&*(buffer+(length_trama-1))==ETX)                
+             -    /* cmd q comunica con monitor po wigan*/
+ 126   1          {
+ 127   2              if (USE_LPR==1)
+ 128   2              {
+ 129   3                    /*-------------------------------mensaje en la pantalla--------------------------------------------
+             --------*/
+ 130   3                    ByteHex_Decimal(buff,*(buffer+2));                                                                        /*convierto el primer byte_he
+             -x a decimal    */
+ 131   3                    buff[3]=' ';
+ 132   3                    Two_ByteHex_Decimal(buff+4,*(buffer+3),*(buffer+4)) ;                                                     /*convierto un byte
+             - de 16 bits a decimal*/                                                 
+ 133   3                  
+ 134   3                    PantallaLCD_LINEA_2(LECTURA_DE_TARJETAS,buff);
+ 135   3                                                                                                                              /*transmito el codigo de la tarjeta a la panta
+             -lla lcd*/
+ 136   3                    /*-------------------------------------------------------------------------------------------------
+             --------*/
+ 137   3                
+ 138   3                    while(!ValidaSensoresPaso());
+ 139   3                      
+ 140   3                    Cmd_LPR_Salida_wiegand(buff);
+ 141   3              }                                                                             
+ 142   2              
+ 143   2              else
+ 144   2              {
+ 145   3                 /*-------------------------------mensaje en la pantalla---------------------------------------------
+             -------*/
+ 146   3                    ByteHex_Decimal(buff,*(buffer+2));                                                                        /*convierto el primer byte_he
+             -x a decimal    */
+ 147   3                    buff[3]=' ';
+ 148   3                    Two_ByteHex_Decimal(buff+4,*(buffer+3),*(buffer+4)) ;                                                     /*convierto un byte
+             - de 16 bits a decimal*/                                                 
+ 149   3                    PantallaLCD_LINEA_2(LECTURA_DE_TARJETAS,buff);                                                            /*transmito el codigo d
+             -e la tarjeta a la pantalla lcd*/
+ 150   3                                                                                                          
+ 151   3                /*---------------------------------------------------------------------------------------------------
+             ------*/  
+ 152   3              
+ 153   3              }
+ 154   2          }
+C51 COMPILER V9.59.0.0   ACCESCAN                                                          07/25/2020 19:44:20 PAGE 4   
+
+ 155   1          else if ((length_trama==12)&&(*buffer==STX)&&*(buffer+(length_trama-1))==ETX)                                   /*graba e
+             -l numero de consecutivo en eeprom*/
+ 156   1          {
+ 157   2            graba_serie_ascii_hex(buffer+1);
+ 158   2            
+ 159   2            
+ 160   2              Debug_txt_Tibbo((unsigned char *) "Grabacion Serie: ");                                                     /*trama recibida pto
+             - paralelo */
+ 161   2              DebugBufferMF(buffer,length_trama,1);
+ 162   2              
+ 163   2            
+ 164   2          }
+ 165   1      }
+ 166          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    688    ----
+   CONSTANT SIZE    =     24    ----
+   XDATA SIZE       =   ----      15
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

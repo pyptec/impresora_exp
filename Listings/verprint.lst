@@ -1,0 +1,139 @@
+C51 COMPILER V9.59.0.0   VERPRINT                                                          08/12/2019 12:33:57 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE VERPRINT
+OBJECT MODULE PLACED IN .\Objects\verprint.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE verprint.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\verprint.lst) TABS(2) OBJECT(.\Objects\verprint.obj)
+
+line level    source
+
+   1          #include<verprint.h>
+   2          
+   3          /*funciones prototipo externas */
+   4          extern unsigned char  ValidaSensoresPaso(void);
+   5          extern void Debug_txt_Tibbo(unsigned char * str);
+   6          extern void PantallaLCD(unsigned char cod_msg);
+   7          extern void send_portERR(unsigned char cod_err);
+   8          
+   9          /*variables externas*/
+  10          extern unsigned char g_cEstadoComSoft;
+  11          extern unsigned char g_cEstadoImpresion;
+  12          extern unsigned char ValTimeOutCom;
+  13          extern unsigned char buffer_ready;
+  14          
+  15          /*----------------------------------------------------------------------------
+  16          tiempo de delay entre funciones
+  17          ------------------------------------------------------------------------------*/
+  18          
+  19          #define   TIME_CARD         20    //50
+  20          #define   TIME_RX           70    //
+  21          #define   TIME_PLACA        55
+  22          #define   TIME_PULSADOR     10
+  23          
+  24          /*----------------------------------------------------------------------------
+  25          definicion de recepcion serial 
+  26          ------------------------------------------------------------------------------*/
+  27          
+  28          #define  ESPERA_RX          0           //espera el primer cmd de recepcion del verificado 
+  29          /*----------------------------------------------------------------------------
+  30          Definiciones de sequencias de lectura de ticket 
+  31          ------------------------------------------------------------------------------*/
+  32          
+  33          #define SEQ_INICIO            0X00  
+  34          #define SEQ_LEECODIGO         0X01
+  35          
+  36          /*---------------------------------------------------------------------------------
+  37          definiciones de la pantalla
+  38          -----------------------------------------------------------------------------------*/
+  39          #define INGRESO                 0xFA
+  40          #define BIENVENIDO              0XFE
+  41          #define AUDIO_IN                0XA0
+  42          #define AUDIO_ENTER             0XA1
+  43          
+  44          /*--------------------------------------------------------------------------------------------------------
+             ------------------
+  45          procedimiento que lee el codigo de barra o el QR
+  46          SEQ_INICIO=00 se detecta lapresencia vehicular 
+  47          SEQ_QUEST_PRINT=1 si fue  presionado el boton 
+  48          ----------------------------------------------------------------------------------------------------------
+             ------------------*/
+  49          
+  50          void Lee_ticket(void)
+  51          {
+  52   1        static unsigned char paso_una_vez=0;
+C51 COMPILER V9.59.0.0   VERPRINT                                                          08/12/2019 12:33:57 PAGE 2   
+
+  53   1        switch (g_cEstadoImpresion)
+  54   1        {
+  55   2          case SEQ_INICIO:
+  56   2          
+  57   2            
+  58   2          if (ValTimeOutCom==1)                                                                 /*tiempo de espera */
+  59   2          {
+  60   3            if (ValidaSensoresPaso()!=0)                                                        /*pregunto q alla presencia vehicular*/
+  61   3            {
+  62   4              Debug_txt_Tibbo((unsigned char *) "Vehiculo en el loop\r\n\r\n");                 /* se encuentra un sensor ac
+             -tivo*/
+  63   4              PantallaLCD(BIENVENIDO);
+  64   4              if(paso_una_vez==0)
+  65   4              {
+  66   5              
+  67   5              send_portERR(AUDIO_IN);                                                           /*habilito el audio de entrada*/
+  68   5              paso_una_vez=1;
+  69   5              }                           
+  70   4              ValTimeOutCom=TIME_RX;
+  71   4              buffer_ready=0;                                                                   /* buffer del pto serie (0) inicia a esperar la trama
+             -*/
+  72   4              g_cEstadoComSoft=ESPERA_RX;   
+  73   4              g_cEstadoImpresion=SEQ_INICIO;                                                    /*volvemos a preguntar  */  
+  74   4                    
+  75   4              
+  76   4            
+  77   4            }
+  78   3            else
+  79   3              {
+  80   4              Debug_txt_Tibbo((unsigned char *) "Vehiculo no en el loop\r\n\r\n");              /* no hay vehiculo en el lo
+             -op*/
+  81   4              paso_una_vez=0;                                               
+  82   4              ValTimeOutCom=TIME_PULSADOR;
+  83   4              buffer_ready=0;                                                                   /* buffer del pto serie (0) inicia a esperar la trama
+             -*/
+  84   4              g_cEstadoComSoft=ESPERA_RX;   
+  85   4              g_cEstadoImpresion=SEQ_INICIO;                                                    /*volvemos a preguntar  */  
+  86   4                    
+  87   4              }
+  88   3          }
+  89   2          break;
+  90   2      /*--------------------------------------------------------------------------------------------------------
+             ------------------------------------
+  91   2      SEQ_LEECODIGO 
+  92   2      lee el dato en el pto serial del codigo qr
+  93   2      ----------------------------------------------------------------------------------------------------------
+             -------------------------------------*/    
+  94   2          case SEQ_LEECODIGO:
+  95   2            if ((ValTimeOutCom==1)||(buffer_ready!=0))
+  96   2            {
+  97   3            }
+  98   2          
+  99   2          default:
+ 100   2          g_cEstadoImpresion=SEQ_INICIO;
+ 101   2          break;
+ 102   2        }
+ 103   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     99    ----
+   CONSTANT SIZE    =     51    ----
+C51 COMPILER V9.59.0.0   VERPRINT                                                          08/12/2019 12:33:57 PAGE 3   
+
+   XDATA SIZE       =      1    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
