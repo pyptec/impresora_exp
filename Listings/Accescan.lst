@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   ACCESCAN                                                          07/16/2021 16:28:18 PAGE 1   
+C51 COMPILER V9.59.0.0   ACCESCAN                                                          07/19/2021 16:32:03 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE ACCESCAN
@@ -54,221 +54,229 @@ line level    source
   43          
   44          #define STX                     02 
   45          #define ETX                     03 
-  46          #define FUERA_DE_LINEA          0xb6
-  47          #define ON_LINE                 0xAA
-  48          
-  49          #define PRMR_NO_MENSUAL             0XB1
-  50          #define PRMR_NO_IN_PARK             0XB2
-  51          #define PRMR_IN_PARK                0XB3
-  52          #define PRMR_EXPIRO                 0XB4
-  53          #define PRMR_MENSUAL_FUERA_HORARIO  0XB5
-C51 COMPILER V9.59.0.0   ACCESCAN                                                          07/16/2021 16:28:18 PAGE 2   
+  46          #define LOTE_FULL               05
+  47          #define FUERA_DE_LINEA          0xb6
+  48          #define ON_LINE                 0xAA
+  49          
+  50          #define PRMR_NO_MENSUAL             0XB1
+  51          #define PRMR_NO_IN_PARK             0XB2
+  52          #define PRMR_IN_PARK                0XB3
+  53          #define PRMR_EXPIRO                 0XB4
+C51 COMPILER V9.59.0.0   ACCESCAN                                                          07/19/2021 16:32:03 PAGE 2   
 
-  54          #define PRMR_GRACIAS                'V'
-  55          
-  56          /*mensajes de pantalla*/
-  57          #define BIENVENIDO              0XFE
-  58          #define SIN_PAGO                0XE7
-  59          #define LECTURA_WIEGAND         92
-  60          
-  61          #define GRACIAS                 91    
-  62          #define NO_MENSUAL_NI_PREPAGO   96
-  63          #define NO_IN_PARK              93
-  64          #define MENSUAL_FUERA_HORARIO   98
-  65          #define IN_PARK                 99
-  66          #define EXPIRO                  94
-  67          #define BIENVENIDO_WIEGAN       0x9b
-  68          
-  69          //unsigned char S1_B2[]={0x13, 0x03, 0x1D, 0x0B, 0x0E, 00, 00, 00, 00, 00, 0x01, 0x13, 0x03, 0x1D, 0x0E, 0
+  54          #define PRMR_MENSUAL_FUERA_HORARIO  0XB5
+  55          #define PRMR_GRACIAS                'V'
+  56          
+  57          /*mensajes de pantalla*/
+  58          #define BIENVENIDO              0XFE
+  59          #define SIN_PAGO                0XE7
+  60          #define LECTURA_WIEGAND         92
+  61          
+  62          #define GRACIAS                 91    
+  63          #define NO_MENSUAL_NI_PREPAGO   96
+  64          #define NO_IN_PARK              93
+  65          #define MENSUAL_FUERA_HORARIO   98
+  66          #define IN_PARK                 99
+  67          #define EXPIRO                  94
+  68          #define BIENVENIDO_WIEGAN       0x9b
+  69          
+  70          //unsigned char S1_B2[]={0x13, 0x03, 0x1D, 0x0B, 0x0E, 00, 00, 00, 00, 00, 0x01, 0x13, 0x03, 0x1D, 0x0E, 0
              -x1D};
-  70          //unsigned char S1_B0[]={0x32, 0x31, 0x30, 0x37, 0x31, 0x35, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01};
-  71          //unsigned char S_B[]={0xE7, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01};
-  72          /*------------------------------------------------------------------------------
-  73          Rutina q valida los cmd del pto paralelo
-  74          ------------------------------------------------------------------------------*/
-  75          void Valida_Trama_Pto(unsigned char *buffer, unsigned char length_trama)
-  76          {
-  77   1         unsigned char buff[11];
-  78   1        /*-------------------------------CMD H reloj para el board y la pantalla lcd-----------------------------
+  71          //unsigned char S1_B0[]={0x32, 0x31, 0x30, 0x37, 0x31, 0x35, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01};
+  72          //unsigned char S_B[]={0xE7, 00, 00, 00, 00, 00, 00, 00, 00, 00, 01};
+  73          /*------------------------------------------------------------------------------
+  74          Rutina q valida los cmd del pto paralelo
+  75          ------------------------------------------------------------------------------*/
+  76          void Valida_Trama_Pto(unsigned char *buffer, unsigned char length_trama)
+  77          {
+  78   1         unsigned char buff[11];
+  79   1        /*-------------------------------CMD H reloj para el board y la pantalla lcd-----------------------------
              --------------*/
-  79   1          if((length_trama==25)&&(*buffer==STX)&&(*(buffer+2)=='H')&&*(buffer+(length_trama-1))==ETX)                         
+  80   1          if((length_trama==25)&&(*buffer==STX)&&(*(buffer+2)=='H')&&*(buffer+(length_trama-1))==ETX)                         
              -/*cmd de Accescan que me envia el reloj actualizado*/
-  80   1          { 
-  81   2            
-  82   2            Block_write_clock_ascii(buffer+3);                                                                                /* se escribe el reloj de har
+  81   1          { 
+  82   2            
+  83   2            Block_write_clock_ascii(buffer+3);                                                                                /* se escribe el reloj de har
              -dware*/
-  83   2          
-  84   2            Reloj_Pantalla_Lcd();                                                                                             /* Escribo el reloj en la pantalla 
+  84   2          
+  85   2            Reloj_Pantalla_Lcd();                                                                                             /* Escribo el reloj en la pantalla 
              -lcd*/
-  85   2          
-  86   2          }
-  87   1            /*-------------------------------CMD B1 PRMR_NO_MENSUAL_NI PREPAGO ------------------------------------
-             ------------------------------*/
-  88   1          else if ((*buffer==PRMR_NO_MENSUAL) )                                                                               /*ok si llega msj a;96;NO E
-             -S MENSUALIDAD NI PREPAGO<LF>*/
-  89   1          {
-  90   2            PantallaLCD(NO_MENSUAL_NI_PREPAGO);                                                                                           /*MSJ MENSUAL NO EN PA
-             -RQUEADERO*/
-  91   2          }   
-  92   1            /*-------------------------------CMD B2 PRMR_NO_IN_PARK   ---------------------------------------------
-             ---------------------*/
-  93   1          else if ((*buffer==PRMR_NO_IN_PARK) )                                                                                 /*ok MSJ MENSUAL NO EN PAR
-             -QUEADERO  */
-  94   1          {
-  95   2            PantallaLCD(NO_IN_PARK);                                                                                            /*MSJ MENSUAL NO EN PARQUEADERO*/
-  96   2          } 
-  97   1          /*-------------------------------CMD B3 PRMR_IN_PARK   -------------------------------------------------
-             -----------------*/
-  98   1          else if ((*buffer==PRMR_IN_PARK)  )                                                                                   /*ok msj MENSUAL ESTA EN PAR
-             -QUEADER*/
-  99   1          {
- 100   2            PantallaLCD(IN_PARK);                                                                                           /*MSJ MENSUAL ESTA EN PARQUEADER*/
- 101   2          }     
- 102   1          /*-------------------------------CMD B4  EXPIRO mensualidad vencida ------------------------------------
-             -----------------------*/
-C51 COMPILER V9.59.0.0   ACCESCAN                                                          07/16/2021 16:28:18 PAGE 3   
-
- 103   1          else if ((length_trama==1)&&(*buffer==PRMR_EXPIRO))                                                                   /*ok msj mensual ve
-             -ncida */
- 104   1          {
- 105   2               PantallaLCD(EXPIRO);                                                                                             /*mesualidad vencida*/
- 106   2          }
- 107   1          /*-------------------------------CMD B5  HORARIO mensualidad FUERA DE HORARIO --------------------------
-             ---------------------------------*/
- 108   1          else if ((length_trama==1)&&(*buffer==PRMR_MENSUAL_FUERA_HORARIO))                                                    /* */
- 109   1          {
- 110   2               PantallaLCD(MENSUAL_FUERA_HORARIO);                                                                              /*ok msj mesualidad fuera d
-             -e horario*/
- 111   2          }
- 112   1          
- 113   1          /*-------------------------------CMD B6 fuera de linea -------------------------------------------------
+  86   2          
+  87   2          }
+  88   1            /*-------------------------------CMD 05 lote full -----------------------------------------------------
              -------------*/
- 114   1          else if(*buffer==FUERA_DE_LINEA)                                                                                    /*cmd de Accescan que dice q e
-             -sta fuera de linea*/
- 115   1          {
- 116   2            if (Timer_wait>=20)                                                                                               /* se envia el msj fuera de linea*/
- 117   2            {                                                                                                                 /* con un tiempo de retardo =((1/(22118400/12
-             -)*65535)*30)*/
- 118   3              PantallaLCD(FUERA_DE_LINEA);
- 119   3              led_err_imp=0;                                                                                                  /*error led on*/
- 120   3              Timer_wait=0;
- 121   3              lock=0;                                                                                                         /*relevo off despues de 1 minuto*/
- 122   3              Atascado=0;
- 123   3              ValTimeOutCom=10;       
- 124   3            }
- 125   2            if ((Debug_Tibbo==0)&&(USE_LPR==1))
- 126   2              {
- 127   3              Debug_Tibbo=1;
- 128   3              Debug_txt_Tibbo((unsigned char *) "LIVE\n");
- 129   3            
- 130   3              Debug_Tibbo=0;
- 131   3              }
- 132   2          }
- 133   1          /*-------------------------------CMD AA en linea -------------------------------------------------------
-             ------------*/
- 134   1          else if (*buffer==ON_LINE)                                                                                          /*en linea*/
- 135   1          {
- 136   2            
- 137   2            if (Timer_wait>=20)                                                                                               /* se envia el msj fuera de linea*/
- 138   2            { 
- 139   3              Timer_wait=0;                                                                                                   /*se inicia el timer*/
- 140   3              lock=0;
- 141   3              led_err_imp=1;                                                                                                  /*relevo off despues de 1 minuto*/
- 142   3              Atascado=0; 
- 143   3              ValTimeOutCom=10;
- 144   3              if ((Debug_Tibbo==0)&&(USE_LPR==1))
- 145   3              {
- 146   4              Debug_Tibbo=1;
- 147   4              Debug_txt_Tibbo((unsigned char *) "LIVE\n");
- 148   4              
- 149   4              Debug_Tibbo=0;
- 150   4              }
- 151   3            }
- 152   2            
- 153   2          } 
- 154   1          /*-------------------------------CMD 'V'=PRMR_GRACIAS  msj Gracias y nombre del mensual-----------------
-             -------------------------*/
- 155   1          else if ((length_trama == 0x13)&& (*(buffer+1)==PRMR_GRACIAS)&&*(buffer+(length_trama-1))==ETX)                 
-             -        /* */
-C51 COMPILER V9.59.0.0   ACCESCAN                                                          07/16/2021 16:28:18 PAGE 4   
-
- 156   1          {
- 157   2               *(buffer+(length_trama-1))=0;
- 158   2               PantallaLCD_LINEA_2(GRACIAS,buffer+2);                                                                     /*SE ENVIA EL MSJ GRACIAS lo
-             - q envia el software*/
- 159   2          }
- 160   1          /*-------------------------------CMD 'O'=PRMR_BIENVENIDO  msj BIENVENIDO  nombre del mensual------------
+  89   1          else if ((*buffer==LOTE_FULL) )                                                                               /*ok si llega msj a;96;NO ES MENS
+             -UALIDAD NI PREPAGO<LF>*/
+  90   1          {
+  91   2            PantallaLCD(LOTE_FULL);                                                                                           /*MSJ MENSUAL NO EN PARQUEADERO*/
+  92   2          }   
+  93   1            /*-------------------------------CMD B1 PRMR_NO_MENSUAL_NI PREPAGO ------------------------------------
              ------------------------------*/
- 161   1          else if ((length_trama==19)&&(*buffer==STX)&&(*(buffer+1)=='O')&&*(buffer+(length_trama-1))==ETX)             
-             -      /*mensaje de bienvenidos*/
- 162   1          {
- 163   2            *(buffer+(length_trama-1))=0;
- 164   2               PantallaLCD_LINEA_2(BIENVENIDO_WIEGAN,buffer+2);       
- 165   2          }
- 166   1          else if ((length_trama==1)&&(*buffer==0xA1))                                                                        /*cmd 0xA1 audio caja qu
-             -e es igual a no registra pago */
- 167   1          {
- 168   2               PantallaLCD(SIN_PAGO);
- 169   2          }
- 170   1                    /*-------------------------------CMD de wiegand---------------------------------------------------*
-             -/
- 171   1          else if ((length_trama==6)&&(*buffer==STX)&&(*(buffer+1)=='W')&&*(buffer+(length_trama-1))==ETX)                
-             -    /* cmd q comunica con monitor po wigan*/
- 172   1          {
- 173   2            /*-------------------------------se covierte el numero serie de la tarjeta-----------------------------
-             --*/
- 174   2                    ByteHex_Decimal(buff,*(buffer+2));                                                                        /*convierto el primer byte_he
-             -x a decimal    */
- 175   2                    buff[3]=' ';
- 176   2                    Two_ByteHex_Decimal(buff+4,*(buffer+3),*(buffer+4)) ;   
- 177   2              if (USE_LPR==1)
- 178   2              {
- 179   3                                                                        /*convierto un byte de 16 bits a decimal*/                                                  
- 180   3                  
- 181   3                    PantallaLCD_LINEA_2(LECTURA_WIEGAND,buff);
- 182   3                                                                                                                              /*transmito el codigo de la tarjeta a la panta
-             -lla lcd*/
- 183   3                    /*-------------------------------------------------------------------------------------------------
-             --------*/
- 184   3                
- 185   3                  //  while(!ValidaSensoresPaso());
- 186   3                      
- 187   3                    Cmd_LPR_Salida_wiegand(buff);
- 188   3              }                                                                             
- 189   2              
- 190   2              else
- 191   2              {
- 192   3                 /*-------------------------------mensaje en la pantalla---------------------------------------------
-             -------*/
- 193   3                                                              /*convierto un byte de 16 bits a decimal*/                                                  
- 194   3                    PantallaLCD_LINEA_2(LECTURA_WIEGAND,buff);                                                            /*transmito el codigo de la
-             - tarjeta a la pantalla lcd*/
- 195   3                                                                                                          
- 196   3                /*---------------------------------------------------------------------------------------------------
-             ------*/  
- 197   3              
- 198   3              }
- 199   2          }
- 200   1          else if ((length_trama==12)&&(*buffer==STX)&&*(buffer+(length_trama-1))==ETX)                                   /*graba e
-             -l numero de consecutivo en eeprom*/
- 201   1          {
- 202   2            graba_serie_ascii_hex(buffer+1);
- 203   2            
-C51 COMPILER V9.59.0.0   ACCESCAN                                                          07/16/2021 16:28:18 PAGE 5   
+  94   1          else if ((*buffer==PRMR_NO_MENSUAL) )                                                                               /*ok si llega msj a;96;NO E
+             -S MENSUALIDAD NI PREPAGO<LF>*/
+  95   1          {
+  96   2            PantallaLCD(NO_MENSUAL_NI_PREPAGO);                                                                                           /*MSJ MENSUAL NO EN PA
+             -RQUEADERO*/
+  97   2          }   
+  98   1            /*-------------------------------CMD B2 PRMR_NO_IN_PARK   ---------------------------------------------
+             ---------------------*/
+  99   1          else if ((*buffer==PRMR_NO_IN_PARK) )                                                                                 /*ok MSJ MENSUAL NO EN PAR
+             -QUEADERO  */
+ 100   1          {
+ 101   2            PantallaLCD(NO_IN_PARK);                                                                                            /*MSJ MENSUAL NO EN PARQUEADERO*/
+ 102   2          } 
+ 103   1          /*-------------------------------CMD B3 PRMR_IN_PARK   -------------------------------------------------
+C51 COMPILER V9.59.0.0   ACCESCAN                                                          07/19/2021 16:32:03 PAGE 3   
 
- 204   2            
- 205   2              Debug_txt_Tibbo((unsigned char *) "Grabacion Serie: ");                                                     /*trama recibida pto
+             -----------------*/
+ 104   1          else if ((*buffer==PRMR_IN_PARK)  )                                                                                   /*ok msj MENSUAL ESTA EN PAR
+             -QUEADER*/
+ 105   1          {
+ 106   2            PantallaLCD(IN_PARK);                                                                                           /*MSJ MENSUAL ESTA EN PARQUEADER*/
+ 107   2          }     
+ 108   1          /*-------------------------------CMD B4  EXPIRO mensualidad vencida ------------------------------------
+             -----------------------*/
+ 109   1          else if ((length_trama==1)&&(*buffer==PRMR_EXPIRO))                                                                   /*ok msj mensual ve
+             -ncida */
+ 110   1          {
+ 111   2               PantallaLCD(EXPIRO);                                                                                             /*mesualidad vencida*/
+ 112   2          }
+ 113   1          /*-------------------------------CMD B5  HORARIO mensualidad FUERA DE HORARIO --------------------------
+             ---------------------------------*/
+ 114   1          else if ((length_trama==1)&&(*buffer==PRMR_MENSUAL_FUERA_HORARIO))                                                    /* */
+ 115   1          {
+ 116   2               PantallaLCD(MENSUAL_FUERA_HORARIO);                                                                              /*ok msj mesualidad fuera d
+             -e horario*/
+ 117   2          }
+ 118   1          
+ 119   1          /*-------------------------------CMD B6 fuera de linea -------------------------------------------------
+             -------------*/
+ 120   1          else if(*buffer==FUERA_DE_LINEA)                                                                                    /*cmd de Accescan que dice q e
+             -sta fuera de linea*/
+ 121   1          {
+ 122   2            if (Timer_wait>=20)                                                                                               /* se envia el msj fuera de linea*/
+ 123   2            {                                                                                                                 /* con un tiempo de retardo =((1/(22118400/12
+             -)*65535)*30)*/
+ 124   3              PantallaLCD(FUERA_DE_LINEA);
+ 125   3              led_err_imp=0;                                                                                                  /*error led on*/
+ 126   3              Timer_wait=0;
+ 127   3              lock=0;                                                                                                         /*relevo off despues de 1 minuto*/
+ 128   3              Atascado=0;
+ 129   3              ValTimeOutCom=10;       
+ 130   3            }
+ 131   2            if ((Debug_Tibbo==0)&&(USE_LPR==1))
+ 132   2              {
+ 133   3              Debug_Tibbo=1;
+ 134   3              Debug_txt_Tibbo((unsigned char *) "LIVE\n");
+ 135   3            
+ 136   3              Debug_Tibbo=0;
+ 137   3              }
+ 138   2          }
+ 139   1          /*-------------------------------CMD AA en linea -------------------------------------------------------
+             ------------*/
+ 140   1          else if (*buffer==ON_LINE)                                                                                          /*en linea*/
+ 141   1          {
+ 142   2            
+ 143   2            if (Timer_wait>=20)                                                                                               /* se envia el msj fuera de linea*/
+ 144   2            { 
+ 145   3              Timer_wait=0;                                                                                                   /*se inicia el timer*/
+ 146   3              lock=0;
+ 147   3              led_err_imp=1;                                                                                                  /*relevo off despues de 1 minuto*/
+ 148   3              Atascado=0; 
+ 149   3              ValTimeOutCom=10;
+ 150   3              if ((Debug_Tibbo==0)&&(USE_LPR==1))
+ 151   3              {
+ 152   4              Debug_Tibbo=1;
+ 153   4              Debug_txt_Tibbo((unsigned char *) "LIVE\n");
+ 154   4              
+ 155   4              Debug_Tibbo=0;
+C51 COMPILER V9.59.0.0   ACCESCAN                                                          07/19/2021 16:32:03 PAGE 4   
+
+ 156   4              }
+ 157   3            }
+ 158   2            
+ 159   2          } 
+ 160   1          /*-------------------------------CMD 'V'=PRMR_GRACIAS  msj Gracias y nombre del mensual-----------------
+             -------------------------*/
+ 161   1          else if ((length_trama == 0x13)&& (*(buffer+1)==PRMR_GRACIAS)&&*(buffer+(length_trama-1))==ETX)                 
+             -        /* */
+ 162   1          {
+ 163   2               *(buffer+(length_trama-1))=0;
+ 164   2               PantallaLCD_LINEA_2(GRACIAS,buffer+2);                                                                     /*SE ENVIA EL MSJ GRACIAS lo
+             - q envia el software*/
+ 165   2          }
+ 166   1          /*-------------------------------CMD 'O'=PRMR_BIENVENIDO  msj BIENVENIDO  nombre del mensual------------
+             ------------------------------*/
+ 167   1          else if ((length_trama==19)&&(*buffer==STX)&&(*(buffer+1)=='O')&&*(buffer+(length_trama-1))==ETX)             
+             -      /*mensaje de bienvenidos*/
+ 168   1          {
+ 169   2            *(buffer+(length_trama-1))=0;
+ 170   2               PantallaLCD_LINEA_2(BIENVENIDO_WIEGAN,buffer+2);       
+ 171   2          }
+ 172   1          else if ((length_trama==1)&&(*buffer==0xA1))                                                                        /*cmd 0xA1 audio caja qu
+             -e es igual a no registra pago */
+ 173   1          {
+ 174   2               PantallaLCD(SIN_PAGO);
+ 175   2          }
+ 176   1                    /*-------------------------------CMD de wiegand---------------------------------------------------*
+             -/
+ 177   1          else if ((length_trama==6)&&(*buffer==STX)&&(*(buffer+1)=='W')&&*(buffer+(length_trama-1))==ETX)                
+             -    /* cmd q comunica con monitor po wigan*/
+ 178   1          {
+ 179   2            /*-------------------------------se covierte el numero serie de la tarjeta-----------------------------
+             --*/
+ 180   2                    ByteHex_Decimal(buff,*(buffer+2));                                                                        /*convierto el primer byte_he
+             -x a decimal    */
+ 181   2                    buff[3]=' ';
+ 182   2                    Two_ByteHex_Decimal(buff+4,*(buffer+3),*(buffer+4)) ;   
+ 183   2              if (USE_LPR==1)
+ 184   2              {
+ 185   3                                                                        /*convierto un byte de 16 bits a decimal*/                                                  
+ 186   3                  
+ 187   3                    PantallaLCD_LINEA_2(LECTURA_WIEGAND,buff);
+ 188   3                                                                                                                              /*transmito el codigo de la tarjeta a la panta
+             -lla lcd*/
+ 189   3                    /*-------------------------------------------------------------------------------------------------
+             --------*/
+ 190   3                
+ 191   3                  //  while(!ValidaSensoresPaso());
+ 192   3                      
+ 193   3                    Cmd_LPR_Salida_wiegand(buff);
+ 194   3              }                                                                             
+ 195   2              
+ 196   2              else
+ 197   2              {
+ 198   3                 /*-------------------------------mensaje en la pantalla---------------------------------------------
+             -------*/
+ 199   3                                                              /*convierto un byte de 16 bits a decimal*/                                                  
+ 200   3                    PantallaLCD_LINEA_2(LECTURA_WIEGAND,buff);                                                            /*transmito el codigo de la
+             - tarjeta a la pantalla lcd*/
+ 201   3                                                                                                          
+ 202   3                /*---------------------------------------------------------------------------------------------------
+             ------*/  
+C51 COMPILER V9.59.0.0   ACCESCAN                                                          07/19/2021 16:32:03 PAGE 5   
+
+ 203   3              
+ 204   3              }
+ 205   2          }
+ 206   1          else if ((length_trama==12)&&(*buffer==STX)&&*(buffer+(length_trama-1))==ETX)                                   /*graba e
+             -l numero de consecutivo en eeprom*/
+ 207   1          {
+ 208   2            graba_serie_ascii_hex(buffer+1);
+ 209   2            
+ 210   2            
+ 211   2              Debug_txt_Tibbo((unsigned char *) "Grabacion Serie: ");                                                     /*trama recibida pto
              - paralelo */
- 206   2              DebugBufferMF(buffer,length_trama,1);
- 207   2              
- 208   2            
- 209   2          }
- 210   1      }
- 211          
+ 212   2              DebugBufferMF(buffer,length_trama,1);
+ 213   2              
+ 214   2            
+ 215   2          }
+ 216   1      }
+ 217          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    810    ----
+   CODE SIZE        =    833    ----
    CONSTANT SIZE    =     24    ----
    XDATA SIZE       =   ----      15
    PDATA SIZE       =   ----    ----

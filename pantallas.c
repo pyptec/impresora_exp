@@ -47,15 +47,15 @@ extern void Debug_chr_Tibbo(unsigned char Dat);
 #define MENSUAL_NO_PAGO					97
 
 #define TARJETA_VENCIDA					180
-#define MENSUAL_FUERA_HORARIO		181
+
 
 #define NO_MENSUAL_NI_PREPAGO		96
 #define	NO_IN_PARK							93						//B2
 #define IN_PARK									99
 #define EXPIRO									94		
-#define MENSUAL_FUERA_HORARIO		181
+#define MENSUAL_FUERA_HORARIO		98
 #define BIENVENIDO_WIEGAN				0x9b
-
+#define LOTE_FULL								05
 
 #define NUL											0x00
 #define SOH											0x01
@@ -324,6 +324,22 @@ unsigned char num_chr;
 									//Raspberry_data (msjpantalla);
 									Raspberry_data((unsigned char  *) "a;93;MENSUAL YA ESTA EN PARQUEADERO\n\r\0");
                   break;
+						case MENSUAL_FUERA_HORARIO:
+						//strcpy(msjpantalla,"a;06;MENSUAL FUERA DE HORARIO\n\0");
+							// Raspberry_data (msjpantalla);
+               Raspberry_data((unsigned char  *) "a;06;MENSUAL FUERA DE HORARIO\n\r\0");
+						   break;
+						case NO_MENSUAL_NI_PREPAGO:
+						 //strcpy(msjpantalla,"a;96;NO ES MENSUALIDAD NI PREPAGO\n\0");
+							//	Raspberry_data(msjpantalla);
+									Raspberry_data((unsigned char  *) "a;96;NO ES MENSUALIDAD NI PREPAGO\n\r\0");
+                  break;
+						case LOTE_FULL:
+						//strcpy(msjpantalla,"a;99;LOTE ASIGNADO ESTA LLENO\n\0");
+						//Raspberry_data (msjpantalla);
+							Raspberry_data((unsigned char  *) "a;92;LOTE ASIGNADO ESTA LLENO\n\r\0");
+						break;
+						
 				}
 		}
 }
@@ -404,40 +420,19 @@ sel_com=0;
 						Raspberry_data (msjpantalla);
 					
             break;
-			//			 case BIENVENIDO:
+						 case BIENVENIDO_WIEGAN:
 						 
-     //       strcpy(msjpantalla,"a;03;BIENVENIDO ");
-		//			 Raspberry_data (msjpantalla);
-			//			 if(MenSual !=  True)
-				//		{
-							/*tarjeta de rotacion*/
-			//			strcpy(msjpantalla, Lee_No_Ticket());
-						//strcat(msjpantalla,ticket);
-				//			 Raspberry_data (msjpantalla);
-					//	}
-					//	else
-					//	{
+            strcpy(msjpantalla,"a;03;BIENVENIDO ");
+					 Raspberry_data (msjpantalla);
+			
 							/*mensual nombre del mensual*/
-					//		strcpy(msjpantalla, buffer);
-						//strcat(msjpantalla,buffer);
-				//			 Raspberry_data (msjpantalla);
+						// num_chr=strlen(buffer);
+						//*(buffer+(num_chr-1))=0;
+							strcpy(msjpantalla, buffer);
+							strcat(msjpantalla,"\n\0");
+							 Raspberry_data (msjpantalla);
 							
-//}
-			//			if (placa_ready== True)
-				//			{
-				//			strcpy(msjpantalla, " PLACA");	
-				//			//strcat(msjpantalla," PLACA:");
-				//			strcat(msjpantalla,placa);	
-								
-				//				strcat(msjpantalla,"\n\0");
-				//			}
-				//			else
-				//			{
-				//				strcpy(msjpantalla, "\n");	
-								//strcat(msjpantalla,"\n\r\0");
-				//			}	
-				//			Raspberry_data (msjpantalla);
-						
+
 			 
 			}
 	}

@@ -43,6 +43,7 @@ sbit led_err_imp = P0^2;			//Error
 
 #define STX											02 
 #define ETX											03 
+#define LOTE_FULL								05
 #define FUERA_DE_LINEA					0xb6
 #define ON_LINE									0xAA
 
@@ -84,6 +85,11 @@ void Valida_Trama_Pto(unsigned char *buffer, unsigned char length_trama)
 			Reloj_Pantalla_Lcd();																																															/* Escribo el reloj en la pantalla lcd*/
 		
 		}
+			/*-------------------------------CMD 05 lote full -----------------------------------------------------------------*/
+		else if ((*buffer==LOTE_FULL)	)																																								/*ok si llega msj a;96;NO ES MENSUALIDAD NI PREPAGO<LF>*/
+		{
+			PantallaLCD(LOTE_FULL);																																														/*MSJ MENSUAL NO EN PARQUEADERO*/
+		}		
 			/*-------------------------------CMD B1 PRMR_NO_MENSUAL_NI PREPAGO -----------------------------------------------------------------*/
 		else if ((*buffer==PRMR_NO_MENSUAL)	)																																								/*ok si llega msj a;96;NO ES MENSUALIDAD NI PREPAGO<LF>*/
 		{

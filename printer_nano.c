@@ -41,6 +41,7 @@ Definiciones de sequencias de impresion de ticket
 #define SEQ_RTA_QUEST					0x02
 #define SEQ_PRINT							0x03
 #define SEQ_RELEASE						0x04
+#define SEQ_PAPEL							0x05
 /*----------------------------------------------------------------------------
 msj de lcd tarjeta y lcd serie
 ------------------------------------------------------------------------------*/
@@ -749,11 +750,11 @@ SEQ_QUEST_PRINT=01 el boton fue presionado, envio cmd a monitor
 				
 			Cmd_Monitor('E');																																/*trama monitor*/
 			clear_buffer();																																	/*limpio el buffer del pto serie*/
-			Status(04);																																			/*pregunta a  la impresora si tiene papel*/
+			//Status(04);																																			/*pregunta a  la impresora si tiene papel*/
 			send_portERR(BIENVENIDO);																												/*puerto paralalelo*/
 				
 		
-			g_cEstadoImpresion=SEQ_RTA_QUEST;
+			g_cEstadoImpresion=SEQ_PAPEL;
 			ValTimeOutCom=TIME_RX	;																													/*tiempo de espera de respuesta de la impresora*/	
 			buffer_ready=0;																																	/* buffer del pto serie (0) inicia a esperar la trama*/
 			g_cEstadoComSoft=ESPERA_RX;		
@@ -765,6 +766,22 @@ SEQ_RTA_QUEST=02 se pregunta si hay papel en la impresora
 		01= si tiene papel la printer
 		02= no, tiene papel     		
 -------------------------------------------------------------------------------------------------------------------------------*/		
+		case SEQ_PAPEL:
+			if (ValTimeOutCom==1)
+			{
+			Debug_txt_Tibbo((unsigned char *) "SEQ_PAPEL\r\n");
+			clear_buffer();		
+			//Status(04);
+				
+			g_cEstadoImpresion=SEQ_RTA_QUEST;
+			ValTimeOutCom=TIME_RX	;																													/*tiempo de espera de respuesta de la impresora*/	
+			buffer_ready=0;																																	/* buffer del pto serie (0) inicia a esperar la trama*/
+			g_cEstadoComSoft=ESPERA_RX;	
+			putchar(DLE);							/*16 decimal*/
+			putchar(EOT);							/*04 decimal*/
+			putchar(04);		
+			}
+		break;
 		case SEQ_RTA_QUEST:
 		
 		if ((ValTimeOutCom==1)||(buffer_ready!=0))
@@ -804,8 +821,10 @@ SEQ_RTA_QUEST=02 se pregunta si hay papel en la impresora
 					 	Debug_txt_Tibbo((unsigned char *) "Impresora no responde \r\n");					/*la respuesta es desconocida*/
 					 ValTimeOutCom=TIME_PULSADOR;
 					 buffer_ready=0;																																		/* buffer del pto serie (0) inicia a esperar la trama*/
+					
 					 g_cEstadoComSoft=ESPERA_RX;		
-					 g_cEstadoImpresion=SEQ_INICIO;
+					 g_cEstadoImpresion=SEQ_PAPEL;
+					//Status(04);	
 						
 				}
 			}
