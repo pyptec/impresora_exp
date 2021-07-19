@@ -342,6 +342,7 @@ unsigned char num_chr;
 						
 				}
 		}
+			sel_com=1;	
 }
 void PantallaLCD_LINEA_2(unsigned char cod_msg, unsigned char *buffer)
 {
@@ -436,4 +437,5 @@ sel_com=0;
 			 
 			}
 	}
+		sel_com=1;
 }

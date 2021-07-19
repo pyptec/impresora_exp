@@ -80,6 +80,8 @@ extern unsigned char ValTimeOutCom;
 extern unsigned char buffer_ready;
 extern unsigned char Timer_wait;
 extern idata unsigned char  Buffer_Rta_Lintech[];
+extern idata unsigned char tbuf [];
+extern idata unsigned char rbuf [];
 extern  unsigned char placa[];
 extern  unsigned char Tipo_Vehiculo;	
 extern	unsigned char QR_BARRAS;
@@ -770,16 +772,13 @@ SEQ_RTA_QUEST=02 se pregunta si hay papel en la impresora
 			if (ValTimeOutCom==1)
 			{
 			Debug_txt_Tibbo((unsigned char *) "SEQ_PAPEL\r\n");
-			clear_buffer();		
-			//Status(04);
+								
+			Status(04);
 				
 			g_cEstadoImpresion=SEQ_RTA_QUEST;
 			ValTimeOutCom=TIME_RX	;																													/*tiempo de espera de respuesta de la impresora*/	
 			buffer_ready=0;																																	/* buffer del pto serie (0) inicia a esperar la trama*/
 			g_cEstadoComSoft=ESPERA_RX;	
-			putchar(DLE);							/*16 decimal*/
-			putchar(EOT);							/*04 decimal*/
-			putchar(04);		
 			}
 		break;
 		case SEQ_RTA_QUEST:

@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:32:04 PAGE 1   
+C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:51:24 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE UART
@@ -62,7 +62,7 @@ line level    source
   52          
   53          /*tiempo de delay entre funciones*/
   54          #define TIME_CARD       5     //50
-C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:32:04 PAGE 2   
+C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:51:24 PAGE 2   
 
   55          #define TIME_EJECT        5     //60
   56          #define RET_MINIMO        3
@@ -126,7 +126,7 @@ line level    source
  114   2        if (((r_in - r_out) & ~(RBUF_SIZE-1)) == 0)
  115   2          {
  116   3          rbuf [r_in & (RBUF_SIZE-1)] = cDatoRx;    //cDatoRx;
-C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:32:04 PAGE 3   
+C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:51:24 PAGE 3   
 
  117   3          r_in++;
  118   3            
@@ -190,7 +190,7 @@ line level    source
  176   3            Buffer_Rta_Lintech[g_cContByteRx++]=cDatoRx;
  177   3            g_cEstadoComSoft=STORE_DATA;      //numero de datos a recibir
  178   3          } 
-C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:32:04 PAGE 4   
+C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:51:24 PAGE 4   
 
  179   3          else
  180   3          {     
@@ -254,7 +254,7 @@ line level    source
  238   1      ------------------------------------------------*/
  239   1      if (TI != 0)
  240   1        {
-C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:32:04 PAGE 5   
+C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:51:24 PAGE 5   
 
  241   2        TI = 0;
  242   2      
@@ -318,7 +318,7 @@ line level    source
  300   1      Clear transmit interrupt and buffer.
  301   1      ------------------------------------------------*/
  302   1      TI = 0;             /* clear transmit interrupt */
-C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:32:04 PAGE 6   
+C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:51:24 PAGE 6   
 
  303   1      t_in = 0;           /* empty transmit buffer */
  304   1      t_out = 0;
@@ -382,7 +382,7 @@ line level    source
  362          
  363          /*------------------------------------------------------------------------------
  364          ------------------------------------------------------------------------------*/
-C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:32:04 PAGE 7   
+C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:51:24 PAGE 7   
 
  365          #pragma disable
  366          
@@ -446,7 +446,7 @@ line level    source
  424          {
  425            unsigned char temp;
  426            unsigned char d;
-C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:32:04 PAGE 8   
+C51 COMPILER V9.59.0.0   UART                                                              07/19/2021 16:51:24 PAGE 8   
 
  427              temp=(Dat&0xf0)>>4;
  428              (temp>0x09)?(temp=temp+0x37):(temp=temp+0x30);
