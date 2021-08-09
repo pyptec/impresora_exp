@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    07/19/2021  16:51:24  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    08/09/2021  10:18:12  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
@@ -59,7 +59,7 @@ INPUT MODULES INCLUDED:
   C:\KEIL_V5\C51\LIB\C51L.LIB (?C?PLDIXDATA)
   C:\KEIL_V5\C51\LIB\C51L.LIB (?C?PSTXDATA)
   C:\KEIL_V5\C51\LIB\C51L.LIB (?C?CCASE)
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 2
 
 
   C:\KEIL_V5\C51\LIB\C51L.LIB (STRCAT)
@@ -119,7 +119,7 @@ LINK MAP OF MODULE:  .\Objects\expdprtr (MAIN)
             CODE    0D0AH     0B3EH     UNIT         ?C?LIB_CODE
             CODE    1848H     0483H     UNIT         ?PR?PRINTF?PRINTF
             CODE    1CCBH     0341H     UNIT         ?PR?_VALIDA_TRAMA_PTO?ACCESCAN
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 3
 
 
             CODE    200CH     02D0H     UNIT         ?PR?_TWO_BYTEHEX_DECIMAL?CLOCK
@@ -179,7 +179,7 @@ LINK MAP OF MODULE:  .\Objects\expdprtr (MAIN)
             CODE    58CEH     0081H     UNIT         ?PR?_STRPBRK?STRPBRK
             CODE    594FH     0080H     UNIT         ?PR?_RASPBERRY_DATA?PANTALLAS
             CODE    59CFH     0078H     UNIT         ?PR?_FUNCION_180?PRINTER_NANO
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 4
 
 
             CODE    5A47H     0073H     UNIT         ?PR?MSJ_LCD_INFORMATIVO?IO_SENSORES
@@ -239,7 +239,7 @@ LINK MAP OF MODULE:  .\Objects\expdprtr (MAIN)
             CODE    6808H     0020H     UNIT         ?PR?ACKD?EEPROM
             CODE    6828H     0020H     UNIT         ?PR?ACK_LECT?EEPROM
             CODE    6848H     0020H     UNIT         ?PR?TIME_BIT?TIBBO
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 5
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 5
 
 
             CODE    6868H     001FH     UNIT         ?PR?VALIDASENSOR?IO_SENSORES
@@ -299,7 +299,7 @@ LINK MAP OF MODULE:  .\Objects\expdprtr (MAIN)
             CODE    6BFAH     0004H     UNIT         ?CO?NUM_SERIE
             CODE    6BFEH     0003H     UNIT         ?PR?OFF_TIMER0_INTERRUP?MAIN
             CODE    6C01H     0003H     UNIT         ?CO?PTO_PARALELO
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 6
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 6
 
 
             CODE    6C04H     0001H     UNIT         ?PR?DELAY?DELAY
@@ -359,7 +359,7 @@ SEGMENT                                             BIT_GROUP          DATA_GROU
   +--> ?PR?_LISTACOMANDOS?PROG
   +--> ?PR?PROG_ID_CLIENTE?PROG
   +--> ?PR?PROG_COD_PARK?PROG
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 7
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 7
 
 
   +--> ?PR?PROG_TIEMPO_GRACIA?PROG
@@ -419,7 +419,7 @@ SEGMENT                                             BIT_GROUP          DATA_GROU
 
 ?PR?DISPLAYCURSOR?PROG                           -----    -----      -----    -----      -----    -----
   +--> ?CO?PROG
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 8
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 8
 
 
   +--> ?PR?PRINTF?PRINTF
@@ -479,7 +479,7 @@ SEGMENT                                             BIT_GROUP          DATA_GROU
   +--> ?PR?_INGRESADATO?PROG
   +--> ?PR?_ATOI?ATOI
   +--> ?PR?_WR_EEPROM?EEPROM
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 9
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 9
 
 
 
@@ -539,7 +539,7 @@ SEGMENT                                             BIT_GROUP          DATA_GROU
   +--> ?PR?_ATOI?ATOI
   +--> ?PR?_WR_EEPROM?EEPROM
 
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 10
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 10
 
 
 ?PR?PROG_CLIENTE?PROG                            -----    -----      -----    -----      003FH    0030H
@@ -599,7 +599,7 @@ SEGMENT                                             BIT_GROUP          DATA_GROU
 
 ?PR?PROG_MSJ4?PROG                               -----    -----      -----    -----      003FH    003EH
   +--> ?CO?PROG
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 11
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 11
 
 
   +--> ?PR?PRINTF?PRINTF
@@ -659,7 +659,7 @@ SEGMENT                                             BIT_GROUP          DATA_GROU
   +--> ?PR?_DEBUG_TXT_TIBBO?TIBBO
   +--> ?PR?_DEBUG_CHR_TIBBO?TIBBO
   +--> ?PR?_TX_AUX?TIBBO
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 12
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 12
 
 
 
@@ -719,7 +719,7 @@ SEGMENT                                             BIT_GROUP          DATA_GROU
   +--> ?PR?_ATOL?ATOL
 
 ?PR?_ATOL?ATOL                                   0020H.0  0000H.1    -----    -----      00B0H    0007H
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 13
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 13
 
 
   +--> ?PR?_ISSPACE?ISSPACE
@@ -779,7 +779,7 @@ SEGMENT                                             BIT_GROUP          DATA_GROU
   +--> ?PR?_BLOCK_READ_CLOCK_HEX?CLOCK
   +--> ?PR?_SEND_PORT?PTO_PARALELO
   +--> ?PR?DEBUG_DIVIDIR_TEXTO?TIBBO
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 14
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 14
 
 
   +--> ?PR?_DEBUGBUFFERMF?TIBBO
@@ -839,7 +839,7 @@ SEGMENT                                             BIT_GROUP          DATA_GROU
 ?PR?_TAMA_LETRA?PRINTER_NANO                     -----    -----      -----    -----      004FH    0001H
   +--> ?PR?_PUTCHAR?MAIN
 
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 15
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 15
 
 
 ?PR?_ESPCS_ENT_CHR?PRINTER_NANO                  -----    -----      -----    -----      004FH    0001H
@@ -899,7 +899,7 @@ SEGMENT                                             BIT_GROUP          DATA_GROU
 
 ?PR?PRINT_MSJ_COD_BARRAS?PRINTER_NANO            -----    -----      -----    -----      0040H    003EH
   +--> ?PR?_TIPO_FUENTE?PRINTER_NANO
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 16
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 16
 
 
   +--> ?PR?_INTERLINEADO?PRINTER_NANO
@@ -959,7 +959,7 @@ SEGMENT                                             BIT_GROUP          DATA_GROU
 
 ?PR?INCREMENTE_SERIE?NUM_SERIE                   -----    -----      -----    -----      000EH    0004H
   +--> ?PR?LEER_SERIE?NUM_SERIE
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 17
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 17
 
 
   +--> ?PR?_GRABA_SERIE?NUM_SERIE
@@ -1019,7 +1019,7 @@ SEGMENT                                             BIT_GROUP          DATA_GROU
   +--> ?PR?_STRLEN?STRLEN
   +--> ?PR?_TX_CHRLCD?PANTALLAS
   +--> ?PR?_STRCAT?STRCAT
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 18
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 18
 
 
   +--> ?PR?_RASPBERRY_DATA?PANTALLAS
@@ -1079,7 +1079,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:6BF0H         PUBLIC        on_Timer0_Interrup
   I:005EH         PUBLIC        tbuf
   B:0090H.1       PUBLIC        DataIn
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 19
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 19
 
 
   D:0089H         PUBLIC        TMOD
@@ -1139,7 +1139,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:6BFEH         LINE#         44
   C:6BFEH         LINE#         45
   C:6C00H         LINE#         47
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 20
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 20
 
 
   -------         ENDPROC       OFF_TIMER0_INTERRUP
@@ -1199,7 +1199,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   -------         ENDPROC       VARIABLE_INICIO
   -------         PROC          MAIN
   -------         DO            
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 21
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 21
 
 
   X:0135H         SYMBOL        buffer
@@ -1259,7 +1259,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   X:000EH         SYMBOL        buffer
   X:0011H         SYMBOL        length_trama
   -------         DO            
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 22
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 22
 
 
   X:0012H         SYMBOL        buff
@@ -1319,7 +1319,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:1E28H         LINE#         144
   C:1E28H         LINE#         145
   C:1E2AH         LINE#         146
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 23
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 23
 
 
   C:1E2CH         LINE#         147
@@ -1379,7 +1379,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   B:00D0H.7       PUBLIC        CY
   C:0003H         PUBLIC        p_ck
   X:01A3H         PUBLIC        data_clk
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 24
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 24
 
 
   C:6BB2H         PUBLIC        cond_ini_clock
@@ -1439,7 +1439,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:540BH         LINE#         66
   C:5424H         LINE#         67
   C:5424H         LINE#         68
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 25
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 25
 
 
   C:5427H         LINE#         69
@@ -1499,7 +1499,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   X:001DH         SYMBOL        datos_clock
   C:550BH         LINE#         112
   C:5516H         LINE#         114
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 26
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 26
 
 
   C:5516H         LINE#         118
@@ -1559,7 +1559,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   X:001DH         SYMBOL        numero
   D:0007H         SYMBOL        centena
   D:0006H         SYMBOL        decena
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 27
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 27
 
 
   -------         ENDDO         
@@ -1619,7 +1619,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:216EH         LINE#         263
   C:2171H         LINE#         264
   C:21CCH         LINE#         265
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 28
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 28
 
 
   C:21CCH         LINE#         267
@@ -1679,7 +1679,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:2F69H         LINE#         332
   C:2F6EH         LINE#         333
   C:2F86H         LINE#         334
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 29
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 29
 
 
   C:2F90H         LINE#         335
@@ -1739,7 +1739,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:6BB4H         LINE#         429
   C:6BB6H         LINE#         430
   C:6BB8H         LINE#         431
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 30
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 30
 
 
   -------         ENDPROC       COND_INI_CLOCK
@@ -1799,7 +1799,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:67C4H         PUBLIC        _e_d_m
   C:5DBBH         PUBLIC        l_d_m
   -------         PROC          L?0043
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 31
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 31
 
 
   -------         ENDPROC       L?0043
@@ -1859,7 +1859,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   -------         PROC          _E_D_M
   D:0007H         SYMBOL        a_serial_eeprom
   -------         DO            
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 32
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 32
 
 
   D:0006H         SYMBOL        nbits
@@ -1919,7 +1919,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:5DDDH         LINE#         130
   C:5DE1H         LINE#         131
   C:5DE3H         LINE#         132
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 33
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 33
 
 
   C:5DE3H         LINE#         133
@@ -1979,7 +1979,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:6569H         LINE#         229
   C:6569H         LINE#         232
   C:656DH         LINE#         233
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 34
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 34
 
 
   C:656DH         LINE#         234
@@ -2039,7 +2039,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:5710H         LINE#         294
   C:571FH         LINE#         295
   -------         ENDPROC       _ESCRIBIRMEMORIA
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 35
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 35
 
 
   -------         ENDMOD        EEPROM
@@ -2099,7 +2099,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   -------         PROC          SEL_SENSOR1
   C:6BD5H         LINE#         56
   C:6BD5H         LINE#         57
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 36
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 36
 
 
   C:6BD5H         LINE#         58
@@ -2159,7 +2159,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:6AB1H         LINE#         105
   C:6AB4H         LINE#         106
   C:6AB4H         LINE#         107
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 37
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 37
 
 
   C:6AB6H         LINE#         108
@@ -2219,7 +2219,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   X:000FH         SYMBOL        info
   -------         ENDDO         
   C:5A47H         LINE#         180
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 38
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 38
 
 
   C:5A47H         LINE#         181
@@ -2279,7 +2279,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:2574H         SYMBOL        _?ix1002
   C:257AH         SYMBOL        _?ix1003
   C:2580H         SYMBOL        _?ix1004
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 39
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 39
 
 
   C:61F1H         PUBLIC        _LCD_txt_num_char
@@ -2339,7 +2339,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   X:001DH         SYMBOL        Ini_Clock_LCD
   -------         ENDDO         
   C:65A0H         LINE#         117
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 40
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 40
 
 
   C:65A0H         LINE#         118
@@ -2399,7 +2399,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:2614H         LINE#         184
   C:2614H         LINE#         186
   C:2614H         LINE#         188
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 41
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 41
 
 
   C:2622H         LINE#         189
@@ -2459,7 +2459,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:273FH         LINE#         270
   C:2745H         LINE#         271
   C:2748H         LINE#         272
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 42
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 42
 
 
   C:2753H         LINE#         274
@@ -2519,7 +2519,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   X:0027H         SYMBOL        msjpantalla
   X:004FH         SYMBOL        num_chr
   -------         ENDDO         
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 43
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 43
 
 
   C:323AH         LINE#         347
@@ -2579,7 +2579,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
 
   -------         MODULE        PROG
   C:0000H         SYMBOL        _ICE_DUMMY_
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 44
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 44
 
 
   C:36FFH         PUBLIC        Prog_Sin_Cobro
@@ -2639,7 +2639,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   X:003FH         SYMBOL        buffer
   -------         DO            
   X:0042H         SYMBOL        buf
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 45
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 45
 
 
   -------         ENDDO         
@@ -2699,7 +2699,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   -------         DO            
   X:0081H         SYMBOL        i
   -------         ENDDO         
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 46
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 46
 
 
   C:4F98H         LINE#         158
@@ -2759,7 +2759,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   -------         PROC          PROG_TIEMPO_GRACIA
   -------         DO            
   X:003FH         SYMBOL        buffer
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 47
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 47
 
 
   X:0049H         SYMBOL        dataee
@@ -2819,7 +2819,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   -------         PROC          PROG_DEBUG
   -------         DO            
   X:003FH         SYMBOL        buffer
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 48
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 48
 
 
   X:0049H         SYMBOL        dataee
@@ -2879,7 +2879,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:3FA8H         LINE#         365
   C:3FA8H         LINE#         366
   C:3FBFH         LINE#         367
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 49
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 49
 
 
   C:3FBFH         LINE#         368
@@ -2939,7 +2939,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:4164H         LINE#         431
   C:4181H         LINE#         432
   C:418BH         LINE#         433
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 50
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 50
 
 
   C:418BH         LINE#         434
@@ -2999,7 +2999,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:5EE4H         LINE#         494
   C:5EE4H         LINE#         495
   C:5EE4H         LINE#         498
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 51
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 51
 
 
   C:5EEDH         LINE#         499
@@ -3059,7 +3059,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   -------         DO            
   X:003FH         SYMBOL        buffer
   -------         ENDDO         
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 52
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 52
 
 
   C:6047H         LINE#         553
@@ -3119,7 +3119,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:6193H         LINE#         609
   -------         ENDPROC       PROG_MSJ7
   -------         PROC          SHOW
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 53
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 53
 
 
   C:48ECH         LINE#         614
@@ -3179,7 +3179,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:28BDH         LINE#         688
   C:28C0H         LINE#         689
   C:28CEH         LINE#         690
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 54
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 54
 
 
   C:28E2H         LINE#         691
@@ -3239,7 +3239,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:2A10H         LINE#         776
   C:2A13H         LINE#         778
   C:2A16H         LINE#         779
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 55
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 55
 
 
   C:2A16H         LINE#         781
@@ -3299,7 +3299,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   X:0011H         SYMBOL        time_out
   X:0012H         SYMBOL        num_data
   X:0013H         SYMBOL        T_ANCHO
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 56
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 56
 
 
   -------         ENDDO         
@@ -3359,7 +3359,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:4F05H         LINE#         123
   C:4F0EH         LINE#         124
   C:4F0EH         LINE#         125
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 57
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 57
 
 
   C:4F10H         LINE#         126
@@ -3419,7 +3419,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:3131H         LINE#         398
   C:3155H         LINE#         399
   C:3179H         LINE#         400
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 58
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 58
 
 
   C:319DH         LINE#         402
@@ -3479,7 +3479,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:57A2H         LINE#         468
   C:57A8H         LINE#         469
   C:57ABH         LINE#         470
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 59
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 59
 
 
   C:57ABH         LINE#         471
@@ -3539,7 +3539,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:3C5AH         LINE#         543
   C:3C6BH         LINE#         544
   C:3C6BH         LINE#         545
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 60
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 60
 
 
   C:3C7AH         LINE#         546
@@ -3599,7 +3599,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:68FAH         LINE#         40
   C:68FAH         LINE#         42
   C:6906H         LINE#         43
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 61
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 61
 
 
   C:6906H         LINE#         44
@@ -3659,7 +3659,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:5E9CH         LINE#         101
   -------         ENDPROC       _TX_AUX
   -------         PROC          _DEBUG_CHR_TIBBO
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 62
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 62
 
 
   D:0003H         SYMBOL        Dat
@@ -3719,7 +3719,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:646BH         LINE#         193
   C:646BH         LINE#         194
   C:646EH         LINE#         195
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 63
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 63
 
 
   C:6476H         LINE#         197
@@ -3779,7 +3779,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
 
   -------         MODULE        UART
   C:0000H         SYMBOL        _ICE_DUMMY_
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 64
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 64
 
 
   C:679EH         PUBLIC        com_getchar
@@ -3839,7 +3839,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:4883H         LINE#         143
   C:4889H         LINE#         144
   C:4894H         LINE#         145
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 65
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 65
 
 
   C:4894H         LINE#         146
@@ -3899,7 +3899,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:667EH         LINE#         289
   C:6680H         LINE#         290
   -------         ENDPROC       COM_INITIALIZE
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 66
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 66
 
 
   -------         PROC          COM_BAUDRATE
@@ -3959,7 +3959,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:6B68H         LINE#         381
   C:6B68H         LINE#         382
   C:6B6BH         LINE#         383
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 67
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 67
 
 
   C:6B6DH         LINE#         385
@@ -4019,7 +4019,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:67E6H         LINE#         130
   C:67EEH         LINE#         131
   C:67EEH         LINE#         132
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 68
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 68
 
 
   C:67F3H         LINE#         133
@@ -4079,7 +4079,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   X:007EH         SYMBOL        fuente
   C:6973H         LINE#         206
   C:6978H         LINE#         207
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 69
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 69
 
 
   C:6978H         LINE#         208
@@ -4139,7 +4139,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:6A14H         LINE#         287
   C:6A19H         LINE#         288
   C:6A19H         LINE#         289
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 70
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 70
 
 
   C:6A1EH         LINE#         290
@@ -4199,7 +4199,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:670EH         LINE#         358
   C:6713H         LINE#         359
   C:6718H         LINE#         360
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 71
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 71
 
 
   C:671DH         LINE#         361
@@ -4259,7 +4259,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:6B9BH         LINE#         415
   -------         ENDPROC       FULLCUT
   -------         PROC          _STATUS
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 72
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 72
 
 
   X:000EH         SYMBOL        StatusConsulta
@@ -4319,7 +4319,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:449FH         LINE#         488
   C:44A6H         LINE#         489
   C:44A9H         LINE#         490
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 73
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 73
 
 
   C:44AEH         LINE#         491
@@ -4379,7 +4379,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:4379H         LINE#         557
   C:4390H         LINE#         558
   C:4395H         LINE#         559
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 74
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 74
 
 
   C:4398H         LINE#         560
@@ -4439,7 +4439,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:383DH         LINE#         620
   C:383DH         LINE#         621
   C:383DH         LINE#         623
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 75
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 75
 
 
   C:3842H         LINE#         626
@@ -4499,7 +4499,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:2A85H         LINE#         700
   C:2A85H         LINE#         703
   C:2A90H         LINE#         704
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 76
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 76
 
 
   C:2A90H         LINE#         705
@@ -4559,7 +4559,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:2B26H         LINE#         786
   C:2B37H         LINE#         787
   C:2B37H         LINE#         789
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 77
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 77
 
 
   C:2B47H         LINE#         791
@@ -4619,7 +4619,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:2C0EH         LINE#         863
   C:2C0EH         LINE#         864
   C:2C0EH         LINE#         869
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 78
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 78
 
 
   C:2C0EH         LINE#         870
@@ -4679,7 +4679,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   -------         MODULE        NUM_SERIE
   C:0000H         SYMBOL        _ICE_DUMMY_
   C:68C3H         PUBLIC        Leer_serie
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 79
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 79
 
 
   C:6B0DH         PUBLIC        _graba_serie_ascii_hex
@@ -4739,7 +4739,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:648EH         LINE#         75
   C:64A0H         LINE#         76
   C:64A4H         LINE#         77
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 80
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 80
 
 
   C:64A4H         LINE#         78
@@ -4799,7 +4799,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:538DH         LINE#         56
   C:5392H         LINE#         57
   C:539BH         LINE#         58
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 81
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 81
 
 
   C:539BH         LINE#         59
@@ -4859,7 +4859,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   X:017DH         SYMBOL        Buffer_Lpr
   X:001AH         SYMBOL        j
   -------         ENDDO         
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 82
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 82
 
 
   C:43AAH         LINE#         116
@@ -4919,7 +4919,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:4767H         LINE#         175
   C:476BH         LINE#         176
   C:4774H         LINE#         177
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 83
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 83
 
 
   C:4774H         LINE#         178
@@ -4979,7 +4979,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   C:18ADH         PUBLIC        _SPRINTF
   -------         ENDMOD        PRINTF
 
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 84
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 84
 
 
   -------         MODULE        POW
@@ -5039,7 +5039,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
 
   -------         MODULE        ?C?CSTPTR
   C:1446H         PUBLIC        ?C?CSTPTR
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 85
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 85
 
 
   -------         ENDMOD        ?C?CSTPTR
@@ -5099,7 +5099,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\expdprtr (MAIN)
   -------         ENDMOD        STRNCAT
 
   -------         MODULE        ?C?STRCMP
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  07/19/2021  16:51:24  PAGE 86
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  08/09/2021  10:18:12  PAGE 86
 
 
   C:16CBH         PUBLIC        ?C?STRCMP
