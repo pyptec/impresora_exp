@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 1   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE PRINTER_NANO
@@ -62,7 +62,7 @@ line level    source
   52          /*----------------------------------------------------------------------------
   53          tiempo de delay entre funciones
   54          ------------------------------------------------------------------------------*/
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 2   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 2   
 
   55          
   56          #define   TIME_CARD         20    //50
@@ -126,7 +126,7 @@ line level    source
  114          /*externo bit*/
  115          extern bit placa_ready;
  116          //extern bit buffer_ready;
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 3   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 3   
 
  117          /*------------------------------------------------
  118          Cmd de inicio de impresora
@@ -190,7 +190,7 @@ line level    source
  176          -------------------------------------------------------------------------------------------------*/ 
  177          
  178          void JustificaIzq(void)
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 4   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 4   
 
  179          {
  180   1        putchar(ESC);
@@ -254,7 +254,7 @@ line level    source
  238          Ancho
  239          00 normal
  240          0x10  =x2 -------------0x70=x8
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 5   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 5   
 
  241          
  242          como se debe aramr el cmd 00 normal, 11 boble de ancho y altura
@@ -318,7 +318,7 @@ line level    source
  300          ------------------------------------------------*/
  301          void position_Hri(unsigned char position)
  302          {
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 6   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 6   
 
  303   1        putchar(GS);
  304   1        putchar('H');
@@ -382,7 +382,7 @@ line level    source
  362   1        putchar(0x31);
  363   1        
  364   1      }
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 7   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 7   
 
  365          
  366          void Funcion_167()
@@ -446,7 +446,7 @@ line level    source
  424          void Status(unsigned char StatusConsulta)
  425          {
  426   1        
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 8   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 8   
 
  427   1        putchar(DLE);             /*16 decimal*/
  428   1        putchar(EOT);             /*04 decimal*/
@@ -510,7 +510,7 @@ line level    source
              ------
  481          Imprime el ticket en codigo QR
  482          ----------------------------------------------------------------------------------------------------------
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 9   
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 9   
 
              ------*/
  483          void Print_datos_cliente_QR()
@@ -574,7 +574,7 @@ line level    source
  541   1          Alimentar_paper(06);                        /*alimenta el papel y se posiciona para imprimir*/
  542   1          LeerMemoria(EE_CLIENTE,buffer); 
  543   1          printf("%s",buffer);                        /*imprimo el nombre de la  concepcion*/
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 10  
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 10  
 
  544   1      /*------------------------------------------------*/  
  545   1          LeerMemoria(EE_NIT,buffer); 
@@ -638,7 +638,7 @@ line level    source
  603   1        
  604   1        LeerMemoria(EE_MSJ4,msj_print);
  605   1        printf(" %s",msj_print);  
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 11  
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 11  
 
  606   1        
  607   1        LeerMemoria(EE_MSJ5,msj_print);
@@ -702,7 +702,7 @@ line level    source
  662   1        if(Tipo_Vehiculo==0)
  663   1        {
  664   2          printf("   Vehiculo:   Carro\n");
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 12  
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 12  
 
  665   2          
  666   2        }
@@ -766,7 +766,7 @@ line level    source
  720   5               Debug_txt_Tibbo((unsigned char *) "Pulsador Activo\r\n");
  721   5                                                                                                /*envia cmd a monitor de vehiculo de Entrada*/
  722   5               g_cEstadoImpresion=SEQ_QUEST_PRINT;                                              /*vamos al siguiente paso a con validar el 
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 13  
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 13  
 
              -cmd*/    
  723   5              }
@@ -811,7 +811,8 @@ line level    source
  757   2              
  758   2          
  759   2            g_cEstadoImpresion=SEQ_PAPEL;
- 760   2            ValTimeOutCom=TIME_RX ;                                                         /*tiempo de espera de respuesta de la impresora*/ 
+ 760   2            ValTimeOutCom=TIME_PULSADOR;          //TIME_RX ;                                                         /*tiempo de espera de respuest
+             -a de la impresora*/ 
  761   2            buffer_ready=0;                                                                 /* buffer del pto serie (0) inicia a esperar la trama*/
  762   2            g_cEstadoComSoft=ESPERA_RX;   
  763   2            break;
@@ -829,12 +830,13 @@ line level    source
  773   2            {
  774   3            Debug_txt_Tibbo((unsigned char *) "SEQ_PAPEL\r\n");
  775   3                      
- 776   3            Status(04);
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 14  
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 14  
 
+ 776   3            Status(04);
  777   3              
  778   3            g_cEstadoImpresion=SEQ_RTA_QUEST;
- 779   3            ValTimeOutCom=TIME_RX ;                                                         /*tiempo de espera de respuesta de la impresora*/ 
+ 779   3            ValTimeOutCom=TIME_PULSADOR;    ///TIME_RX  ;                                                         /*tiempo de espera de respuesta 
+             -de la impresora*/ 
  780   3            buffer_ready=0;                                                                 /* buffer del pto serie (0) inicia a esperar la trama*/
  781   3            g_cEstadoComSoft=ESPERA_RX; 
  782   3            }
@@ -850,7 +852,7 @@ line level    source
  792   3              {
  793   4                buffer_ready=0;
  794   4                Debug_txt_Tibbo((unsigned char *) "Impresora con papel \r\n");              /*la respuesta es desconocida*/
- 795   4                ValTimeOutCom=TIME_PLACA;
+ 795   4                ValTimeOutCom=TIME_PULSADOR;    //TIME_CARD;        //TIME_PLACA;
  796   4                g_cEstadoImpresion=SEQ_PRINT  ;   
  797   4              }
  798   3              else if (buffer_ready==2)
@@ -869,7 +871,7 @@ line level    source
  809   3              else if (buffer_ready==3)
  810   3              {
  811   4                 Debug_txt_Tibbo((unsigned char *) "Nivel bajo de papel \r\n");       /*la respuesta es desconocida*/
- 812   4                 ValTimeOutCom=TIME_PLACA;
+ 812   4                 ValTimeOutCom=TIME_PULSADOR;   //TIME_CARD;              //TIME_PLACA;
  813   4                 buffer_ready=0;                                                                    /* buffer del pto serie (0) inicia a esperar la tra
              -ma*/
  814   4                 g_cEstadoComSoft=ESPERA_RX;    
@@ -892,10 +894,10 @@ line level    source
  829   3            }
  830   2              
  831   2            break;
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 15  
+
  832   2      /*--------------------------------------------------------------------------------------------------------
              ----------------------
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 15  
-
  833   2      SEQ_PRINT =03 se imprime la factura
  834   2      y se envia una trama al pto paralelo para que el principal envie trama a access 
  835   2      ademas incrementa el numero de consecutivo  
@@ -956,10 +958,10 @@ line level    source
  885   6                  ValTimeOutCom=TIME_PULSADOR;
  886   6                  buffer_ready=0;                                                                   /* buffer del pto serie (0) inicia a esperar la tra
              -ma*/
+C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 16:55:20 PAGE 16  
+
  887   6                  g_cEstadoComSoft=ESPERA_RX;
  888   6                  g_cEstadoImpresion=SEQ_INICIO;
-C51 COMPILER V9.59.0.0   PRINTER_NANO                                                      08/09/2021 10:18:12 PAGE 16  
-
  889   6                }
  890   5                else 
  891   5                {
@@ -1005,7 +1007,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   2971    ----
+   CODE SIZE        =   2981    ----
    CONSTANT SIZE    =    421    ----
    XDATA SIZE       =      2     304
    PDATA SIZE       =   ----    ----

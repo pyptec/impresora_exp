@@ -757,7 +757,7 @@ SEQ_QUEST_PRINT=01 el boton fue presionado, envio cmd a monitor
 				
 		
 			g_cEstadoImpresion=SEQ_PAPEL;
-			ValTimeOutCom=TIME_RX	;																													/*tiempo de espera de respuesta de la impresora*/	
+			ValTimeOutCom=TIME_PULSADOR;					//TIME_RX	;																													/*tiempo de espera de respuesta de la impresora*/	
 			buffer_ready=0;																																	/* buffer del pto serie (0) inicia a esperar la trama*/
 			g_cEstadoComSoft=ESPERA_RX;		
 			break;
@@ -776,7 +776,7 @@ SEQ_RTA_QUEST=02 se pregunta si hay papel en la impresora
 			Status(04);
 				
 			g_cEstadoImpresion=SEQ_RTA_QUEST;
-			ValTimeOutCom=TIME_RX	;																													/*tiempo de espera de respuesta de la impresora*/	
+			ValTimeOutCom=TIME_PULSADOR;		///TIME_RX	;																													/*tiempo de espera de respuesta de la impresora*/	
 			buffer_ready=0;																																	/* buffer del pto serie (0) inicia a esperar la trama*/
 			g_cEstadoComSoft=ESPERA_RX;	
 			}
@@ -792,7 +792,7 @@ SEQ_RTA_QUEST=02 se pregunta si hay papel en la impresora
 				{
 					buffer_ready=0;
 					Debug_txt_Tibbo((unsigned char *) "Impresora con papel \r\n");							/*la respuesta es desconocida*/
-					ValTimeOutCom=TIME_PLACA;
+					ValTimeOutCom=TIME_PULSADOR;		//TIME_CARD;				//TIME_PLACA;
 					g_cEstadoImpresion=SEQ_PRINT	;		
 				}
 				else if (buffer_ready==2)
@@ -809,7 +809,7 @@ SEQ_RTA_QUEST=02 se pregunta si hay papel en la impresora
 				else if (buffer_ready==3)
 				{
 					 Debug_txt_Tibbo((unsigned char *) "Nivel bajo de papel \r\n");				/*la respuesta es desconocida*/
-					 ValTimeOutCom=TIME_PLACA;
+					 ValTimeOutCom=TIME_PULSADOR;		//TIME_CARD;							//TIME_PLACA;
 					 buffer_ready=0;																																		/* buffer del pto serie (0) inicia a esperar la trama*/
 					 g_cEstadoComSoft=ESPERA_RX;		
 					 g_cEstadoImpresion=SEQ_PRINT;

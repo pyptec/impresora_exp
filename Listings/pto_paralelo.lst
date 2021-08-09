@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 10:18:11 PAGE 1   
+C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 16:55:20 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE PTO_PARALELO
@@ -62,7 +62,7 @@ line level    source
   51          unsigned char recibe_port(unsigned char *buffer_port)
   52          {
   53   1      
-C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 10:18:11 PAGE 2   
+C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 16:55:20 PAGE 2   
 
   54   1        unsigned int count;
   55   1        unsigned char time_out,num_data;
@@ -126,7 +126,7 @@ line level    source
  111   1        long int cont;
  112   1        unsigned char timeOut,length;
  113   1        
-C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 10:18:11 PAGE 3   
+C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 16:55:20 PAGE 3   
 
  114   1        length=length_char;
  115   1      
@@ -190,7 +190,7 @@ line level    source
  172          //   Buffer_port[j++]=*buffer_S1_B0;                  /*ticket*/
  173          //    buffer_S1_B0++;
  174          //  }while (*buffer_S1_B0!=0);
-C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 10:18:11 PAGE 4   
+C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 16:55:20 PAGE 4   
 
  175          //  Buffer_port[2]=j-3;
  176          //  if(*(buffer_S1_B2+5)!=0)                          /*MF_DCTO           0x05        Tipo de descuento (00)sin descuento, (01xx 
@@ -254,7 +254,7 @@ line level    source
  231            //if(*(buffer_S1_B2+5)!=0)                          /*MF_DCTO           0x05        Tipo de descuento (00)sin descuento, (01xx 
              -xxxx) 0x40 fija fecha de salida,
  232          //                                                    10xx xxxx dcto por porcentaje xx xxxx= valor del porcentaje, 11xx xxxx dcto po
-C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 10:18:11 PAGE 5   
+C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 16:55:20 PAGE 5   
 
              -r dinero */
  233            //{
@@ -318,7 +318,7 @@ line level    source
  289          //   Buffer_port[j++]=*buffer_S1_B0;                  /*ticket*/
  290          //    buffer_S1_B0++;
  291          //  }while (*buffer_S1_B0!=0);
-C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 10:18:11 PAGE 6   
+C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 16:55:20 PAGE 6   
 
  292            
  293          //  if(*(buffer_S1_B2+5)!=0)                          /*MF_DCTO           0x05        Tipo de descuento (00)sin descuento, (01xx 
@@ -382,7 +382,7 @@ line level    source
  347          //      while(busy==0);
  348          //    send_port(Buffer_port,j);                         /*trama transmitida pto paralelo*/
  349              
-C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 10:18:11 PAGE 7   
+C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 16:55:20 PAGE 7   
 
  350          //      Debug_Dividir_texto();                                              /*division del texto */
  351                        
@@ -446,7 +446,7 @@ line level    source
  408   1        {   
  409   2          do
  410   2          {
-C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 10:18:11 PAGE 8   
+C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 16:55:20 PAGE 8   
 
  411   3          Buffer_port[j++]=placa[t];                              /*almaceno la placa en el buffer*/
  412   3          p--;
@@ -510,7 +510,7 @@ line level    source
  470   2        }
  471   1        ready=1;
  472   1        port_clk=1;
-C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 10:18:11 PAGE 9   
+C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 16:55:20 PAGE 9   
 
  473   1        rx_in_data=1;                                   //Led de visualizacion  OFF
  474   1      
@@ -574,7 +574,7 @@ line level    source
  532   3            k++;
  533   3            }
  534   2              else {buffer_info[i]=';'; i++; break;}  /*le pongo un  separador */
-C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 10:18:11 PAGE 10  
+C51 COMPILER V9.59.0.0   PTO_PARALELO                                                      08/09/2021 16:55:20 PAGE 10  
 
  535   2              
  536   2           }
