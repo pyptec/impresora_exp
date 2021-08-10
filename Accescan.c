@@ -27,6 +27,7 @@ unsigned char rd_eeprom (unsigned char control,unsigned int Dir);
 extern unsigned long int  Leer_serie ();
 extern void serie_ascii_siceros_l(unsigned char *serie);
 extern void Cmd_LPR_Salida_wiegand(unsigned char *buffer);
+extern void Formato_eeprom();
 
 extern unsigned char Timer_wait;
 extern unsigned char Tipo_Vehiculo;
@@ -53,6 +54,7 @@ sbit led_err_imp = P0^2;			//Error
 #define PRMR_EXPIRO									0XB4
 #define PRMR_MENSUAL_FUERA_HORARIO	0XB5
 #define	PRMR_GRACIAS								'V'
+#define PRMR_MSJ_EXCLUSIVO					0X55
 
 /*mensajes de pantalla*/
 #define BIENVENIDO							0XFE
@@ -136,6 +138,11 @@ void Valida_Trama_Pto(unsigned char *buffer, unsigned char length_trama)
 				Debug_Tibbo=0;
 				}
 		}
+				/*-------------------------------	CMD 55 PRMR_MSJ_EXCLUSIVO  ------------------------------------------------------------------*/
+		else if ((length_trama==3)&&(*(buffer+1)==PRMR_MSJ_EXCLUSIVO)&&*(buffer+(length_trama-1))==ETX)																																				/* */
+		{
+				 Formato_eeprom();																																														/*mesualidad vencida*/
+		}	
 		/*-------------------------------CMD AA en linea ------------------------------------------------------------------*/
 		else if (*buffer==ON_LINE)																																													/*en linea*/
 		{

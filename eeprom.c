@@ -26,6 +26,7 @@ unsigned char l_chr;
 
 /*define posiciones de memoria*/
 #define EE_ID_CLIENTE		0x0000
+#define EE_FECHA_VENCIMIENTO		0X0350
 
 
 //*******************************************************************************************
@@ -293,4 +294,13 @@ while(*res !='\0')																	/**/
 	}
 	*res=0;
 	wr_eeprom(control,addres,*res); 
+}
+void Formato_eeprom()
+{
+unsigned char dato=0xff;
+unsigned int i;
+	for(i=0; i< EE_FECHA_VENCIMIENTO; i++)
+	{
+			wr_eeprom(0xa8,i,dato);
+	}
 }

@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/09/2021 16:55:20 PAGE 1   
+C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/10/2021 14:27:45 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE PANTALLAS
@@ -62,7 +62,7 @@ line level    source
   52          #define NO_MENSUAL_NI_PREPAGO   96
   53          #define NO_IN_PARK              93            //B2
   54          #define IN_PARK                 99
-C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/09/2021 16:55:20 PAGE 2   
+C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/10/2021 14:27:45 PAGE 2   
 
   55          #define EXPIRO                  94    
   56          #define MENSUAL_FUERA_HORARIO   98
@@ -126,7 +126,7 @@ line level    source
  114          07 numero de caracteres de la trama de reloj
  115          20 19 03 26 09 21 20  el dato del reloj
  116          ------------------------------------------------------------------------------*/
-C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/09/2021 16:55:20 PAGE 3   
+C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/10/2021 14:27:45 PAGE 3   
 
  117          void Reloj_Pantalla_Lcd()
  118          {
@@ -190,7 +190,7 @@ line level    source
  174   1      unsigned char num_chr;
  175   1      
  176   1        
-C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/09/2021 16:55:20 PAGE 4   
+C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/10/2021 14:27:45 PAGE 4   
 
  177   1          sel_com=0;
  178   1        
@@ -254,7 +254,7 @@ line level    source
  236   3                LCD_txt ((unsigned char *)       "TARJETA NO REGISTRA PAGO ",1);
  237   3      
  238   3                break;
-C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/09/2021 16:55:20 PAGE 5   
+C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/10/2021 14:27:45 PAGE 5   
 
  239   3                  
  240   3              case EXCEDE_GRACIA:
@@ -318,7 +318,7 @@ line level    source
  298   3                 Raspberry_data((unsigned char  *) "a;03;BIENVENIDO\n\r\0");
  299   3                    //Raspberry_data (msjpantalla);
  300   3                   
-C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/09/2021 16:55:20 PAGE 6   
+C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/10/2021 14:27:45 PAGE 6   
 
  301   3                    break;
  302   3                case TARJETA_VENCIDA:
@@ -382,7 +382,7 @@ line level    source
  360   2            
  361   2            switch (cod_msg)
  362   2            {
-C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/09/2021 16:55:20 PAGE 7   
+C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/10/2021 14:27:45 PAGE 7   
 
  363   3          
  364   3              case  LECTURA_DE_TARJETAS:
@@ -446,7 +446,7 @@ line level    source
  420   3                  strcat(msjpantalla,"\n\0");
  421   3                  Raspberry_data (msjpantalla);
  422   3                
-C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/09/2021 16:55:20 PAGE 8   
+C51 COMPILER V9.59.0.0   PANTALLAS                                                         08/10/2021 14:27:45 PAGE 8   
 
  423   3                  break;
  424   3                   case BIENVENIDO_WIEGAN:

@@ -314,8 +314,8 @@ PCON |= 0x80;       /* 0x80=SMOD: set serial baudrate doubler */
 TMOD &= ~0xF0;      /* clear timer 1 mode bits */
 TMOD |= 0x20;       /* put timer 1 into MODE 2 */
 
-TH1 =0xfd;// (unsigned char) (256 - (XTAL / (16L * 12L * baudrate)));
-TL1=0xfd;						//f4 9600 fa 19200 fd 38400 ff 115200 cristal 22.148mhz
+TH1 =0xf4;// (unsigned char) (256 - (XTAL / (16L * 12L * baudrate)));
+TL1=0xf4;						//f4 9600 fa 19200 fd 38400 ff 115200 cristal 22.148mhz
 TR1 = 1;            /* start timer 1 */
 }
 
